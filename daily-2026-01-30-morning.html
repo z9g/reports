@@ -118,6 +118,11 @@
             font-size: 0.85rem;
             color: var(--text-muted);
         }
+        a.tool-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
         .insight-list {
             list-style: none;
         }
@@ -222,8 +227,8 @@
         <h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">Hacker News</h4>
         <table>
             <tr><th>帖子</th><th>类型</th></tr>
-            <tr><td>AgentMail (YC S25)</td><td>Launch HN</td></tr>
-            <tr><td>Moltworker</td><td>产品发布</td></tr>
+            <tr><td><a href="https://news.ycombinator.com/">AgentMail (YC S25)</a></td><td>Launch HN</td></tr>
+            <tr><td><a href="https://blog.cloudflare.com/moltworker-self-hosted-ai-agent/">Moltworker</a></td><td>产品发布</td></tr>
             <tr><td>AGENTS.md vs Skills</td><td>技术讨论</td></tr>
         </table>
     </section>
@@ -231,31 +236,31 @@
     <section>
         <h2>🚀 新工具/项目</h2>
         <div class="tools-grid">
-            <div class="tool-card">
+            <a href="https://blog.cloudflare.com/moltworker-self-hosted-ai-agent/" class="tool-card" style="text-decoration: none; color: inherit;">
                 <h4>Moltworker</h4>
                 <div class="type">AI Agent</div>
                 <p>Cloudflare 自托管 AI 代理</p>
-            </div>
-            <div class="tool-card">
+            </a>
+            <a href="https://news.ycombinator.com/" class="tool-card" style="text-decoration: none; color: inherit;">
                 <h4>AgentMail</h4>
                 <div class="type">API</div>
                 <p>AI Agent 邮箱服务</p>
-            </div>
-            <div class="tool-card">
+            </a>
+            <a href="https://huggingface.co/blog/daggr" class="tool-card" style="text-decoration: none; color: inherit;">
                 <h4>Daggr</h4>
                 <div class="type">开发工具</div>
                 <p>链式应用可视化</p>
-            </div>
-            <div class="tool-card">
+            </a>
+            <a href="https://cli.sentry.dev/" class="tool-card" style="text-decoration: none; color: inherit;">
                 <h4>Sentry CLI</h4>
                 <div class="type">CLI</div>
                 <p>开发者+Agent 错误追踪</p>
-            </div>
-            <div class="tool-card">
+            </a>
+            <a href="https://huggingface.co/blog/nvidia/cosmos-policy-for-robot-control" class="tool-card" style="text-decoration: none; color: inherit;">
                 <h4>NVIDIA Cosmos</h4>
                 <div class="type">ML 模型</div>
                 <p>机器人控制策略</p>
-            </div>
+            </a>
         </div>
     </section>
 
