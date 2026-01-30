@@ -17,6 +17,7 @@ const REPORT_TYPES = {
     morning: { icon: '🌅', badge: 'morning', label: '早间版', name: 'AI 早报' },
     noon: { icon: '🤖', badge: 'noon', label: '午间版', name: 'AI 午间快报' },
     evening: { icon: '🌙', badge: 'evening', label: '晚间版', name: 'AI 晚报' },
+    'deep-read': { icon: '🧠', badge: 'deep-read', label: '深度阅读', name: 'AI 深度阅读' },
     default: { icon: '📊', badge: '', label: '', name: 'AI 报告' }
 };
 
@@ -37,7 +38,8 @@ function extractMetadata(filePath) {
     
     // 判断报告类型
     let type = 'default';
-    if (fileName.includes('morning') || title.includes('早报')) type = 'morning';
+    if (fileName.includes('deep-read') || title.includes('深度阅读')) type = 'deep-read';
+    else if (fileName.includes('morning') || title.includes('早报')) type = 'morning';
     else if (fileName.includes('noon') || title.includes('午间')) type = 'noon';
     else if (fileName.includes('evening') || title.includes('晚报')) type = 'evening';
     
@@ -95,8 +97,8 @@ function generateReportListHTML(reports) {
             <h2>📅 ${dateStr}</h2>
             <ul class="report-list">\n`;
         
-        // 按类型排序：晚间 > 午间 > 早间
-        const typeOrder = { evening: 0, noon: 1, morning: 2, default: 3 };
+        // 按类型排序：深度阅读 > 晚间 > 午间 > 早间
+        const typeOrder = { 'deep-read': 0, evening: 1, noon: 2, morning: 3, default: 4 };
         const sortedReports = grouped[date].sort((a, b) => typeOrder[a.type] - typeOrder[b.type]);
         
         for (const report of sortedReports) {
@@ -127,9 +129,9 @@ function generateReportListHTML(reports) {
  * 更新 index.html
  */
 function updateIndex() {
-    // 扫描所有报告文件
+    // 扫描所有报告文件 (daily-* 和 deep-read-*)
     const files = fs.readdirSync(REPORTS_DIR)
-        .filter(f => f.startsWith('daily-') && f.endsWith('.html') && !f.includes('-v2'));
+        .filter(f => (f.startsWith('daily-') || f.startsWith('deep-read-')) && f.endsWith('.html') && !f.includes('-v2'));
     
     console.log(`📂 发现 ${files.length} 个报告文件`);
     
