@@ -191,6 +191,9 @@ const HTML_TEMPLATE = `<!DOCTYPE html>
     </style>
 </head>
 <body>
+    <nav style="margin-bottom: 1rem;">
+        <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← 返回报告索引</a>
+    </nav>
 {{CONTENT}}
 </body>
 </html>`;
