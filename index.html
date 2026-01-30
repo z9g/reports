@@ -1,1 +1,167 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>Reports</title></head><body><h1>📊 Reports</h1><p>Report files will appear here.</p></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 AI 报告中心</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-orange: #d29922;
+            --accent-purple: #a371f7;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        header h1 { 
+            font-size: 2.5rem; 
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        header p { color: var(--text-muted); }
+        .report-list {
+            list-style: none;
+        }
+        .report-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .report-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .report-item a {
+            display: flex;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            text-decoration: none;
+            color: inherit;
+        }
+        .report-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            min-width: 50px;
+            text-align: center;
+        }
+        .report-info {
+            flex: 1;
+        }
+        .report-info h3 {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+        .report-info .meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .report-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+        .report-badge.morning { background: var(--accent-orange); }
+        .report-badge.noon { background: var(--accent-green); }
+        .report-badge.evening { background: var(--accent-purple); }
+        .arrow {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+        }
+        .date-group {
+            margin-bottom: 2rem;
+        }
+        .date-group h2 {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 2rem;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            header h1 { font-size: 1.75rem; }
+            .report-item a { padding: 1rem; }
+            .report-icon { font-size: 1.5rem; min-width: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📊 AI 报告中心</h1>
+        <p>每日 AI 行业动态追踪</p>
+    </header>
+
+    <main>
+        <!-- REPORT_LIST_START -->
+        <div class="date-group">
+            <h2>📅 2026年1月30日</h2>
+            <ul class="report-list">
+                <li class="report-item">
+                    <a href="daily-2026-01-30-noon.html">
+                        <span class="report-icon">🤖</span>
+                        <div class="report-info">
+                            <h3>AI 午间快报 <span class="report-badge noon">午间版</span></h3>
+                            <p class="meta">2026-01-30 12:00 PM · OpenAI 将退役 GPT-4o、Google Project Genie 发布、Claude Code 性能追踪器上线</p>
+                        </div>
+                        <span class="arrow">→</span>
+                    </a>
+                </li>
+                <li class="report-item">
+                    <a href="daily-2026-01-30-morning.html">
+                        <span class="report-icon">🌅</span>
+                        <div class="report-info">
+                            <h3>AI 早报 <span class="report-badge morning">早间版</span></h3>
+                            <p class="meta">2026-01-30 10:30 AM · OpenAI 计划 2 月 13 日关闭 GPT-4o、Daggr - 链式应用可视化工具、Sentry 发布开发者和 Agent 新 CLI</p>
+                        </div>
+                        <span class="arrow">→</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- REPORT_LIST_END -->
+    </main>
+
+    <footer>
+        <p>Generated by <a href="https://github.com/clawdbot/clawdbot">Clawdbot</a> ⚡</p>
+        <p>数据来源：Hacker News, The Verge, X/Twitter</p>
+    </footer>
+</body>
+</html>
