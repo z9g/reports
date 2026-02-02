@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 扫描报告索引</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --link: #58a6ff;
+            --accent: #238636;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #58a6ff, #8957e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        .report-list {
+            list-style: none;
+        }
+        .report-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+        .report-item:hover {
+            border-color: var(--link);
+        }
+        .report-item a {
+            color: var(--link);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .report-item a:hover {
+            text-decoration: underline;
+        }
+        .report-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+        footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 AI 扫描报告索引</h1>
+    <p class="subtitle">GitHub Trending + arXiv cs.AI 每日扫描</p>
+
+    <ul class="report-list">
+        <li class="report-item">
+            <div>
+                <a href="2026-02-02-pm.html">2026年2月2日 下午扫描</a>
+                <span class="badge">最新</span>
+            </div>
+            <span class="report-date">17:00 CST</span>
+        </li>
+    </ul>
+
+    <footer>
+        <p>由 Clawdbot 自动生成和更新</p>
+    </footer>
+</body>
+</html>
