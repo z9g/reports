@@ -3,261 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📊 AI 报告中心</title>
+    <title>AI 日报索引 | Miles's Reports</title>
     <style>
         :root {
-            --bg: #0d1117;
-            --card-bg: #161b22;
-            --border: #30363d;
-            --text: #c9d1d9;
-            --text-muted: #8b949e;
-            --accent: #58a6ff;
-            --accent-green: #3fb950;
-            --accent-orange: #d29922;
-            --accent-purple: #a371f7;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        .container {
             max-width: 800px;
             margin: 0 auto;
         }
+        
         header {
             text-align: center;
-            padding: 3rem 0;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
-        header h1 { 
-            font-size: 2.5rem; 
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), #a855f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 0.5rem;
         }
-        header p { color: var(--text-muted); }
+        
+        .subtitle {
+            color: var(--text-muted);
+        }
+        
+        section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
         .report-list {
             list-style: none;
         }
-        .report-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
-        .report-item:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        .report-item a {
+        
+        .report-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 1.25rem 1.5rem;
+        }
+        
+        .report-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .report-list a {
+            color: var(--accent-blue);
             text-decoration: none;
-            color: inherit;
+            font-weight: 500;
         }
-        .report-icon {
-            font-size: 2rem;
-            margin-right: 1rem;
-            min-width: 50px;
-            text-align: center;
+        
+        .report-list a:hover {
+            text-decoration: underline;
         }
-        .report-info {
-            flex: 1;
-        }
-        .report-info h3 {
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-bottom: 0.25rem;
-        }
-        .report-info .meta {
+        
+        .date-tag {
             font-size: 0.85rem;
             color: var(--text-muted);
+            background: rgba(99,102,241,0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
         }
-        .report-badge {
-            background: var(--accent-purple);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
+        
+        .new-tag {
+            background: rgba(34,197,94,0.2);
+            color: var(--accent-green);
             font-size: 0.75rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
             margin-left: 0.5rem;
         }
-        .report-badge.morning { background: var(--accent-orange); }
-        .report-badge.noon { background: var(--accent-green); }
-        .report-badge.evening { background: var(--accent-purple); }
-        .report-badge.deep-read { background: #db61a2; }
-        .arrow {
-            color: var(--text-muted);
-            font-size: 1.25rem;
-        }
-        .date-group {
-            margin-bottom: 2rem;
-        }
-        .date-group h2 {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border);
-        }
+        
         footer {
             text-align: center;
-            padding: 2rem 0;
             color: var(--text-muted);
             font-size: 0.85rem;
             margin-top: 2rem;
         }
-        footer a { color: var(--accent); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-        @media (max-width: 600px) {
-            body { padding: 1rem; }
-            header h1 { font-size: 1.75rem; }
-            .report-item a { padding: 1rem; }
-            .report-icon { font-size: 1.5rem; min-width: 40px; }
-        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>📊 AI 报告中心</h1>
-        <p>每日 AI 行业动态追踪</p>
-    </header>
-
-    <main>
-        <!-- REPORT_LIST_START -->
-        <div class="date-group">
-            <h2>📅 2026年2月2日</h2>
+    <div class="container">
+        <header>
+            <h1>🤖 AI 日报索引</h1>
+            <p class="subtitle">每日 AI 新闻汇总</p>
+        </header>
+        
+        <section>
+            <h2>📰 AI 早报</h2>
             <ul class="report-list">
-                <li class="report-item">
-                    <a href="daily-2026-02-02-night.html">
-                        <span class="report-icon">🌙</span>
-                        <div class="report-info">
-                            <h3>AI 晚间总结 <span class="report-badge evening">晚间版</span></h3>
-                            <p class="meta">2026-02-02 21:30 · AI用户分化、Agent系统扩展定量原则、CoT混淆安全警示</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
+                <li>
+                    <span>
+                        <a href="ai-daily-2026-02-03.html">2026年2月3日 AI早报</a>
+                    </span>
+                    <span class="date-tag">02-03</span>
                 </li>
-                <li class="report-item">
-                    <a href="deep-read-2026-02-02.html">
-                        <span class="report-icon">🧠</span>
-                        <div class="report-info">
-                            <h3>AI 深度阅读 <span class="report-badge deep-read">深度阅读</span></h3>
-                            <p class="meta">2026-02-02 14:30 · AI用户分化现象、Google Agent扩展科学研究</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
-                </li>
-                <li class="report-item">
-                    <a href="ai-daily-2026-02-02.html">
-                        <span class="report-icon">🌅</span>
-                        <div class="report-info">
-                            <h3>AI 早报 <span class="report-badge morning">早间版</span></h3>
-                            <p class="meta">2026-02-02 10:30 · AI用户分化、Yann LeCun警告、AI Agent社交网络、20+开源工具</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
+                <li>
+                    <span><a href="ai-daily-2026-02-02.html">2026年2月2日 AI早报</a></span>
+                    <span class="date-tag">02-02</span>
                 </li>
             </ul>
-        </div>
-        <div class="date-group">
-            <h2>📅 2026年2月1日</h2>
+        </section>
+        
+        <section>
+            <h2>☀️ AI 午间快报</h2>
             <ul class="report-list">
-                <li class="report-item">
-                    <a href="daily-2026-02-01-night.html">
-                        <span class="report-icon">🌙</span>
-                        <div class="report-info">
-                            <h3>AI 晚间总结 <span class="report-badge evening">晚间版</span></h3>
-                            <p class="meta">2026-02-01 21:30 · AI可验证性危机、浏览器代理60%+成功率、人机协作模式</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
-                </li>
-                <li class="report-item">
-                    <a href="deep-read-2026-02-01.html">
-                        <span class="report-icon">🧠</span>
-                        <div class="report-info">
-                            <h3>AI 深度阅读 <span class="report-badge deep-read">深度阅读</span></h3>
-                            <p class="meta">2026-02-01 14:30 · Wiki Education研究、Browser Use基准测试</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
+                <li>
+                    <span>
+                        <a href="ai-news-2026-02-03-noon.html">2026年2月3日 午间快报</a>
+                        <span class="new-tag">NEW</span>
+                    </span>
+                    <span class="date-tag">02-03</span>
                 </li>
             </ul>
-        </div>
-        <div class="date-group">
-            <h2>📅 2026年1月31日</h2>
+        </section>
+        
+        <section>
+            <h2>🌙 每日简报</h2>
             <ul class="report-list">
-                <li class="report-item">
-                    <a href="daily-2026-01-31-morning.html">
-                        <span class="report-icon">🌅</span>
-                        <div class="report-info">
-                            <h3>AI 早报 <span class="report-badge morning">早间版</span></h3>
-                            <p class="meta">2026-01-31 10:30  · OpenAI与Nvidia的1000亿美元交易搁置、Kimi K2.5技术报告发布、xAI诉OpenAI案可能被驳回</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
+                <li>
+                    <span><a href="daily-2026-02-02-night.html">2026年2月2日 晚间简报</a></span>
+                    <span class="date-tag">02-02</span>
                 </li>
-                <li class="report-item">
-                    <a href="daily-2026-01-31-night.html">
-                        <span class="report-icon">📊</span>
-                        <div class="report-info">
-                            <h3>AI 报告</h3>
-                            <p class="meta">2026-01-31 10:30 · ☀️ 早报 (10:30)、🌅 午报 (12:21)、🌆 晚间社交动态 (20:00)</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
+                <li>
+                    <span><a href="daily-2026-02-01-night.html">2026年2月1日 晚间简报</a></span>
+                    <span class="date-tag">02-01</span>
+                </li>
+                <li>
+                    <span><a href="daily-2026-01-31-night.html">2026年1月31日 晚间简报</a></span>
+                    <span class="date-tag">01-31</span>
+                </li>
+                <li>
+                    <span><a href="daily-2026-01-31-morning.html">2026年1月31日 早间简报</a></span>
+                    <span class="date-tag">01-31</span>
+                </li>
+                <li>
+                    <span><a href="daily-2026-01-30-noon.html">2026年1月30日 午间简报</a></span>
+                    <span class="date-tag">01-30</span>
+                </li>
+                <li>
+                    <span><a href="daily-2026-01-30-morning.html">2026年1月30日 早间简报</a></span>
+                    <span class="date-tag">01-30</span>
                 </li>
             </ul>
-        </div>
-        <div class="date-group">
-            <h2>📅 2026年1月30日</h2>
+        </section>
+        
+        <section>
+            <h2>📖 深度阅读</h2>
             <ul class="report-list">
-                <li class="report-item">
-                    <a href="deep-read-2026-01-30.html">
-                        <span class="report-icon">🧠</span>
-                        <div class="report-info">
-                            <h3>AI 深度阅读 <span class="report-badge deep-read">深度阅读</span></h3>
-                            <p class="meta">2026-01-30 14:30 PM · 📚 本期精选文章、来源信息、🎯 目标</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
+                <li>
+                    <span><a href="deep-read-2026-02-02.html">2026年2月2日 深度阅读</a></span>
+                    <span class="date-tag">02-02</span>
                 </li>
-                <li class="report-item">
-                    <a href="daily-2026-01-30-noon.html">
-                        <span class="report-icon">🤖</span>
-                        <div class="report-info">
-                            <h3>AI 午间快报 <span class="report-badge noon">午间版</span></h3>
-                            <p class="meta">2026-01-30 12:00 PM · OpenAI 将退役 GPT-4o、Google Project Genie 发布、Claude Code 性能追踪器上线</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
+                <li>
+                    <span><a href="deep-read-2026-02-01.html">2026年2月1日 深度阅读</a></span>
+                    <span class="date-tag">02-01</span>
                 </li>
-                <li class="report-item">
-                    <a href="daily-2026-01-30-morning.html">
-                        <span class="report-icon">🌅</span>
-                        <div class="report-info">
-                            <h3>AI 早报 <span class="report-badge morning">早间版</span></h3>
-                            <p class="meta">2026-01-30 10:30 AM · OpenAI 计划 2 月 13 日关闭 GPT-4o、Daggr - 链式应用可视化工具、Sentry 发布开发者和 Agent 新 CLI</p>
-                        </div>
-                        <span class="arrow">→</span>
-                    </a>
+                <li>
+                    <span><a href="deep-read-2026-01-30.html">2026年1月30日 深度阅读</a></span>
+                    <span class="date-tag">01-30</span>
                 </li>
             </ul>
-        </div>
-        <!-- REPORT_LIST_END -->
-    </main>
-
-    <footer>
-        <p>Generated by <a href="https://github.com/clawdbot/clawdbot">Clawdbot</a> ⚡</p>
-        <p>数据来源：Hacker News, The Verge, X/Twitter</p>
-    </footer>
+        </section>
+        
+        <footer>
+            <p>自动生成 by Clawdbot | 最后更新: 2026-02-03 12:00</p>
+        </footer>
+    </div>
 </body>
 </html>
