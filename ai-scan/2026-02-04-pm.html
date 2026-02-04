@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 AI 下午扫描报告 - 2026-02-04</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .meta { color: var(--text-muted); margin-bottom: 2rem; }
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+        h3 { color: var(--accent-green); margin: 1.5rem 0 1rem; }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .card-title a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .card-title a:hover { color: var(--primary); }
+        .card-desc { color: var(--text-muted); font-size: 0.95rem; }
+        .stars {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #000;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .tag.green { background: var(--accent-green); }
+        .tag.orange { background: var(--accent-orange); }
+        .paper-list { list-style: none; }
+        .paper-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+        .paper-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .paper-title a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .paper-title a:hover { color: var(--primary); text-decoration: underline; }
+        .paper-authors { color: var(--text-muted); font-size: 0.9rem; font-style: italic; }
+        .paper-summary { margin-top: 0.75rem; font-size: 0.95rem; }
+        .paper-links { margin-top: 0.75rem; }
+        .paper-links a {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .paper-links a:hover { text-decoration: underline; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1rem; }
+        .summary-box {
+            background: linear-gradient(135deg, var(--card-bg), #1a1a2e);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid var(--primary);
+        }
+        .summary-box h2 { border: none; margin-top: 0; }
+        .summary-list { list-style: none; }
+        .summary-list li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+        .summary-list li::before { content: '🔥'; position: absolute; left: 0; }
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            h1 { font-size: 1.75rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI 下午扫描报告</h1>
+        <p class="meta">📅 2026年2月4日 下午 | ⏰ 17:35 CST</p>
+
+        <h2>📊 GitHub 热门新项目</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/HKUDS/nanobot" target="_blank">🐈 HKUDS/nanobot</a></div>
+                <div class="card-desc">超轻量级 Clawdbot，精简高效</div>
+                <span class="stars">⭐ 4,701</span>
+            </div>
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/gavrielc/nanoclaw" target="_blank">gavrielc/nanoclaw</a></div>
+                <div class="card-desc">运行在 Apple 容器中的个人 Claude 助手，轻量安全</div>
+                <span class="stars">⭐ 4,350</span>
+            </div>
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/Leey21/awesome-ai-research-writing" target="_blank">✨ awesome-ai-research-writing</a></div>
+                <div class="card-desc">提升AI研究写作，告别繁琐润色</div>
+                <span class="stars">⭐ 2,821</span>
+            </div>
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/miaoxworld/OpenClawInstaller" target="_blank">OpenClawInstaller</a></div>
+                <div class="card-desc">ClawdBot 一键部署工具</div>
+                <span class="stars">⭐ 1,131</span>
+            </div>
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/agno-agi/dash" target="_blank">agno-agi/dash</a></div>
+                <div class="card-desc">自学习数据代理，基于6层上下文，灵感来自OpenAI内部实现</div>
+                <span class="stars">⭐ 1,018</span>
+            </div>
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/dwzhu-pku/PaperBanana" target="_blank">🍌 PaperBanana</a></div>
+                <div class="card-desc">AI科学家的学术插图自动化工具</div>
+                <span class="stars">⭐ 747</span>
+            </div>
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/MoonshotAI/Kimi-K2.5" target="_blank">🌙 Kimi-K2.5</a></div>
+                <div class="card-desc">Moonshot 最强模型发布</div>
+                <span class="stars">⭐ 634</span>
+            </div>
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/stepfun-ai/Step-3.5-Flash" target="_blank">⚡ Step-3.5-Flash</a></div>
+                <div class="card-desc">快速、精准、可靠的代理智能</div>
+                <span class="stars">⭐ 522</span>
+            </div>
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/zai-org/GLM-OCR" target="_blank">GLM-OCR</a></div>
+                <div class="card-desc">精准 × 快速 × 全面的 OCR 解决方案</div>
+                <span class="stars">⭐ 449</span>
+            </div>
+            <div class="card">
+                <div class="card-title"><a href="https://github.com/cisco-ai-defense/skill-scanner" target="_blank">🔒 skill-scanner</a></div>
+                <div class="card-desc">Agent Skills 安全扫描器 by Cisco AI Defense</div>
+                <span class="stars">⭐ 288</span>
+            </div>
+        </div>
+
+        <h2>📄 arXiv cs.AI 最新论文</h2>
+
+        <h3>🔬 推理与学习</h3>
+        <ul class="paper-list">
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03846" target="_blank">PLATE: Plasticity-Tunable Efficient Adapters for Geometry-Aware Continual Learning</a></div>
+                <div class="paper-authors">Romain Cosentino (Salesforce AI Research)</div>
+                <div class="paper-summary">提出 PLATE 方法，通过利用预训练网络的几何冗余实现无需旧任务数据的持续学习，支持可塑性-保留权衡的显式控制。</div>
+                <div class="paper-links">📎 <a href="https://github.com/SalesforceAIResearch/PLATE" target="_blank">代码</a></div>
+            </li>
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03814" target="_blank">Conformal Thinking: Risk Control for Reasoning on a Compute Budget</a></div>
+                <div class="paper-authors">Xi Wang 等</div>
+                <div class="paper-summary">将推理 LLM 的预算设置问题重新定义为风险控制，在限制错误率的同时最小化计算量。</div>
+            </li>
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03806" target="_blank">Bridging Online and Offline RL: Contextual Bandit Learning for Multi-Turn Code Generation</a></div>
+                <div class="paper-authors">Ziru Chen 等 (OSU NLP Group)</div>
+                <div class="paper-summary">提出 Cobalt 方法，结合在线和离线 RL 的优势用于多轮代码生成，在 LiveCodeBench 上提升最高 9.0 Pass@1。</div>
+                <div class="paper-links">📎 <a href="https://github.com/OSU-NLP-Group/cobalt" target="_blank">代码</a></div>
+            </li>
+        </ul>
+
+        <h3>🎨 生成与创作</h3>
+        <ul class="paper-list">
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03828" target="_blank">AutoFigure: Generating and Refining Publication-Ready Scientific Illustrations</a></div>
+                <span class="tag green">ICLR 2026</span>
+                <div class="paper-authors">Minjun Zhu 等</div>
+                <div class="paper-summary">首个自动生成出版级科学插图的智能体框架，含 3,300 对高质量文本-插图数据集 FigureBench。</div>
+                <div class="paper-links">📎 <a href="https://github.com/ResearAI/AutoFigure" target="_blank">代码</a></div>
+            </li>
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03838" target="_blank">PrevizWhiz: Combining Rough 3D Scenes and 2D Video to Guide Generative Video Previsualization</a></div>
+                <span class="tag green">CHI 2026</span>
+                <div class="paper-authors">Erzhen Hu 等</div>
+                <div class="paper-summary">结合粗糙 3D 场景与生成式图像/视频模型创建风格化视频预览，降低电影制作者技术门槛。</div>
+            </li>
+        </ul>
+
+        <h3>🤖 智能体与多代理系统</h3>
+        <ul class="paper-list">
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03794" target="_blank">Understanding Agent Scaling in LLM-Based Multi-Agent Systems via Diversity</a></div>
+                <div class="paper-authors">Yingxuan Yang 等</div>
+                <div class="paper-summary">信息论框架揭示多智能体系统性能上界，<strong>2 个异构代理可匹配或超越 16 个同构代理</strong>。</div>
+                <div class="paper-links">📎 <a href="https://github.com/SafeRL-Lab/Agent-Scaling" target="_blank">代码</a></div>
+            </li>
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03786" target="_blank">AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration</a></div>
+                <div class="paper-authors">Jianhao Ruan 等</div>
+                <div class="paper-summary">统一框架无关的代理抽象，实现按需自动创建专用执行器，在 GAIA、SWE-Bench 上提升 16.28%。</div>
+                <div class="paper-links">📎 <a href="https://github.com/FoundationAgents/AOrchestra" target="_blank">代码</a></div>
+            </li>
+        </ul>
+
+        <h3>🔒 安全与可信</h3>
+        <ul class="paper-list">
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03792" target="_blank">WebSentinel: Detecting and Localizing Prompt Injection Attacks for Web Agents</a></div>
+                <div class="paper-authors">Xilong Wang 等</div>
+                <div class="paper-summary">两步方法检测和定位网页中的提示注入攻击，大幅超越基线方法。</div>
+                <div class="paper-links">📎 <a href="https://github.com/wxl-lxw/WebSentinel" target="_blank">代码</a></div>
+            </li>
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03812" target="_blank">Antidistillation Fingerprinting</a></div>
+                <div class="paper-authors">Yixuan Even Xu 等</div>
+                <div class="paper-summary">检测第三方模型是否通过蒸馏训练于教师模型输出，实现更强检测置信度和最小效用损失。</div>
+            </li>
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03799" target="_blank">Conformal Reachability for Safe Control in Unknown Environments</a></div>
+                <div class="paper-authors">Xinhang Ma 等</div>
+                <div class="paper-summary">结合保形预测与可达性分析的概率验证框架，实现未知动态系统的可证安全控制。</div>
+            </li>
+        </ul>
+
+        <h3>📚 其他亮点</h3>
+        <ul class="paper-list">
+            <li class="paper-item">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.03837" target="_blank">Accelerating Scientific Research with Gemini: Case Studies and Common Techniques</a></div>
+                <div class="paper-authors">David P. Woodruff 等 (Google Research)</div>
+                <div class="paper-summary">展示 Gemini Deep Think 协助解决开放问题、反驳猜想的案例研究，AI 作为科学发现的真正伙伴。</div>
+            </li>
+        </ul>
+
+        <div class="summary-box">
+            <h2>📈 趋势总结</h2>
+            <ul class="summary-list">
+                <li><strong>AI Agent 生态持续火热</strong>: nanobot、nanoclaw、AOrchestra 等轻量级/模块化代理框架涌现</li>
+                <li><strong>科学研究自动化</strong>: AutoFigure、PaperBanana 等工具加速学术产出</li>
+                <li><strong>安全与可信 AI</strong>: WebSentinel、Antidistillation Fingerprinting 关注代理安全</li>
+                <li><strong>持续学习</strong>: PLATE 解决无旧数据的持续学习难题</li>
+                <li><strong>多代理系统理论</strong>: 异构代理 > 同构扩展的理论证明</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>报告自动生成 by Miles | <a href="2026-02-04-pm.md" style="color: var(--primary);">Markdown 版本</a></p>
+        </footer>
+    </div>
+</body>
+</html>
