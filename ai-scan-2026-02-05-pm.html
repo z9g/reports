@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 下午扫描报告 - 2026年2月5日</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .date { color: var(--text-muted); font-size: 1.1rem; }
+        h2 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            padding-left: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .card h3 {
+            margin-bottom: 0.5rem;
+        }
+        .card h3 a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .card h3 a:hover { text-decoration: underline; }
+        .card p { color: var(--text-muted); font-size: 0.95rem; }
+        .meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .meta span { display: flex; align-items: center; gap: 0.3rem; }
+        .tag {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+        .tag.green { background: var(--accent-green); }
+        .tag.orange { background: var(--accent-orange); }
+        .links { margin-top: 0.75rem; }
+        .links a {
+            color: var(--primary);
+            text-decoration: none;
+            margin-right: 1rem;
+            font-size: 0.9rem;
+        }
+        .links a:hover { text-decoration: underline; }
+        .highlight-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .highlight-table th, .highlight-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .highlight-table th {
+            background: var(--card-bg);
+            color: var(--primary);
+        }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 AI 下午扫描报告</h1>
+            <p class="date">2026年2月5日 17:00 (Asia/Shanghai)</p>
+        </header>
+
+        <h2>🔥 GitHub Trending AI 项目</h2>
+
+        <div class="card">
+            <h3><a href="https://github.com/thedotmack/claude-mem" target="_blank">thedotmack/claude-mem</a></h3>
+            <p>Claude Code插件 - 自动捕获Claude在编码会话期间的所有操作，使用AI压缩并将相关上下文注入未来会话。</p>
+            <div class="meta">
+                <span class="tag green">Claude</span>
+                <span class="tag">插件</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://github.com/openai/skills" target="_blank">openai/skills</a></h3>
+            <p>Codex技能目录 - OpenAI官方发布的Codex技能目录。</p>
+            <div class="meta">
+                <span class="tag orange">OpenAI</span>
+                <span class="tag">官方</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://github.com/disler/claude-code-hooks-mastery" target="_blank">disler/claude-code-hooks-mastery</a></h3>
+            <p>掌握Claude Code Hooks - Python编写的Claude Code Hooks教程和示例。</p>
+            <div class="meta">
+                <span>⭐ 2,489 stars</span>
+                <span>🍴 507 forks</span>
+                <span class="tag">Python</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://github.com/OpenBMB/ChatDev" target="_blank">OpenBMB/ChatDev</a></h3>
+            <p>ChatDev 2.0 - 通过LLM驱动的多智能体协作实现完整开发流程。</p>
+            <div class="meta">
+                <span class="tag green">Multi-Agent</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://github.com/Canner/WrenAI" target="_blank">Canner/WrenAI</a></h3>
+            <p>生成式BI工具 - 用自然语言查询任何数据库，生成精准SQL、图表和AI驱动的商业智能。</p>
+            <div class="meta">
+                <span class="tag">Text-to-SQL</span>
+                <span class="tag orange">GenBI</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://github.com/pedramamini/Maestro" target="_blank">pedramamini/Maestro</a></h3>
+            <p>Agent编排命令中心 - 多智能体协调与管理平台。</p>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://github.com/microsoft/qlib" target="_blank">microsoft/qlib</a></h3>
+            <p>AI量化投资平台 - 支持监督学习、市场动态建模和强化学习，集成RD-Agent实现自动化研发。</p>
+            <div class="meta">
+                <span class="tag">Microsoft</span>
+                <span class="tag green">Quant</span>
+            </div>
+        </div>
+
+        <h2>📚 arXiv cs.AI 最新论文</h2>
+
+        <div class="card">
+            <h3><a href="https://arxiv.org/abs/2602.04883" target="_blank">Protein Autoregressive Modeling via Multiscale Structure Generation</a></h3>
+            <p>提出蛋白质自回归建模(PAR)，首个通过粗到细的多尺度预测生成蛋白质骨架的自回归框架。</p>
+            <div class="meta">
+                <span>Yanru Qu, Cheng-Yen Hsieh 等</span>
+            </div>
+            <div class="links">
+                <a href="https://arxiv.org/pdf/2602.04883v1" target="_blank">📄 PDF</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://arxiv.org/abs/2602.04879" target="_blank">Rethinking the Trust Region in LLM Reinforcement Learning</a></h3>
+            <p>提出DPPO，用更有原则的策略散度约束替代PPO的启发式裁剪机制，提高LLM微调的稳定性和效率。</p>
+            <div class="meta">
+                <span>Penghui Qi, Xiangxin Zhou 等</span>
+            </div>
+            <div class="links">
+                <a href="https://arxiv.org/pdf/2602.04879v1" target="_blank">📄 PDF</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://arxiv.org/abs/2602.04872" target="_blank">Multi-layer Cross-Attention is Provably Optimal for Multi-modal ICL</a></h3>
+            <p>引入可证明贝叶斯最优的线性化交叉注意力机制，强调深度对上下文学习的重要性。</p>
+            <div class="meta">
+                <span>Nicholas Barnfield, Subhabrata Sen, Pragya Sur</span>
+            </div>
+            <div class="links">
+                <a href="https://arxiv.org/pdf/2602.04872v1" target="_blank">📄 PDF</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://arxiv.org/abs/2602.04863" target="_blank">Subliminal Effects in Your Data: A General Mechanism via Log-Linearity</a></h3>
+            <p>揭示数据集中隐藏"潜文本"的通用机制，介绍LLS方法选择数据子集引发隐藏效果。</p>
+            <div class="meta">
+                <span>Ishaq Aden-Ali, Noah Golowich 等</span>
+            </div>
+            <div class="links">
+                <a href="https://arxiv.org/pdf/2602.04863v1" target="_blank">📄 PDF</a>
+                <a href="https://github.com/ishaqadenali/logit-linear-selection" target="_blank">💻 代码</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://arxiv.org/abs/2602.04850" target="_blank">El Agente Quntur: A Research Collaborator Agent for Quantum Chemistry</a></h3>
+            <p>层级多智能体AI系统，作为量子化学研究协作者而非自动化工具，支持ORCA 6.0全部功能。</p>
+            <div class="meta">
+                <span>Juan B. Pérez-Sánchez 等</span>
+            </div>
+            <div class="links">
+                <a href="https://arxiv.org/pdf/2602.04850v1" target="_blank">📄 PDF</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://arxiv.org/abs/2602.04843" target="_blank">Fluid Representations in Reasoning Models</a></h3>
+            <p>对QwQ-32B推理模型的机制分析，发现模型在推理过程中逐渐改进内部表示，提出"流动推理表示"概念。</p>
+            <div class="meta">
+                <span>Dmitrii Kharlapenko 等</span>
+            </div>
+            <div class="links">
+                <a href="https://arxiv.org/pdf/2602.04843v1" target="_blank">📄 PDF</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://arxiv.org/abs/2602.04837" target="_blank">Group-Evolving Agents: Open-Ended Self-Improvement via Experience Sharing</a></h3>
+            <p>提出GEA范式，将智能体群体作为进化单元实现开放式自我改进。SWE-bench达71.0%准确率。</p>
+            <div class="meta">
+                <span>Zhaotian Weng 等</span>
+                <span class="tag green">SOTA</span>
+            </div>
+            <div class="links">
+                <a href="https://arxiv.org/pdf/2602.04837v1" target="_blank">📄 PDF</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://arxiv.org/abs/2602.04836" target="_blank">Are AI Capabilities Increasing Exponentially? A Competing Hypothesis</a></h3>
+            <p>对METR报告的AI能力指数增长论点提出质疑，通过sigmoid曲线拟合发现拐点可能已经过去。</p>
+            <div class="meta">
+                <span>Haosen Ge, Hamsa Bastani, Osbert Bastani</span>
+                <span class="tag orange">热点讨论</span>
+            </div>
+            <div class="links">
+                <a href="https://arxiv.org/pdf/2602.04836v1" target="_blank">📄 PDF</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><a href="https://arxiv.org/abs/2602.04821" target="_blank">Safe Urban Traffic Control via Uncertainty-Aware Conformal Prediction</a></h3>
+            <p>提出STREAM-RL框架，结合不确定性引导的预测、异常检测和安全策略学习。</p>
+            <div class="links">
+                <a href="https://arxiv.org/pdf/2602.04821v1" target="_blank">📄 PDF</a>
+            </div>
+        </div>
+
+        <h2>📊 今日亮点</h2>
+        <table class="highlight-table">
+            <tr><th>领域</th><th>热点</th></tr>
+            <tr><td>智能体</td><td>GEA群体进化、El Agente量子化学协作</td></tr>
+            <tr><td>LLM训练</td><td>DPPO替代PPO、数据集潜文本效应</td></tr>
+            <tr><td>推理模型</td><td>QwQ-32B流动表示机制分析</td></tr>
+            <tr><td>多模态</td><td>多层交叉注意力的最优性证明</td></tr>
+            <tr><td>AI安全</td><td>AI能力增长曲线的质疑与讨论</td></tr>
+        </table>
+
+        <footer>
+            <p>报告生成时间: 2026-02-05 17:00 CST</p>
+            <p>由 Clawdbot AI 自动生成</p>
+        </footer>
+    </div>
+</body>
+</html>
