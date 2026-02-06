@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 下午扫描报告 - 2026年2月6日</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .date { color: var(--text-muted); font-size: 1.1rem; }
+        h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        h3 {
+            color: var(--text);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section { margin-bottom: 3rem; }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1rem;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .card-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .card-title a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .card-title a:hover { color: var(--primary); }
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        .card-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .stars { color: var(--warning); }
+        .lang { color: var(--success); }
+        .paper {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+        }
+        .paper-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .paper-title a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .paper-title a:hover { color: var(--primary); }
+        .paper-summary {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        .paper-links {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .paper-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 6px;
+        }
+        .paper-links a:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .highlight-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .highlight-box li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .highlight-box li:last-child { border-bottom: none; }
+        .highlight-box strong { color: var(--primary); }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .back-link:hover { text-decoration: underline; }
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 AI 下午扫描报告</h1>
+            <p class="date">2026年2月6日 17:00 (Asia/Shanghai)</p>
+        </header>
+
+        <section class="section">
+            <h2>📦 GitHub 热门AI项目</h2>
+            
+            <h3>🔥 今日活跃项目</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/huggingface/transformers" target="_blank">huggingface/transformers</a></div>
+                    <div class="card-desc">🤗 Transformers: 机器学习模型框架，支持文本、视觉、音频等多模态</div>
+                    <div class="card-meta"><span class="stars">⭐ 156K</span><span class="lang">Python</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/langgenius/dify" target="_blank">langgenius/dify</a></div>
+                    <div class="card-desc">生产级Agentic工作流开发平台</div>
+                    <div class="card-meta"><span class="stars">⭐ 129K</span><span class="lang">TypeScript</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/langchain-ai/langchain" target="_blank">langchain-ai/langchain</a></div>
+                    <div class="card-desc">🦜🔗 可靠Agent的开发平台</div>
+                    <div class="card-meta"><span class="stars">⭐ 126K</span><span class="lang">Python</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/open-webui/open-webui" target="_blank">open-webui/open-webui</a></div>
+                    <div class="card-desc">用户友好的AI界面 (支持Ollama, OpenAI API等)</div>
+                    <div class="card-meta"><span class="stars">⭐ 123K</span><span class="lang">Python</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/firecrawl/firecrawl" target="_blank">firecrawl/firecrawl</a></div>
+                    <div class="card-desc">🔥 AI网页数据API - 将网站转换为LLM友好的Markdown</div>
+                    <div class="card-meta"><span class="stars">⭐ 80K</span><span class="lang">TypeScript</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/infiniflow/ragflow" target="_blank">infiniflow/ragflow</a></div>
+                    <div class="card-desc">领先的开源RAG引擎，融合RAG与Agent能力</div>
+                    <div class="card-meta"><span class="stars">⭐ 73K</span><span class="lang">Python</span></div>
+                </div>
+            </div>
+
+            <h3>🆕 新兴项目</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/sgl-project/sglang" target="_blank">sgl-project/sglang</a></div>
+                    <div class="card-desc">高性能LLM和多模态模型服务框架</div>
+                    <div class="card-meta"><span class="stars">⭐ 23K</span><span class="lang">Python</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/emcie-co/parlant" target="_blank">emcie-co/parlant</a></div>
+                    <div class="card-desc">面向控制的LLM Agent，分钟级部署</div>
+                    <div class="card-meta"><span class="stars">⭐ 18K</span><span class="lang">Python</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/iOfficeAI/AionUi" target="_blank">iOfficeAI/AionUi</a></div>
+                    <div class="card-desc">本地24/7 Cowork - 支持Gemini CLI, Claude Code等</div>
+                    <div class="card-meta"><span class="stars">⭐ 12K</span><span class="lang">TypeScript</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/inclusionAI/AReaL" target="_blank">inclusionAI/AReaL</a></div>
+                    <div class="card-desc">闪电级LLM推理与Agent强化学习框架</div>
+                    <div class="card-meta"><span class="stars">⭐ 4K</span><span class="lang">Python</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/antvis/Infographic" target="_blank">antvis/Infographic</a></div>
+                    <div class="card-desc">🦋 信息图生成与渲染框架，AI驱动</div>
+                    <div class="card-meta"><span class="stars">⭐ 4K</span><span class="lang">TypeScript</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title"><a href="https://github.com/wrtnlabs/autobe" target="_blank">wrtnlabs/autobe</a></div>
+                    <div class="card-desc">AI Vibe Coding Agent - 生成100%可运行的TS后端代码</div>
+                    <div class="card-meta"><span class="stars">⭐ 761</span><span class="lang">TypeScript</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📄 arXiv cs.AI 最新论文</h2>
+
+            <h3>🤖 多Agent系统</h3>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.06039" target="_blank">DyTopo: Dynamic Topology Routing for Multi-Agent Reasoning</a></div>
+                <div class="paper-summary">动态拓扑路由多Agent推理框架，通过语义匹配重构通信图，比基线平均提升6.2%</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.06039" target="_blank">📄 arXiv</a>
+                    <a href="https://arxiv.org/pdf/2602.06039" target="_blank">📑 PDF</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.06038" target="_blank">CommCP: Multi-Agent Coordination via LLM-Based Communication</a></div>
+                <div class="paper-summary">基于LLM的去中心化多Agent通信框架，用于多任务具身问答 (ICRA 2026)</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.06038" target="_blank">📄 arXiv</a>
+                    <a href="https://comm-cp.github.io" target="_blank">🌐 项目</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.06008" target="_blank">AgenticPay: Multi-Agent LLM Negotiation for Buyer-Seller Transactions</a></div>
+                <div class="paper-summary">多Agent买卖谈判基准，支持110+任务场景</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.06008" target="_blank">📄 arXiv</a>
+                    <a href="https://github.com/SafeRL-Lab/AgenticPay" target="_blank">💻 GitHub</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.05965" target="_blank">Learning to Share: Selective Memory for Parallel Agentic Systems</a></div>
+                <div class="paper-summary">学习共享：并行Agent系统的选择性内存机制，显著减少运行时间</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.05965" target="_blank">📄 arXiv</a>
+                    <a href="https://joefioresi718.github.io/LTS_webpage/" target="_blank">🌐 项目</a>
+                </div>
+            </div>
+
+            <h3>🧠 大模型优化</h3>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.06043" target="_blank">Shared LoRA Subspaces for Continual Learning</a></div>
+                <div class="paper-summary">共享LoRA子空间实现持续学习，100x参数减少，281x内存节省</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.06043" target="_blank">📄 arXiv</a>
+                    <a href="https://arxiv.org/pdf/2602.06043" target="_blank">📑 PDF</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.06025" target="_blank">BudgetMem: Query-Aware Budget-Tier Routing for Agent Memory</a></div>
+                <div class="paper-summary">运行时Agent内存框架，显式查询感知性能-成本控制</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.06025" target="_blank">📄 arXiv</a>
+                    <a href="https://github.com/ViktorAxelsen/BudgetMem" target="_blank">💻 GitHub</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.06022" target="_blank">CORAL: Correctness-Optimized Residual Activation Lens</a></div>
+                <div class="paper-summary">校准感知的推理时引导方法，准确率提升10%，ECE降低50%</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.06022" target="_blank">📄 arXiv</a>
+                    <a href="https://arxiv.org/pdf/2602.06022" target="_blank">📑 PDF</a>
+                </div>
+            </div>
+
+            <h3>🎨 视觉生成</h3>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.06013" target="_blank">GenArena: Human-Aligned Evaluation for Visual Generation</a></div>
+                <div class="paper-summary">统一视觉生成评估框架，成对比较范式，与LMArena相关性0.86</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.06013" target="_blank">📄 arXiv</a>
+                    <a href="https://genarena.github.io/" target="_blank">🌐 项目</a>
+                    <a href="https://github.com/ruihanglix/genarena" target="_blank">💻 GitHub</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.05986" target="_blank">RISE-Video: Can Video Generators Decode Implicit World Rules?</a></div>
+                <div class="paper-summary">视频生成推理基准，467样本，8类别，评估11个SOTA模型</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.05986" target="_blank">📄 arXiv</a>
+                    <a href="https://github.com/VisionXLab/RISE-Video" target="_blank">💻 GitHub</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.05951" target="_blank">Better Source, Better Flow: Condition-Dependent Source Distribution</a></div>
+                <div class="paper-summary">条件相关源分布设计，FID收敛速度提升3倍</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.05951" target="_blank">📄 arXiv</a>
+                    <a href="https://junwankimm.github.io/CSFM" target="_blank">🌐 项目</a>
+                </div>
+            </div>
+
+            <h3>🎯 应用研究</h3>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.06000" target="_blank">Speech Emotion Recognition Leveraging Whisper</a></div>
+                <div class="paper-summary">基于Whisper的语音情感识别，ShEMO数据集SOTA (提升2.47%)</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.06000" target="_blank">📄 arXiv</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.05983" target="_blank">GATTF: Geographically-aware Transformer for Traffic Forecasting</a></div>
+                <div class="paper-summary">地理感知Transformer交通预测，用于高速公路数字孪生 (IEEE IV 2026)</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.05983" target="_blank">📄 arXiv</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.05920" target="_blank">Quantum RL with Transformers for CVRP</a></div>
+                <div class="paper-summary">量子强化学习解决有容量车辆路径问题，混合架构表现最佳</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.05920" target="_blank">📄 arXiv</a>
+                </div>
+            </div>
+            <div class="paper">
+                <div class="paper-title"><a href="https://arxiv.org/abs/2602.05930" target="_blank">Compound Deception: 100 Fabricated Citations at NeurIPS 2025</a></div>
+                <div class="paper-summary">分析NeurIPS 2025中100个AI生成的虚假引用，建立五类分类法</div>
+                <div class="paper-links">
+                    <a href="https://arxiv.org/abs/2602.05930" target="_blank">📄 arXiv</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📈 本日亮点</h2>
+            <div class="highlight-box">
+                <ul>
+                    <li><strong>Share (LoRA子空间)</strong> - 单一共享子空间替代数百个任务特定LoRA适配器，实现100x参数减少</li>
+                    <li><strong>DyTopo</strong> - 动态重构Agent通信图，比基线平均提升6.2%</li>
+                    <li><strong>GenArena</strong> - 开源模型+成对比较范式超越闭源模型，评估准确率提升20%+</li>
+                    <li><strong>NeurIPS引用分析</strong> - 揭示1%接收论文含虚假引用，100%呈复合失败模式</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>报告由 AI 下午扫描自动生成</p>
+            <a href="index.html" class="back-link">← 返回索引</a>
+        </footer>
+    </div>
+</body>
+</html>
