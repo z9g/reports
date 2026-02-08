@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在 OpenClaw 中使用 Pi</title>
+    <title>Pi Framework 深度调研报告</title>
     <style>
         :root {
             --bg: #0d1117;
@@ -15,177 +15,810 @@
             --accent-green: #3fb950;
             --accent-orange: #d29922;
             --accent-red: #f85149;
+            --accent-purple: #a371f7;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
             padding: 2rem;
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
         }
+        /* Navigation */
+        nav { margin-bottom: 1.5rem; }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        nav a:hover { color: var(--accent); }
+        
+        /* Header */
         header {
             text-align: center;
             padding: 2rem 0;
             border-bottom: 1px solid var(--border);
             margin-bottom: 2rem;
         }
-        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header h1 { font-size: 2.2rem; margin-bottom: 0.75rem; color: #fff; }
         header .meta { color: var(--text-muted); font-size: 0.9rem; }
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
+        
+        /* Headings */
+        h1, h2, h3, h4, h5, h6 { color: #fff; margin-top: 2rem; margin-bottom: 1rem; }
+        h2 { font-size: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        h3 { font-size: 1.25rem; color: var(--accent); }
+        h4 { font-size: 1.1rem; color: var(--accent-green); }
+        h5 { font-size: 1rem; color: var(--accent-orange); }
+        
+        /* Content sections */
+        .content { margin-bottom: 2rem; }
+        .content > * { margin-bottom: 1rem; }
+        
+        /* Paragraphs */
+        p { margin: 0.75rem 0; }
+        
+        /* Links */
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        
+        /* Lists */
+        ul, ol { padding-left: 1.5rem; margin: 0.75rem 0; }
+        li { margin: 0.4rem 0; }
+        li > ul, li > ol { margin: 0.25rem 0; }
+        
+        /* Code - Inline */
+        code {
+            background: rgba(110, 118, 129, 0.4);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, Monaco, monospace;
+            font-size: 0.85em;
+            color: #e6edf3;
         }
-        .stat {
-            background: var(--card-bg);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-        .stat strong { color: var(--accent); }
-        section {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        section h2 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .breaking { border-left: 4px solid var(--accent-red); }
-        .breaking h2 { color: var(--accent-red); }
-        .news-item {
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .news-item:last-child { border-bottom: none; }
-        .news-item h3 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-        .news-item h3 a { color: var(--accent); text-decoration: none; }
-        .news-item h3 a:hover { text-decoration: underline; }
-        .news-item h3.no-link { color: var(--text); }
-        .news-item p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; }
-        .news-item .source { 
-            font-size: 0.8rem; 
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-        .news-item .source a { color: var(--accent); text-decoration: none; }
-        .news-item .read-more {
-            display: inline-block;
-            margin-top: 0.5rem;
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.85rem;
-        }
-        .news-item .read-more:hover { text-decoration: underline; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-        th { color: var(--text-muted); font-weight: 600; }
-        td a { color: var(--accent); text-decoration: none; }
-        td a:hover { text-decoration: underline; }
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        .tool-card {
-            background: var(--bg);
+        
+        /* Code - Block */
+        pre {
+            background: #161b22;
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 1rem;
-            text-decoration: none;
-            color: inherit;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: #e6edf3;
             display: block;
-            transition: all 0.2s ease;
+            white-space: pre;
         }
-        .tool-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        .tool-card.no-link { cursor: default; }
-        .tool-card.no-link:hover { transform: none; border-color: var(--border); }
-        .tool-card h4 { color: var(--accent-green); margin-bottom: 0.25rem; }
-        .tool-card.no-link h4 { color: var(--text); }
-        .tool-card .type {
-            font-size: 0.75rem;
-            color: var(--accent-orange);
-            margin-bottom: 0.5rem;
-        }
-        .tool-card p { font-size: 0.85rem; color: var(--text-muted); }
-        .insight-list { list-style: none; }
-        .insight-list li {
-            padding: 0.75rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-        .insight-list li::before {
-            content: "→";
+        /* Code language label */
+        pre[data-lang]::before {
+            content: attr(data-lang);
             position: absolute;
-            left: 0;
-            color: var(--accent);
-        }
-        .insight-list strong { color: var(--accent-orange); }
-        .action-list { list-style: none; }
-        .action-list li {
-            padding: 0.5rem 0;
-            padding-left: 1.75rem;
-            position: relative;
-        }
-        .action-list li::before {
-            content: "☐";
-            position: absolute;
-            left: 0;
-            color: var(--accent-green);
-        }
-        .missing-link {
+            top: 0;
+            right: 0;
+            padding: 0.25rem 0.75rem;
             font-size: 0.75rem;
-            color: var(--accent-orange);
-            opacity: 0.7;
+            color: var(--text-muted);
+            background: var(--bg);
+            border-bottom-left-radius: 6px;
+            border-top-right-radius: 7px;
+            text-transform: uppercase;
         }
+        
+        /* Syntax Highlighting */
+        .token-keyword { color: #ff7b72; }
+        .token-string { color: #a5d6ff; }
+        .token-comment { color: #8b949e; font-style: italic; }
+        .token-function { color: #d2a8ff; }
+        .token-number { color: #79c0ff; }
+        .token-operator { color: #ff7b72; }
+        .token-class { color: #ffa657; }
+        .token-property { color: #79c0ff; }
+        .token-builtin { color: #ffa657; }
+        .token-variable { color: #ffa657; }
+        .token-type { color: #7ee787; }
+        .token-punctuation { color: #c9d1d9; }
+        .token-tag { color: #7ee787; }
+        .token-attr-name { color: #79c0ff; }
+        .token-attr-value { color: #a5d6ff; }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            display: block;
+            overflow-x: auto;
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+        th {
+            background: var(--card-bg);
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) { background: rgba(22, 27, 34, 0.5); }
+        
+        /* Blockquotes */
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+            background: rgba(56, 139, 253, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+        blockquote p { margin: 0.5rem 0; color: var(--text); }
+        blockquote code { background: rgba(110, 118, 129, 0.3); }
+        
+        /* Horizontal rule */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+        
+        /* Emoji-based markers */
+        .marker-star { color: var(--accent-orange); }
+        .marker-check { color: var(--accent-green); }
+        .marker-cross { color: var(--accent-red); }
+        
+        /* Strong & Em */
+        strong { color: #fff; }
+        em { color: var(--text-muted); }
+        
+        /* TOC */
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h2 { margin-top: 0; font-size: 1.1rem; }
+        .toc ol { margin: 0; padding-left: 1.25rem; }
+        .toc li { margin: 0.5rem 0; }
+        .toc a { color: var(--text); }
+        .toc a:hover { color: var(--accent); }
+        
+        /* Footer */
         footer {
             text-align: center;
             padding: 2rem 0;
             color: var(--text-muted);
             font-size: 0.85rem;
             border-top: 1px solid var(--border);
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
-        @media (max-width: 600px) {
+        
+        /* Responsive */
+        @media (max-width: 768px) {
             body { padding: 1rem; }
-            header h1 { font-size: 1.75rem; }
-            .stats { flex-direction: column; gap: 0.5rem; }
+            header h1 { font-size: 1.5rem; }
+            pre { padding: 0.75rem; font-size: 0.8rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.5rem; }
         }
     </style>
 </head>
 <body>
-    <nav style="margin-bottom: 1rem;">
-        <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← 返回报告索引</a>
-    </nav>
-<header>
-        <h1>在 OpenClaw 中使用 Pi</h1>
-        <p class="meta"></p>
-        <div class="stats"></div></header><section><h2>目录</h2></section><section><h2>1. 概述</h2><div class="news-item"><h3 class="no-link">1.1 什么是 Pi</h3><p>Pi 是一个**极简主义的终端编码助手框架**，其核心理念是： > "Adapt pi to your workflows, not the other way around." > （让 Pi 适应你的工作流，而不是反过来） Pi 由 Mario Zechner 开发（libGDX 游戏引擎创始人），设计哲学是**做减法而非加法**——通过提供强大的扩展机制，让用户自己构建需要的功能，而非内置一堆可能用不上的特性。</p></div><div class="news-item"><h3 class="no-link">1.2 定位</h3></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">1.2 定位</h4><table><tr><th>维度</th><th>Pi 的选择</th></tr><tr><td>**内置功能**</td><td>极简（仅 read/write/edit/bash 四个工具）</td></tr><tr><td>**扩展性**</td><td>极强（Extensions、Skills、Prompt Templates、Themes、Packages）</td></tr><tr><td>**运行模式**</td><td>多样（Interactive、Print、JSON、RPC、SDK）</td></tr><tr><td>**MCP 支持**</td><td>刻意不内置（可通过扩展实现）</td></tr><tr><td>**子代理**</td><td>刻意不内置（可通过扩展实现）</td></tr><tr><td>**权限弹窗**</td><td>刻意不内置（可通过扩展实现）</td></tr></table></section><section><h2>2. 架构设计</h2><div class="news-item"><h3 class="no-link">1.3 官方 Slogan</h3><p>``` "shittycodingagent.ai" — 自嘲式的官网域名 "robots need your body" — rentahuman.ai 的标语（相关项目） ```</p></div><div class="news-item"><h3 class="no-link">2.1 Monorepo 结构</h3><p>``` pi-mono/ ├── packages/ │   ├── ai/              # 统一 LLM API 层 │   ├── agent/           # Agent 运行时核心 │   ├── coding-agent/    # 终端编码助手 CLI │   ├── tui/             # 终端 UI 框架 │   ├── web-ui/          # Web UI 组件 │   ├── mom/             # Slack Bot 集成 │   └── pods/            # vLLM GPU Pod 管理 ├── .pi/                 # 项目级配置目录 ├── AGENTS.md            # Agent 开发规范 └── package.json ```</p></div><div class="news-item"><h3 class="no-link">2.2 分层架构</h3><p>``` ┌─────────────────────────────────────────────────────────┐ │                    应用层 (Applications)                 │ │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │ │  │ coding-agent│  │     mom     │  │    pods     │     │ │  │ (终端 CLI)  │  │ (Slack Bot) │  │ (GPU 管理)  │     │ │  └──────┬──────┘  └──────┬──────┘  └─────────────┘     │ ├─────────┼────────────────┼──────────────────────────────┤ │         │                │                              │ │         ▼                ▼                              │ │  ┌────────────────────────────┐                        │ │  │       agent-core           │  ← Agent 运行时        │ │  │  • 工具调用 • 状态管理     │                        │ │  │  • 事件流 • 消息队列       │                        │ │  └────────────┬───────────────┘                        │ │               │                                         │ │               ▼                                         │ │  ┌────────────────────────────┐                        │ │  │          pi-ai             │  ← 统一 LLM 接口       │ │  │  • 多 Provider 支持        │                        │ │  │  • Token/Cost 追踪         │                        │ │  │  • 跨 Provider 切换        │                        │ │  └────────────────────────────┘                        │ ├─────────────────────────────────────────────────────────┤ │                    UI 层 (Presentation)                 │ │  ┌─────────────┐  ┌─────────────┐                      │ │  │    tui      │  │   web-ui    │                      │ │  │ (终端渲染)  │  │ (Web 组件)  │                      │ │  └─────────────┘  └─────────────┘                      │ └─────────────────────────────────────────────────────────┘ ```</p></div></section><section><h2>3. 核心包分析</h2><div class="news-item"><h3 class="no-link">2.3 事件驱动架构</h3><p>Pi 采用事件驱动设计，所有操作都可被拦截和修改： ``` 用户输入 │ ├─► input 事件 (可拦截/转换) ├─► before_agent_start (可注入消息) ├─► agent_start │   │ │   └─► turn_start │       ├─► context 事件 (可修改消息) │       │ │       │   LLM 响应: │       │   ├─► tool_call (可阻止) │       │   │   └─► tool_result (可修改) │       │ │       └─► turn_end │ └─► agent_end ```</p></div><div class="news-item"><h3 class="no-link">3.1 @mariozechner/pi-ai</h3><p>**统一的多 Provider LLM API**</p></div><div class="news-item"><h3 class="no-link">支持的 Provider（18+）</h3></div><div class="news-item"><h3 class="no-link">核心特性</h3><p>```typescript import { getModel, stream, complete, Context } from '@mariozechner/pi-ai'; // 1. 类型安全的模型选择（IDE 自动补全） const model = getModel('anthropic', 'claude-sonnet-4-20250514'); // 2. 统一的上下文结构 const context: Context = { systemPrompt: 'You are a helpful assistant.', messages: [{ role: 'user', content: 'Hello' }], tools: [myTool] }; // 3. 流式响应 for await (const event of stream(model, context)) { if (event.type === 'text_delta') { process.stdout.write(event.delta); } } // 4. 跨 Provider 无缝切换 const gpt = getModel('openai', 'gpt-4o'); const continuation = await complete(gpt, context); // 自动处理消息格式转换 ```</p></div><div class="news-item"><h3 class="no-link">创新点：跨 Provider Handoff</h3><p>Pi 支持在对话中**无缝切换不同 Provider**：</p></div><div class="news-item"><h3 class="no-link">3.2 @mariozechner/pi-agent-core</h3><p>**Agent 运行时核心** ```typescript import { Agent } from "@mariozechner/pi-agent-core"; const agent = new Agent({ initialState: { systemPrompt: "You are helpful.", model: getModel("anthropic", "claude-sonnet-4-20250514"), tools: [readTool, bashTool], }, // 消息转换器（过滤自定义消息类型） convertToLlm: (messages) => messages.filter(m => ["user", "assistant", "toolResult"].includes(m.role) ), // 上下文转换器（用于压缩、剪枝） transformContext: async (messages) => pruneOldMessages(messages), }); // 事件订阅 agent.subscribe((event) => { switch (event.type) { case 'message_update': // 流式文本 case 'tool_execution_start': // 工具开始 case 'tool_execution_end': // 工具完成 } }); await agent.prompt("Read the config file"); ```</p></div><div class="news-item"><h3 class="no-link">核心概念</h3></div><div class="news-item"><h3 class="no-link">3.3 @mariozechner/pi-coding-agent</h3><p>**终端编码助手 CLI**</p></div><div class="news-item"><h3 class="no-link">运行模式</h3><p>```bash pi pi -p "Summarize this codebase" pi --mode json "Your task" pi --mode rpc import { createAgentSession } from "@mariozechner/pi-coding-agent"; ```</p></div><div class="news-item"><h3 class="no-link">内置工具</h3></div><div class="news-item"><h3 class="no-link">3.4 @mariozechner/pi-tui</h3><p>**终端 UI 框架**</p></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">支持的 Provider（18+）</h4><table><tr><th>类型</th><th>Provider</th></tr><tr><td>**API Key**</td><td>OpenAI, Anthropic, Google, Azure, Mistral, Groq, Cerebras, xAI, OpenRouter, Bedrock, MiniMax</td></tr><tr><td>**OAuth**</td><td>Anthropic Claude Pro/Max, OpenAI Codex, GitHub Copilot, Google Gemini CLI, Antigravity</td></tr><tr><td>**自定义**</td><td>任何 OpenAI 兼容 API（Ollama、vLLM、LM Studio 等）</td></tr></table><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">核心概念</h4><table><tr><th>概念</th><th>说明</th></tr><tr><td>**AgentMessage**</td><td>扩展的消息类型，支持自定义字段</td></tr><tr><td>**Steering**</td><td>在工具执行期间插入消息，中断当前流程</td></tr><tr><td>**Follow-up**</td><td>在 Agent 完成后追加消息</td></tr><tr><td>**Context Transform**</td><td>发送给 LLM 前的消息预处理</td></tr></table><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">内置工具</h4><table><tr><th>工具</th><th>功能</th></tr><tr><td>`read`</td><td>读取文件</td></tr><tr><td>`write`</td><td>写入文件</td></tr><tr><td>`edit`</td><td>编辑文件（精确替换）</td></tr><tr><td>`bash`</td><td>执行命令</td></tr><tr><td>`grep`</td><td>搜索内容（可选）</td></tr><tr><td>`find`</td><td>查找文件（可选）</td></tr><tr><td>`ls`</td><td>列目录（可选）</td></tr></table></section><section><h2>4. 创新与独创性</h2><div class="news-item"><h3 class="no-link">核心特性</h3><p>```typescript import { TUI, Text, Editor, ProcessTerminal } from "@mariozechner/pi-tui"; const tui = new TUI(new ProcessTerminal()); tui.addChild(new Text("Welcome!")); const editor = new Editor(tui, theme); editor.onSubmit = (text) => handleInput(text); tui.addChild(editor); tui.start(); ```</p></div><div class="news-item"><h3 class="no-link">4.1 哲学创新："刻意不做"</h3><p>Pi 最大的创新是**反向思维**——通过不内置功能来实现最大灵活性：</p></div><div class="news-item"><h3 class="no-link">4.2 技术创新</h3></div><div class="news-item"><h3 class="no-link">4.2.1 Session 树形结构</h3><p>``` Session 采用 JSONL + 树形结构存储 每条记录有 id 和 parentId 支持原地分支，无需创建新文件 [entry-1] ─► [entry-2] ─► [entry-3] ─► [entry-4] │ └─► [entry-5] ─► [entry-6]  (分支) ``` **优势**：</p></div><div class="news-item"><h3 class="no-link">4.2.2 扩展系统</h3><p>Pi 的扩展系统是其最强大的特性： ```typescript // 一个扩展可以: export default function (pi: ExtensionAPI) { // 1. 注册自定义工具 pi.registerTool({ name: "deploy", ... }); // 2. 拦截事件 pi.on("tool_call", async (event, ctx) => { if (event.toolName === "bash" && isDangerous(event.input)) { return { block: true, reason: "Blocked dangerous command" }; } }); // 3. 注册命令 pi.registerCommand("stats", { handler: async (args, ctx) => {} }); // 4. 注册快捷键 pi.registerShortcut("ctrl+shift+p", { handler: async (ctx) => {} }); // 5. 自定义 UI pi.registerMessageRenderer("my-type", renderer); // 6. 修改 Provider pi.registerProvider("my-proxy", { baseUrl: "..." }); } ``` **示例扩展**（官方仓库包含 60+ 示例）：</p></div><div class="news-item"><h3 class="no-link">4.2.3 Compaction（上下文压缩）</h3><p>```typescript pi.on("session_before_compact", async (event, ctx) => { // 自定义压缩逻辑 const summary = await generateSummary(event.branchEntries); return { compaction: { summary, firstKeptEntryId: event.preparation.firstKeptEntryId, tokensBefore: event.preparation.tokensBefore, } }; }); ```</p></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">4.1 哲学创新："刻意不做"</h4><table><tr><th>常见功能</th><th>Pi 的态度</th><th>理由</th></tr><tr><td>**MCP**</td><td>不内置</td><td>"构建带 README 的 CLI 工具即可"</td></tr><tr><td>**子代理**</td><td>不内置</td><td>"通过 tmux 或扩展实现"</td></tr><tr><td>**权限弹窗**</td><td>不内置</td><td>"在容器中运行，或自建确认流程"</td></tr><tr><td>**Plan Mode**</td><td>不内置</td><td>"写到文件，或通过扩展实现"</td></tr><tr><td>**后台 Bash**</td><td>不内置</td><td>"用 tmux，完全可观察"</td></tr></table></section><section><h2>Steps</h2><div class="news-item"><h3 class="no-link">4.2.4 Skills 标准</h3><p>Pi 采用 [Agent Skills](https://agentskills.io) 标准： ```markdown <!-- .pi/skills/my-skill/SKILL.md --> Use this skill when the user asks about X. 1. Do this 2. Then that ``` 使用 `/skill:my-skill` 调用。</p></div><div class="news-item"><h3 class="no-link">4.2.5 Prompt Caching 支持</h3><p>```bash PI_CACHE_RETENTION=long pi  # 5分钟 → 1小时 PI_CACHE_RETENTION=long pi  # 内存缓存 → 24小时 ```</p></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">4.3 设计亮点</h4><table><tr><th>特性</th><th>说明</th></tr><tr><td>**热重载**</td><td>扩展、Skills、主题支持 `/reload` 热重载</td></tr><tr><td>**TypeBox Schema**</td><td>工具参数使用 TypeBox 定义，支持序列化</td></tr><tr><td>**自动补全**</td><td>编辑器内 `/` 触发命令补全，`Tab` 触发路径补全</td></tr><tr><td>**粘贴处理**</td><td>大于 10 行的粘贴自动折叠为标记</td></tr><tr><td>**IME 支持**</td><td>正确处理中日韩输入法</td></tr></table></section><section><h2>5. 使用指南</h2><div class="news-item"><h3 class="no-link">4.3 设计亮点</h3></div><div class="news-item"><h3 class="no-link">5.1 安装</h3><p>```bash npm install -g @mariozechner/pi-coding-agent ```</p></div><div class="news-item"><h3 class="no-link">5.2 配置</h3><p>```bash export ANTHROPIC_API_KEY=sk-ant-... pi pi /login  # 选择 Provider ```</p></div><div class="news-item"><h3 class="no-link">5.3 基本操作</h3><p>```bash pi pi "List all .ts files" pi -p "Summarize this codebase" pi -c pi -r pi --provider anthropic --model claude-sonnet-4-20250514 pi --thinking high "Complex problem" ```</p></div><div class="news-item"><h3 class="no-link">5.4 编辑器快捷键</h3></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">5.4 编辑器快捷键</h4><table><tr><th>快捷键</th><th>功能</th></tr><tr><td>`Enter`</td><td>提交</td></tr><tr><td>`Shift+Enter`</td><td>换行</td></tr><tr><td>`Tab`</td><td>自动补全</td></tr><tr><td>`Ctrl+C`</td><td>清空编辑器</td></tr><tr><td>`Ctrl+C x2`</td><td>退出</td></tr><tr><td>`Escape`</td><td>取消/中止</td></tr><tr><td>`Escape x2`</td><td>打开 `/tree`</td></tr><tr><td>`Ctrl+L`</td><td>模型选择器</td></tr><tr><td>`Ctrl+P`</td><td>循环模型</td></tr><tr><td>`Shift+Tab`</td><td>循环 Thinking Level</td></tr><tr><td>`Ctrl+O`</td><td>展开/折叠工具输出</td></tr><tr><td>`Ctrl+T`</td><td>展开/折叠 Thinking</td></tr></table><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">5.5 命令参考</h4><table><tr><th>命令</th><th>功能</th></tr><tr><td>`/login`, `/logout`</td><td>OAuth 认证</td></tr><tr><td>`/model`</td><td>切换模型</td></tr><tr><td>`/settings`</td><td>设置</td></tr><tr><td>`/new`</td><td>新会话</td></tr><tr><td>`/resume`</td><td>恢复会话</td></tr><tr><td>`/tree`</td><td>会话树导航</td></tr><tr><td>`/fork`</td><td>分叉会话</td></tr><tr><td>`/compact`</td><td>手动压缩上下文</td></tr><tr><td>`/copy`</td><td>复制最后回复</td></tr><tr><td>`/export`</td><td>导出为 HTML</td></tr><tr><td>`/share`</td><td>上传为 Gist</td></tr><tr><td>`/reload`</td><td>重载扩展</td></tr></table></section><section><h2>6. Demo 示例</h2><div class="news-item"><h3 class="no-link">5.5 命令参考</h3></div><div class="news-item"><h3 class="no-link">6.1 基础 SDK 使用</h3><p>```typescript // demo-basic.ts import { AuthStorage, createAgentSession, ModelRegistry, SessionManager } from "@mariozechner/pi-coding-agent"; async function main() { const authStorage = new AuthStorage(); const modelRegistry = new ModelRegistry(authStorage); const { session } = await createAgentSession({ sessionManager: SessionManager.inMemory(), authStorage, modelRegistry, }); // 订阅事件 session.subscribe((event) => { if (event.type === "message_update" && event.assistantMessageEvent.type === "text_delta") { process.stdout.write(event.assistantMessageEvent.delta); } }); // 发送请求 await session.prompt("What files are in the current directory?"); } main().catch(console.error); ```</p></div><div class="news-item"><h3 class="no-link">6.2 自定义扩展</h3><p>```typescript // my-extension.ts import type { ExtensionAPI } from "@mariozechner/pi-coding-agent"; import { Type } from "@sinclair/typebox"; export default function (pi: ExtensionAPI) { // 1. 危险命令拦截 pi.on("tool_call", async (event, ctx) => { if (event.toolName === "bash") { const cmd = event.input.command || ""; if (cmd.includes("rm -rf") || cmd.includes("sudo")) { const ok = await ctx.ui.confirm( "⚠️ 危险命令", `确认执行: ${cmd}?` ); if (!ok) return { block: true, reason: "用户取消" }; } } }); // 2. 自定义工具 pi.registerTool({ name: "timestamp", label: "Timestamp", description: "Get current timestamp in various formats", parameters: Type.Object({ format: Type.Optional(Type.String({ description: "iso, unix, or human" })), }), async execute(toolCallId, params) { const now = new Date(); let result: string; switch (params.format) { case "unix": result = String(Math.floor(now.getTime() / 1000)); break; case "human": result = now.toLocaleString(); break; default: result = now.toISOString(); } return { content: [{ type: "text", text: result }], details: {} }; }, }); // 3. 自定义命令 pi.registerCommand("hello", { description: "Say hello", handler: async (args, ctx) => { ctx.ui.notify(`Hello, ${args || "world"}! 🎉`, "info"); }, }); // 4. 会话启动通知 pi.on("session_start", async (_event, ctx) => { ctx.ui.setStatus("my-ext", "🚀 Extension loaded"); }); } ``` 使用： ```bash pi -e ./my-extension.ts ```</p></div></section><section><h2>7. 与竞品对比</h2><div class="news-item"><h3 class="no-link">6.3 RPC 模式集成</h3><p>```typescript // rpc-client.ts import { spawn } from "child_process"; import * as readline from "readline"; const pi = spawn("pi", ["--mode", "rpc"], { stdio: ["pipe", "pipe", "inherit"], }); const rl = readline.createInterface({ input: pi.stdout }); rl.on("line", (line) => { const event = JSON.parse(line); console.log("Event:", event.type); }); // 发送提示 pi.stdin.write(JSON.stringify({ method: "prompt", params: { text: "Hello!" } }) + "\n"); ```</p></div><div class="news-item"><h3 class="no-link">7.1 对比矩阵</h3></div><div class="news-item"><h3 class="no-link">7.2 核心差异</h3><p>**Pi vs Claude Code** **Pi vs Cursor** **Pi vs Aider**</p></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">7.1 对比矩阵</h4><table><tr><th>特性</th><th>Pi</th><th>Claude Code</th><th>Cursor</th><th>Aider</th><th>Continue</th></tr><tr><td>**开源**</td><td>✅ MIT</td><td>❌</td><td>❌</td><td>✅ Apache</td><td>✅ Apache</td></tr><tr><td>**终端原生**</td><td>✅</td><td>✅</td><td>❌</td><td>✅</td><td>❌</td></tr><tr><td>**多 Provider**</td><td>✅ 18+</td><td>❌ Claude only</td><td>✅</td><td>✅</td><td>✅</td></tr><tr><td>**扩展系统**</td><td>✅ 强大</td><td>❌</td><td>✅</td><td>❌</td><td>✅</td></tr><tr><td>**Session 分支**</td><td>✅ 树形</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td></tr><tr><td>**自定义工具**</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>✅</td></tr><tr><td>**SDK 嵌入**</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td></tr><tr><td>**MCP**</td><td>扩展</td><td>✅</td><td>✅</td><td>❌</td><td>✅</td></tr><tr><td>**子代理**</td><td>扩展</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr></table></section><section><h2>8. 总结与建议</h2><div class="news-item"><h3 class="no-link">7.3 Pi 的最佳场景</h3><p>1. **需要深度定制**：扩展系统无与伦比 2. **多 Provider 切换**：跨 Provider Handoff 独家 3. **嵌入其他应用**：SDK 模式支持 4. **终端重度用户**：TUI 体验优秀 5. **隐私敏感**：可完全本地运行（Ollama）</p></div><div class="news-item"><h3 class="no-link">8.1 优势</h3></div><div class="news-item"><h3 class="no-link">8.2 局限</h3></div><div class="news-item"><h3 class="no-link">8.3 建议使用场景</h3><p>✅ **推荐使用**： ❌ **不推荐使用**：</p></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">8.1 优势</h4><table><tr><th>方面</th><th>评价</th></tr><tr><td>**设计哲学**</td><td>⭐⭐⭐⭐⭐ 极简主义 + 极致扩展性</td></tr><tr><td>**架构质量**</td><td>⭐⭐⭐⭐⭐ 分层清晰、事件驱动</td></tr><tr><td>**扩展能力**</td><td>⭐⭐⭐⭐⭐ 几乎可以改变一切</td></tr><tr><td>**多 Provider**</td><td>⭐⭐⭐⭐⭐ 业界最全</td></tr><tr><td>**文档质量**</td><td>⭐⭐⭐⭐ 详尽但需要时间消化</td></tr><tr><td>**社区活跃**</td><td>⭐⭐⭐ Discord 活跃，但规模较小</td></tr></table></section><section><h2>附录</h2><div class="news-item"><h3 class="no-link">8.4 OpenClaw 集成</h3><p>OpenClaw 已集成 Pi 作为 coding-agent 技能之一： ```bash bash pty:true workdir:~/project command:"pi 'Your task'" ``` Pi 的 SDK 模式也可以更深度地嵌入 OpenClaw： ```typescript import { createAgentSession } from "@mariozechner/pi-coding-agent"; // 在 OpenClaw Gateway 中运行 Pi session const { session } = await createAgentSession({...}); await session.prompt(userTask); ```</p></div><div class="news-item"><h3 class="no-link">A. 相关链接</h3></div><div class="news-item"><h3 class="no-link">B. 版本历史关键点</h3></div><div class="news-item"><h3 class="no-link">C. 贡献者</h3><p>*报告完成时间：2026-02-08* *调研人：OpenClaw Agent*</p></div></section><footer>
-        <p>报告生成时间: 2026/2/8 21:38:11 GMT+8</p>
+    <nav><a href="index.html">← 返回报告索引</a></nav>
+<div class="content">
+<header><h1>Pi Framework 深度调研报告</h1></header>
+<blockquote>
+<p>调研日期：2026-02-08</p>
+<p>版本：v0.52.8</p>
+<p>仓库：https://github.com/badlogic/pi-mono</p>
+<p>作者：Mario Zechner (libGDX 创始人)</p>
+</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ol>
+<li><a href="#1-概述" target="_blank">概述</a></li>
+<li><a href="#2-架构设计" target="_blank">架构设计</a></li>
+<li><a href="#3-核心包分析" target="_blank">核心包分析</a></li>
+<li><a href="#4-创新与独创性" target="_blank">创新与独创性</a></li>
+<li><a href="#5-使用指南" target="_blank">使用指南</a></li>
+<li><a href="#6-demo-示例" target="_blank">Demo 示例</a></li>
+<li><a href="#7-与竞品对比" target="_blank">与竞品对比</a></li>
+<li><a href="#8-总结与建议" target="_blank">总结与建议</a></li>
+</ol>
+<hr>
+<h2 id="1-概述">1. 概述</h2>
+<h3 id="1-1-什么是-pi">1.1 什么是 Pi</h3>
+<p>Pi 是一个<strong>极简主义的终端编码助手框架</strong>，其核心理念是：</p>
+<blockquote>
+<p>"Adapt pi to your workflows, not the other way around."</p>
+<p>（让 Pi 适应你的工作流，而不是反过来）</p>
+</blockquote>
+<p>Pi 由 Mario Zechner 开发（libGDX 游戏引擎创始人），设计哲学是<strong>做减法而非加法</strong>——通过提供强大的扩展机制，让用户自己构建需要的功能，而非内置一堆可能用不上的特性。</p>
+<h3 id="1-2-定位">1.2 定位</h3>
+<table>
+<tr><th>维度</th><th>Pi 的选择</th></tr>
+<tr><td><strong>内置功能</strong></td><td>极简（仅 read/write/edit/bash 四个工具）</td></tr>
+<tr><td><strong>扩展性</strong></td><td>极强（Extensions、Skills、Prompt Templates、Themes、Packages）</td></tr>
+<tr><td><strong>运行模式</strong></td><td>多样（Interactive、Print、JSON、RPC、SDK）</td></tr>
+<tr><td><strong>MCP 支持</strong></td><td>刻意不内置（可通过扩展实现）</td></tr>
+<tr><td><strong>子代理</strong></td><td>刻意不内置（可通过扩展实现）</td></tr>
+<tr><td><strong>权限弹窗</strong></td><td>刻意不内置（可通过扩展实现）</td></tr>
+</table>
+<h3 id="1-3-官方-slogan">1.3 官方 Slogan</h3>
+<pre><code>&quot;shittycodingagent.ai&quot; — 自嘲式的官网域名
+&quot;robots need your body&quot; — rentahuman.ai 的标语（相关项目）</code></pre>
+<hr>
+<h2 id="2-架构设计">2. 架构设计</h2>
+<h3 id="2-1-monorepo-结构">2.1 Monorepo 结构</h3>
+<pre><code>pi-mono/
+├── packages/
+│   ├── ai/              # 统一 LLM API 层
+│   ├── agent/           # Agent 运行时核心
+│   ├── coding-agent/    # 终端编码助手 CLI
+│   ├── tui/             # 终端 UI 框架
+│   ├── web-ui/          # Web UI 组件
+│   ├── mom/             # Slack Bot 集成
+│   └── pods/            # vLLM GPU Pod 管理
+├── .pi/                 # 项目级配置目录
+├── AGENTS.md            # Agent 开发规范
+└── package.json</code></pre>
+<h3 id="2-2-分层架构">2.2 分层架构</h3>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│                    应用层 (Applications)                 │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
+│  │ coding-agent│  │     mom     │  │    pods     │     │
+│  │ (终端 CLI)  │  │ (Slack Bot) │  │ (GPU 管理)  │     │
+│  └──────┬──────┘  └──────┬──────┘  └─────────────┘     │
+├─────────┼────────────────┼──────────────────────────────┤
+│         │                │                              │
+│         ▼                ▼                              │
+│  ┌────────────────────────────┐                        │
+│  │       agent-core           │  ← Agent 运行时        │
+│  │  • 工具调用 • 状态管理     │                        │
+│  │  • 事件流 • 消息队列       │                        │
+│  └────────────┬───────────────┘                        │
+│               │                                         │
+│               ▼                                         │
+│  ┌────────────────────────────┐                        │
+│  │          pi-ai             │  ← 统一 LLM 接口       │
+│  │  • 多 Provider 支持        │                        │
+│  │  • Token/Cost 追踪         │                        │
+│  │  • 跨 Provider 切换        │                        │
+│  └────────────────────────────┘                        │
+├─────────────────────────────────────────────────────────┤
+│                    UI 层 (Presentation)                 │
+│  ┌─────────────┐  ┌─────────────┐                      │
+│  │    tui      │  │   web-ui    │                      │
+│  │ (终端渲染)  │  │ (Web 组件)  │                      │
+│  └─────────────┘  └─────────────┘                      │
+└─────────────────────────────────────────────────────────┘</code></pre>
+<h3 id="2-3-事件驱动架构">2.3 事件驱动架构</h3>
+<p>Pi 采用事件驱动设计，所有操作都可被拦截和修改：</p>
+<pre><code>用户输入
+  │
+  ├─► input 事件 (可拦截/转换)
+  ├─► before_agent_start (可注入消息)
+  ├─► agent_start
+  │   │
+  │   └─► turn_start
+  │       ├─► context 事件 (可修改消息)
+  │       │
+  │       │   LLM 响应:
+  │       │   ├─► tool_call (可阻止)
+  │       │   │   └─► tool_result (可修改)
+  │       │
+  │       └─► turn_end
+  │
+  └─► agent_end</code></pre>
+<hr>
+<h2 id="3-核心包分析">3. 核心包分析</h2>
+<h3 id="3-1-mariozechner-pi-ai">3.1 @mariozechner/pi-ai</h3>
+<p><strong>统一的多 Provider LLM API</strong></p>
+<h4 id="支持的-provider-18">支持的 Provider（18+）</h4>
+<table>
+<tr><th>类型</th><th>Provider</th></tr>
+<tr><td><strong>API Key</strong></td><td>OpenAI, Anthropic, Google, Azure, Mistral, Groq, Cerebras, xAI, OpenRouter, Bedrock, MiniMax</td></tr>
+<tr><td><strong>OAuth</strong></td><td>Anthropic Claude Pro/Max, OpenAI Codex, GitHub Copilot, Google Gemini CLI, Antigravity</td></tr>
+<tr><td><strong>自定义</strong></td><td>任何 OpenAI 兼容 API（Ollama、vLLM、LM Studio 等）</td></tr>
+</table>
+<h4 id="核心特性">核心特性</h4>
+<pre data-lang="typescript"><code><span class="token-keyword">import</span> { getModel, stream, complete, Context } <span class="token-keyword">from</span> &<span <span class="token-keyword">class</span>="token-comment">#<span <span class="token-keyword">class</span>="token-number">39</span>;@mariozechner/pi-ai&#<span <span class="token-keyword">class</span>="token-number">39</span>;;</span>
+
+<span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">1</span>. 类型安全的模型选择（IDE 自动补全）</span>
+<span class="token-keyword">const</span> model = <span class="token-function">getModel</span>(&<span <span class="token-keyword">class</span>="token-comment">#<span <span class="token-keyword">class</span>="token-number">39</span>;anthropic<span <span class="token-keyword">class</span>="token-string">&#<span <span class="token-keyword">class</span>="token-number">39</span>;, &#<span <span class="token-keyword">class</span>="token-number">39</span>;</span>claude-sonnet-<span <span class="token-keyword">class</span>="token-number">4</span>-<span <span class="token-keyword">class</span>="token-number">20250514</span>&#<span <span class="token-keyword">class</span>="token-number">39</span>;);</span>
+
+<span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">2</span>. 统一的上下文结构</span>
+<span class="token-keyword">const</span> context: Context = {
+  systemPrompt: &<span <span class="token-keyword">class</span>="token-comment">#<span <span class="token-keyword">class</span>="token-number">39</span>;You are a helpful assistant.&#<span <span class="token-keyword">class</span>="token-number">39</span>;,</span>
+  messages: [{ role: &<span <span class="token-keyword">class</span>="token-comment">#<span <span class="token-keyword">class</span>="token-number">39</span>;user<span <span class="token-keyword">class</span>="token-string">&#<span <span class="token-keyword">class</span>="token-number">39</span>;, content: &#<span <span class="token-keyword">class</span>="token-number">39</span>;</span>Hello&#<span <span class="token-keyword">class</span>="token-number">39</span>; }],</span>
+  tools: [myTool]
+};
+
+<span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">3</span>. 流式响应</span>
+<span class="token-keyword">for</span> <span class="token-keyword">await</span> (<span class="token-keyword">const</span> event of <span class="token-function">stream</span>(model, context)) {
+  <span class="token-keyword">if</span> (event.<span class="token-keyword">type</span> === &<span <span class="token-keyword">class</span>="token-comment">#<span <span class="token-keyword">class</span>="token-number">39</span>;text_delta&#<span <span class="token-keyword">class</span>="token-number">39</span>;) {</span>
+    process.stdout.<span class="token-function">write</span>(event.delta);
+  }
+}
+
+<span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">4</span>. 跨 Provider 无缝切换</span>
+<span class="token-keyword">const</span> gpt = <span class="token-function">getModel</span>(&<span <span class="token-keyword">class</span>="token-comment">#<span <span class="token-keyword">class</span>="token-number">39</span>;openai<span <span class="token-keyword">class</span>="token-string">&#<span <span class="token-keyword">class</span>="token-number">39</span>;, &#<span <span class="token-keyword">class</span>="token-number">39</span>;</span>gpt-4o&#<span <span class="token-keyword">class</span>="token-number">39</span>;);</span>
+<span class="token-keyword">const</span> continuation = <span class="token-keyword">await</span> <span class="token-function">complete</span>(gpt, context); <span <span class="token-keyword">class</span>="token-comment">// 自动处理消息格式转换</span></code></pre>
+<h4 id="创新点-跨-provider-handoff">创新点：跨 Provider Handoff</h4>
+<p>Pi 支持在对话中<strong>无缝切换不同 Provider</strong>：</p>
+<ul>
+<li>Claude 的 thinking blocks 会自动转换为 <code><thinking></code> 标签发给 GPT</li>
+<li>工具调用和结果在不同 Provider 间正确传递</li>
+<li>图片、部分响应等都能正确处理</li>
+</ul>
+<h3 id="3-2-mariozechner-pi-agent-core">3.2 @mariozechner/pi-agent-core</h3>
+<p><strong>Agent 运行时核心</strong></p>
+<pre data-lang="typescript"><code><span class="token-keyword">import</span> { Agent } <span class="token-keyword">from</span> <span <span class="token-keyword">class</span>="token-string">&quot;@mariozechner/pi-agent-core&quot;</span>;
+
+<span class="token-keyword">const</span> agent = <span class="token-keyword">new</span> <span class="token-function">Agent</span>({
+  initialState: {
+    systemPrompt: <span <span class="token-keyword">class</span>="token-string">&quot;You are helpful.&quot;</span>,
+    model: <span class="token-function">getModel</span>(<span <span class="token-keyword">class</span>="token-string">&quot;anthropic&quot;</span>, <span <span class="token-keyword">class</span>="token-string">&quot;claude-sonnet-<span <span class="token-keyword">class</span>="token-number">4</span>-<span <span class="token-keyword">class</span>="token-number">20250514</span>&quot;</span>),
+    tools: [readTool, bashTool],
+  },
+  
+  <span <span class="token-keyword">class</span>="token-comment">// 消息转换器（过滤自定义消息类型）</span>
+  convertToLlm: (messages) =&gt; messages.<span class="token-function">filter</span>(m =&gt; 
+    [<span <span class="token-keyword">class</span>="token-string">&quot;user&quot;</span>, <span <span class="token-keyword">class</span>="token-string">&quot;assistant&quot;</span>, <span <span class="token-keyword">class</span>="token-string">&quot;toolResult&quot;</span>].<span class="token-function">includes</span>(m.role)
+  ),
+  
+  <span <span class="token-keyword">class</span>="token-comment">// 上下文转换器（用于压缩、剪枝）</span>
+  transformContext: <span class="token-keyword">async</span> (messages) =&gt; <span class="token-function">pruneOldMessages</span>(messages),
+});
+
+<span <span class="token-keyword">class</span>="token-comment">// 事件订阅</span>
+agent.<span class="token-function">subscribe</span>((event) =&gt; {
+  <span class="token-function">switch</span>(event.<span class="token-keyword">type</span>) {
+    case &<span <span class="token-keyword">class</span>="token-comment">#<span <span class="token-keyword">class</span>="token-number">39</span>;message_update&#<span <span class="token-keyword">class</span>="token-number">39</span>;: <span <span class="token-keyword">class</span>="token-comment">// 流式文本</span></span>
+    case &<span <span class="token-keyword">class</span>="token-comment">#<span <span class="token-keyword">class</span>="token-number">39</span>;tool_execution_start&#<span <span class="token-keyword">class</span>="token-number">39</span>;: <span <span class="token-keyword">class</span>="token-comment">// 工具开始</span></span>
+    case &<span <span class="token-keyword">class</span>="token-comment">#<span <span class="token-keyword">class</span>="token-number">39</span>;tool_execution_end&#<span <span class="token-keyword">class</span>="token-number">39</span>;: <span <span class="token-keyword">class</span>="token-comment">// 工具完成</span></span>
+  }
+});
+
+<span class="token-keyword">await</span> agent.<span class="token-function">prompt</span>(<span <span class="token-keyword">class</span>="token-string">&quot;Read the config file&quot;</span>);</code></pre>
+<h4 id="核心概念">核心概念</h4>
+<table>
+<tr><th>概念</th><th>说明</th></tr>
+<tr><td><strong>AgentMessage</strong></td><td>扩展的消息类型，支持自定义字段</td></tr>
+<tr><td><strong>Steering</strong></td><td>在工具执行期间插入消息，中断当前流程</td></tr>
+<tr><td><strong>Follow-up</strong></td><td>在 Agent 完成后追加消息</td></tr>
+<tr><td><strong>Context Transform</strong></td><td>发送给 LLM 前的消息预处理</td></tr>
+</table>
+<h3 id="3-3-mariozechner-pi-coding-agent">3.3 @mariozechner/pi-coding-agent</h3>
+<p><strong>终端编码助手 CLI</strong></p>
+<h4 id="运行模式">运行模式</h4>
+<pre data-lang="bash"><code><span class="token-comment"># <span class="token-number">1</span>. 交互模式（默认）</span>
+pi
+
+<span class="token-comment"># <span class="token-number">2</span>. 打印模式（执行后退出）</span>
+pi -p <span class="token-string">&quot;Summarize this codebase&quot;</span>
+
+<span class="token-comment"># <span class="token-number">3</span>. JSON 模式（输出事件流）</span>
+pi --mode json <span class="token-string">&quot;Your task&quot;</span>
+
+<span class="token-comment"># <span class="token-number">4</span>. RPC 模式（进程集成）</span>
+pi --mode rpc
+
+<span class="token-comment"># <span class="token-number">5</span>. SDK 模式（嵌入其他应用）</span>
+import { createAgentSession } from <span class="token-string">&quot;@mariozechner/pi-coding-agent&quot;</span>;</code></pre>
+<h4 id="内置工具">内置工具</h4>
+<table>
+<tr><th>工具</th><th>功能</th></tr>
+<tr><td><code>read</code></td><td>读取文件</td></tr>
+<tr><td><code>write</code></td><td>写入文件</td></tr>
+<tr><td><code>edit</code></td><td>编辑文件（精确替换）</td></tr>
+<tr><td><code>bash</code></td><td>执行命令</td></tr>
+<tr><td><code>grep</code></td><td>搜索内容（可选）</td></tr>
+<tr><td><code>find</code></td><td>查找文件（可选）</td></tr>
+<tr><td><code>ls</code></td><td>列目录（可选）</td></tr>
+</table>
+<h3 id="3-4-mariozechner-pi-tui">3.4 @mariozechner/pi-tui</h3>
+<p><strong>终端 UI 框架</strong></p>
+<h4 id="核心特性">核心特性</h4>
+<ul>
+<li><strong>差分渲染</strong>：三策略渲染系统，只更新变化部分</li>
+<li><strong>同步输出</strong>：使用 CSI 2026 原子更新，无闪烁</li>
+<li><strong>组件化</strong>：Text、Editor、Markdown、SelectList、Image 等</li>
+<li><strong>内联图片</strong>：支持 Kitty/iTerm2 图形协议</li>
+</ul>
+<pre data-lang="typescript"><code><span class="token-keyword">import</span> { TUI, Text, Editor, ProcessTerminal } <span class="token-keyword">from</span> <span <span class="token-keyword">class</span>="token-string">&quot;@mariozechner/pi-tui&quot;</span>;
+
+<span class="token-keyword">const</span> tui = <span class="token-keyword">new</span> <span class="token-function">TUI</span>(<span class="token-keyword">new</span> <span class="token-function">ProcessTerminal</span>());
+tui.<span class="token-function">addChild</span>(<span class="token-keyword">new</span> <span class="token-function">Text</span>(<span <span class="token-keyword">class</span>="token-string">&quot;Welcome!&quot;</span>));
+
+<span class="token-keyword">const</span> editor = <span class="token-keyword">new</span> <span class="token-function">Editor</span>(tui, theme);
+editor.onSubmit = (text) =&gt; <span class="token-function">handleInput</span>(text);
+tui.<span class="token-function">addChild</span>(editor);
+
+tui.<span class="token-function">start</span>();</code></pre>
+<hr>
+<h2 id="4-创新与独创性">4. 创新与独创性</h2>
+<h3 id="4-1-哲学创新-刻意不做">4.1 哲学创新："刻意不做"</h3>
+<p>Pi 最大的创新是<strong>反向思维</strong>——通过不内置功能来实现最大灵活性：</p>
+<table>
+<tr><th>常见功能</th><th>Pi 的态度</th><th>理由</th></tr>
+<tr><td><strong>MCP</strong></td><td>不内置</td><td>"构建带 README 的 CLI 工具即可"</td></tr>
+<tr><td><strong>子代理</strong></td><td>不内置</td><td>"通过 tmux 或扩展实现"</td></tr>
+<tr><td><strong>权限弹窗</strong></td><td>不内置</td><td>"在容器中运行，或自建确认流程"</td></tr>
+<tr><td><strong>Plan Mode</strong></td><td>不内置</td><td>"写到文件，或通过扩展实现"</td></tr>
+<tr><td><strong>后台 Bash</strong></td><td>不内置</td><td>"用 tmux，完全可观察"</td></tr>
+</table>
+<h3 id="4-2-技术创新">4.2 技术创新</h3>
+<h4 id="4-2-1-session-树形结构">4.2.1 Session 树形结构</h4>
+<pre><code>Session 采用 JSONL + 树形结构存储
+每条记录有 id 和 parentId
+支持原地分支，无需创建新文件
+
+[entry-1] ─► [entry-2] ─► [entry-3] ─► [entry-4]
+                 │
+                 └─► [entry-5] ─► [entry-6]  (分支)</code></pre>
+<p><strong>优势</strong>：</p>
+<ul>
+<li><code>/tree</code> 命令可视化导航</li>
+<li>无损分支历史</li>
+<li>支持任意点回溯</li>
+</ul>
+<h4 id="4-2-2-扩展系统">4.2.2 扩展系统</h4>
+<p>Pi 的扩展系统是其最强大的特性：</p>
+<pre data-lang="typescript"><code><span <span class="token-keyword">class</span>="token-comment">// 一个扩展可以:</span>
+<span class="token-keyword">export</span> default <span class="token-keyword">function</span> (pi: ExtensionAPI) {
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">1</span>. 注册自定义工具</span>
+  pi.<span class="token-function">registerTool</span>({ name: <span <span class="token-keyword">class</span>="token-string">&quot;deploy&quot;</span>, ... });
+  
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">2</span>. 拦截事件</span>
+  pi.<span class="token-function">on</span>(<span <span class="token-keyword">class</span>="token-string">&quot;tool_call&quot;</span>, <span class="token-keyword">async</span> (event, ctx) =&gt; {
+    <span class="token-keyword">if</span> (event.toolName === <span <span class="token-keyword">class</span>="token-string">&quot;bash&quot;</span> &amp;&amp; <span class="token-function">isDangerous</span>(event.input)) {
+      <span class="token-keyword">return</span> { block: true, reason: <span <span class="token-keyword">class</span>="token-string">&quot;Blocked dangerous command&quot;</span> };
+    }
+  });
+  
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">3</span>. 注册命令</span>
+  pi.<span class="token-function">registerCommand</span>(<span <span class="token-keyword">class</span>="token-string">&quot;stats&quot;</span>, { handler: <span class="token-keyword">async</span> (args, ctx) =&gt; {} });
+  
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">4</span>. 注册快捷键</span>
+  pi.<span class="token-function">registerShortcut</span>(<span <span class="token-keyword">class</span>="token-string">&quot;ctrl+shift+p&quot;</span>, { handler: <span class="token-keyword">async</span> (ctx) =&gt; {} });
+  
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">5</span>. 自定义 UI</span>
+  pi.<span class="token-function">registerMessageRenderer</span>(<span <span class="token-keyword">class</span>="token-string">&quot;my-<span class="token-keyword">type</span>&quot;</span>, renderer);
+  
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">6</span>. 修改 Provider</span>
+  pi.<span class="token-function">registerProvider</span>(<span <span class="token-keyword">class</span>="token-string">&quot;my-proxy&quot;</span>, { baseUrl: <span <span class="token-keyword">class</span>="token-string">&quot;...&quot;</span> });
+}</code></pre>
+<p><strong>示例扩展</strong>（官方仓库包含 60+ 示例）：</p>
+<ul>
+<li><code>doom-overlay</code> — 等待时玩 Doom</li>
+<li><code>ssh.ts</code> — 远程执行</li>
+<li><code>git-checkpoint.ts</code> — 自动 Git 检查点</li>
+<li><code>confirm-destructive.ts</code> — 危险命令确认</li>
+<li><code>custom-compaction.ts</code> — 自定义上下文压缩</li>
+<li><code>handoff.ts</code> — 跨模型切换</li>
+</ul>
+<h4 id="4-2-3-compaction-上下文压缩">4.2.3 Compaction（上下文压缩）</h4>
+<pre data-lang="typescript"><code>pi.<span class="token-function">on</span>(<span <span class="token-keyword">class</span>="token-string">&quot;session_before_compact&quot;</span>, <span class="token-keyword">async</span> (event, ctx) =&gt; {
+  <span <span class="token-keyword">class</span>="token-comment">// 自定义压缩逻辑</span>
+  <span class="token-keyword">const</span> summary = <span class="token-keyword">await</span> <span class="token-function">generateSummary</span>(event.branchEntries);
+  <span class="token-keyword">return</span> {
+    compaction: {
+      summary,
+      firstKeptEntryId: event.preparation.firstKeptEntryId,
+      tokensBefore: event.preparation.tokensBefore,
+    }
+  };
+});</code></pre>
+<h4 id="4-2-4-skills-标准">4.2.4 Skills 标准</h4>
+<p>Pi 采用 <a href="https://agentskills.io" target="_blank">Agent Skills</a> 标准：</p>
+<pre data-lang="markdown"><code>&lt;!-- .pi/skills/my-skill/SKILL.md --&gt;
+<span class="token-comment"># My Skill</span>
+Use this skill when the user asks about X.
+
+<span class="token-comment">## Steps</span>
+<span class="token-number">1</span>. Do this
+<span class="token-number">2</span>. Then that</code></pre>
+<p>使用 <code>/skill:my-skill</code> 调用。</p>
+<h4 id="4-2-5-prompt-caching-支持">4.2.5 Prompt Caching 支持</h4>
+<pre data-lang="bash"><code><span class="token-comment"># Anthropic 扩展缓存时间</span>
+PI_CACHE_RETENTION=long pi  <span class="token-comment"># <span class="token-number">5</span>分钟 → <span class="token-number">1</span>小时</span>
+
+<span class="token-comment"># OpenAI 扩展缓存</span>
+PI_CACHE_RETENTION=long pi  <span class="token-comment"># 内存缓存 → <span class="token-number">24</span>小时</span></code></pre>
+<h3 id="4-3-设计亮点">4.3 设计亮点</h3>
+<table>
+<tr><th>特性</th><th>说明</th></tr>
+<tr><td><strong>热重载</strong></td><td>扩展、Skills、主题支持 <code>/reload</code> 热重载</td></tr>
+<tr><td><strong>TypeBox Schema</strong></td><td>工具参数使用 TypeBox 定义，支持序列化</td></tr>
+<tr><td><strong>自动补全</strong></td><td>编辑器内 <code>/</code> 触发命令补全，<code>Tab</code> 触发路径补全</td></tr>
+<tr><td><strong>粘贴处理</strong></td><td>大于 10 行的粘贴自动折叠为标记</td></tr>
+<tr><td><strong>IME 支持</strong></td><td>正确处理中日韩输入法</td></tr>
+</table>
+<hr>
+<h2 id="5-使用指南">5. 使用指南</h2>
+<h3 id="5-1-安装">5.1 安装</h3>
+<pre data-lang="bash"><code>npm install -g @mariozechner/pi-coding-agent</code></pre>
+<h3 id="5-2-配置">5.2 配置</h3>
+<pre data-lang="bash"><code><span class="token-comment"># 方式 <span class="token-number">1</span>: 环境变量</span>
+export ANTHROPIC_API_KEY=sk-ant-...
+pi
+
+<span class="token-comment"># 方式 <span class="token-number">2</span>: OAuth 登录</span>
+pi
+/login  <span class="token-comment"># 选择 Provider</span></code></pre>
+<h3 id="5-3-基本操作">5.3 基本操作</h3>
+<pre data-lang="bash"><code><span class="token-comment"># 交互模式</span>
+pi
+
+<span class="token-comment"># 带初始提示</span>
+pi <span class="token-string">&quot;List all .ts files&quot;</span>
+
+<span class="token-comment"># 非交互模式</span>
+pi -p <span class="token-string">&quot;Summarize this codebase&quot;</span>
+
+<span class="token-comment"># 继续上次会话</span>
+pi -c
+
+<span class="token-comment"># 选择历史会话</span>
+pi -r
+
+<span class="token-comment"># 指定模型</span>
+pi --provider anthropic --model claude-sonnet-<span class="token-number">4</span>-<span class="token-number">20250514</span>
+
+<span class="token-comment"># 指定 Thinking Level</span>
+pi --thinking high <span class="token-string">&quot;Complex problem&quot;</span></code></pre>
+<h3 id="5-4-编辑器快捷键">5.4 编辑器快捷键</h3>
+<table>
+<tr><th>快捷键</th><th>功能</th></tr>
+<tr><td><code>Enter</code></td><td>提交</td></tr>
+<tr><td><code>Shift+Enter</code></td><td>换行</td></tr>
+<tr><td><code>Tab</code></td><td>自动补全</td></tr>
+<tr><td><code>Ctrl+C</code></td><td>清空编辑器</td></tr>
+<tr><td><code>Ctrl+C x2</code></td><td>退出</td></tr>
+<tr><td><code>Escape</code></td><td>取消/中止</td></tr>
+<tr><td><code>Escape x2</code></td><td>打开 <code>/tree</code></td></tr>
+<tr><td><code>Ctrl+L</code></td><td>模型选择器</td></tr>
+<tr><td><code>Ctrl+P</code></td><td>循环模型</td></tr>
+<tr><td><code>Shift+Tab</code></td><td>循环 Thinking Level</td></tr>
+<tr><td><code>Ctrl+O</code></td><td>展开/折叠工具输出</td></tr>
+<tr><td><code>Ctrl+T</code></td><td>展开/折叠 Thinking</td></tr>
+</table>
+<h3 id="5-5-命令参考">5.5 命令参考</h3>
+<table>
+<tr><th>命令</th><th>功能</th></tr>
+<tr><td><code>/login</code>, <code>/logout</code></td><td>OAuth 认证</td></tr>
+<tr><td><code>/model</code></td><td>切换模型</td></tr>
+<tr><td><code>/settings</code></td><td>设置</td></tr>
+<tr><td><code>/new</code></td><td>新会话</td></tr>
+<tr><td><code>/resume</code></td><td>恢复会话</td></tr>
+<tr><td><code>/tree</code></td><td>会话树导航</td></tr>
+<tr><td><code>/fork</code></td><td>分叉会话</td></tr>
+<tr><td><code>/compact</code></td><td>手动压缩上下文</td></tr>
+<tr><td><code>/copy</code></td><td>复制最后回复</td></tr>
+<tr><td><code>/export</code></td><td>导出为 HTML</td></tr>
+<tr><td><code>/share</code></td><td>上传为 Gist</td></tr>
+<tr><td><code>/reload</code></td><td>重载扩展</td></tr>
+</table>
+<hr>
+<h2 id="6-demo-示例">6. Demo 示例</h2>
+<h3 id="6-1-基础-sdk-使用">6.1 基础 SDK 使用</h3>
+<pre data-lang="typescript"><code><span <span class="token-keyword">class</span>="token-comment">// demo-basic.ts</span>
+<span class="token-keyword">import</span> { AuthStorage, createAgentSession, ModelRegistry, SessionManager } <span class="token-keyword">from</span> <span <span class="token-keyword">class</span>="token-string">&quot;@mariozechner/pi-coding-agent&quot;</span>;
+
+<span class="token-keyword">async</span> <span class="token-keyword">function</span> <span class="token-function">main</span>() {
+  <span class="token-keyword">const</span> authStorage = <span class="token-keyword">new</span> <span class="token-function">AuthStorage</span>();
+  <span class="token-keyword">const</span> modelRegistry = <span class="token-keyword">new</span> <span class="token-function">ModelRegistry</span>(authStorage);
+  
+  <span class="token-keyword">const</span> { session } = <span class="token-keyword">await</span> <span class="token-function">createAgentSession</span>({
+    sessionManager: SessionManager.<span class="token-function">inMemory</span>(),
+    authStorage,
+    modelRegistry,
+  });
+
+  <span <span class="token-keyword">class</span>="token-comment">// 订阅事件</span>
+  session.<span class="token-function">subscribe</span>((event) =&gt; {
+    <span class="token-keyword">if</span> (event.<span class="token-keyword">type</span> === <span <span class="token-keyword">class</span>="token-string">&quot;message_update&quot;</span> &amp;&amp; event.assistantMessageEvent.<span class="token-keyword">type</span> === <span <span class="token-keyword">class</span>="token-string">&quot;text_delta&quot;</span>) {
+      process.stdout.<span class="token-function">write</span>(event.assistantMessageEvent.delta);
+    }
+  });
+
+  <span <span class="token-keyword">class</span>="token-comment">// 发送请求</span>
+  <span class="token-keyword">await</span> session.<span class="token-function">prompt</span>(<span <span class="token-keyword">class</span>="token-string">&quot;What files are in the current directory?&quot;</span>);
+}
+
+<span class="token-function">main</span>().<span class="token-keyword">catch</span>(console.error);</code></pre>
+<h3 id="6-2-自定义扩展">6.2 自定义扩展</h3>
+<pre data-lang="typescript"><code><span <span class="token-keyword">class</span>="token-comment">// my-extension.ts</span>
+<span class="token-keyword">import</span> <span class="token-keyword">type</span> { ExtensionAPI } <span class="token-keyword">from</span> <span <span class="token-keyword">class</span>="token-string">&quot;@mariozechner/pi-coding-agent&quot;</span>;
+<span class="token-keyword">import</span> { Type } <span class="token-keyword">from</span> <span <span class="token-keyword">class</span>="token-string">&quot;@sinclair/typebox&quot;</span>;
+
+<span class="token-keyword">export</span> default <span class="token-keyword">function</span> (pi: ExtensionAPI) {
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">1</span>. 危险命令拦截</span>
+  pi.<span class="token-function">on</span>(<span <span class="token-keyword">class</span>="token-string">&quot;tool_call&quot;</span>, <span class="token-keyword">async</span> (event, ctx) =&gt; {
+    <span class="token-keyword">if</span> (event.toolName === <span <span class="token-keyword">class</span>="token-string">&quot;bash&quot;</span>) {
+      <span class="token-keyword">const</span> cmd = event.input.command || <span <span class="token-keyword">class</span>="token-string">&quot;&quot;</span>;
+      <span class="token-keyword">if</span> (cmd.<span class="token-function">includes</span>(<span <span class="token-keyword">class</span>="token-string">&quot;rm -rf&quot;</span>) || cmd.<span class="token-function">includes</span>(<span <span class="token-keyword">class</span>="token-string">&quot;sudo&quot;</span>)) {
+        <span class="token-keyword">const</span> ok = <span class="token-keyword">await</span> ctx.ui.<span class="token-function">confirm</span>(
+          <span <span class="token-keyword">class</span>="token-string">&quot;⚠️ 危险命令&quot;</span>, 
+          <span <span class="token-keyword">class</span>="token-string">`确认执行: ${cmd}?`</span>
+        );
+        <span class="token-keyword">if</span> (!ok) <span class="token-keyword">return</span> { block: true, reason: <span <span class="token-keyword">class</span>="token-string">&quot;用户取消&quot;</span> };
+      }
+    }
+  });
+
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">2</span>. 自定义工具</span>
+  pi.<span class="token-function">registerTool</span>({
+    name: <span <span class="token-keyword">class</span>="token-string">&quot;timestamp&quot;</span>,
+    label: <span <span class="token-keyword">class</span>="token-string">&quot;Timestamp&quot;</span>,
+    description: <span <span class="token-keyword">class</span>="token-string">&quot;Get current timestamp in various formats&quot;</span>,
+    parameters: Type.<span class="token-function">Object</span>({
+      format: Type.<span class="token-function">Optional</span>(Type.<span class="token-function">String</span>({ description: <span <span class="token-keyword">class</span>="token-string">&quot;iso, unix, or human&quot;</span> })),
+    }),
+    <span class="token-keyword">async</span> <span class="token-function">execute</span>(toolCallId, params) {
+      <span class="token-keyword">const</span> now = <span class="token-keyword">new</span> <span class="token-function">Date</span>();
+      <span class="token-keyword">let</span> result: string;
+      <span class="token-function">switch</span>(params.format) {
+        case <span <span class="token-keyword">class</span>="token-string">&quot;unix&quot;</span>: result = <span class="token-function">String</span>(Math.<span class="token-function">floor</span>(now.<span class="token-function">getTime</span>() / <span <span class="token-keyword">class</span>="token-number">1000</span>)); break;
+        case <span <span class="token-keyword">class</span>="token-string">&quot;human&quot;</span>: result = now.<span class="token-function">toLocaleString</span>(); break;
+        default: result = now.<span class="token-function">toISOString</span>();
+      }
+      <span class="token-keyword">return</span> { content: [{ <span class="token-keyword">type</span>: <span <span class="token-keyword">class</span>="token-string">&quot;text&quot;</span>, text: result }], details: {} };
+    },
+  });
+
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">3</span>. 自定义命令</span>
+  pi.<span class="token-function">registerCommand</span>(<span <span class="token-keyword">class</span>="token-string">&quot;hello&quot;</span>, {
+    description: <span <span class="token-keyword">class</span>="token-string">&quot;Say hello&quot;</span>,
+    handler: <span class="token-keyword">async</span> (args, ctx) =&gt; {
+      ctx.ui.<span class="token-function">notify</span>(<span <span class="token-keyword">class</span>="token-string">`Hello, ${args || &quot;world&quot;}! 🎉`</span>, <span <span class="token-keyword">class</span>="token-string">&quot;info&quot;</span>);
+    },
+  });
+
+  <span <span class="token-keyword">class</span>="token-comment">// <span <span class="token-keyword">class</span>="token-number">4</span>. 会话启动通知</span>
+  pi.<span class="token-function">on</span>(<span <span class="token-keyword">class</span>="token-string">&quot;session_start&quot;</span>, <span class="token-keyword">async</span> (_event, ctx) =&gt; {
+    ctx.ui.<span class="token-function">setStatus</span>(<span <span class="token-keyword">class</span>="token-string">&quot;my-ext&quot;</span>, <span <span class="token-keyword">class</span>="token-string">&quot;🚀 Extension loaded&quot;</span>);
+  });
+}</code></pre>
+<p>使用：</p>
+<pre data-lang="bash"><code>pi -e ./my-extension.ts</code></pre>
+<h3 id="6-3-rpc-模式集成">6.3 RPC 模式集成</h3>
+<pre data-lang="typescript"><code><span <span class="token-keyword">class</span>="token-comment">// rpc-client.ts</span>
+<span class="token-keyword">import</span> { spawn } <span class="token-keyword">from</span> <span <span class="token-keyword">class</span>="token-string">&quot;child_process&quot;</span>;
+<span class="token-keyword">import</span> * <span class="token-keyword">as</span> readline <span class="token-keyword">from</span> <span <span class="token-keyword">class</span>="token-string">&quot;readline&quot;</span>;
+
+<span class="token-keyword">const</span> pi = <span class="token-function">spawn</span>(<span <span class="token-keyword">class</span>="token-string">&quot;pi&quot;</span>, [<span <span class="token-keyword">class</span>="token-string">&quot;--mode&quot;</span>, <span <span class="token-keyword">class</span>="token-string">&quot;rpc&quot;</span>], {
+  stdio: [<span <span class="token-keyword">class</span>="token-string">&quot;pipe&quot;</span>, <span <span class="token-keyword">class</span>="token-string">&quot;pipe&quot;</span>, <span <span class="token-keyword">class</span>="token-string">&quot;inherit&quot;</span>],
+});
+
+<span class="token-keyword">const</span> rl = readline.<span class="token-function">createInterface</span>({ input: pi.stdout });
+
+rl.<span class="token-function">on</span>(<span <span class="token-keyword">class</span>="token-string">&quot;line&quot;</span>, (line) =&gt; {
+  <span class="token-keyword">const</span> event = JSON.<span class="token-function">parse</span>(line);
+  console.<span class="token-function">log</span>(<span <span class="token-keyword">class</span>="token-string">&quot;Event:&quot;</span>, event.<span class="token-keyword">type</span>);
+});
+
+<span <span class="token-keyword">class</span>="token-comment">// 发送提示</span>
+pi.stdin.<span class="token-function">write</span>(JSON.<span class="token-function">stringify</span>({
+  method: <span <span class="token-keyword">class</span>="token-string">&quot;prompt&quot;</span>,
+  params: { text: <span <span class="token-keyword">class</span>="token-string">&quot;Hello!&quot;</span> }
+}) + <span <span class="token-keyword">class</span>="token-string">&quot;\n&quot;</span>);</code></pre>
+<hr>
+<h2 id="7-与竞品对比">7. 与竞品对比</h2>
+<h3 id="7-1-对比矩阵">7.1 对比矩阵</h3>
+<table>
+<tr><th>特性</th><th>Pi</th><th>Claude Code</th><th>Cursor</th><th>Aider</th><th>Continue</th></tr>
+<tr><td><strong>开源</strong></td><td><span class="marker-check">✅</span> MIT</td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-check">✅</span> Apache</td><td><span class="marker-check">✅</span> Apache</td></tr>
+<tr><td><strong>终端原生</strong></td><td><span class="marker-check">✅</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-cross">❌</span></td></tr>
+<tr><td><strong>多 Provider</strong></td><td><span class="marker-check">✅</span> 18+</td><td><span class="marker-cross">❌</span> Claude only</td><td><span class="marker-check">✅</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-check">✅</span></td></tr>
+<tr><td><strong>扩展系统</strong></td><td><span class="marker-check">✅</span> 强大</td><td><span class="marker-cross">❌</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-check">✅</span></td></tr>
+<tr><td><strong>Session 分支</strong></td><td><span class="marker-check">✅</span> 树形</td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td></tr>
+<tr><td><strong>自定义工具</strong></td><td><span class="marker-check">✅</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-check">✅</span></td></tr>
+<tr><td><strong>SDK 嵌入</strong></td><td><span class="marker-check">✅</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td></tr>
+<tr><td><strong>MCP</strong></td><td>扩展</td><td><span class="marker-check">✅</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-check">✅</span></td></tr>
+<tr><td><strong>子代理</strong></td><td>扩展</td><td><span class="marker-check">✅</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-cross">❌</span></td><td><span class="marker-cross">❌</span></td></tr>
+</table>
+<h3 id="7-2-核心差异">7.2 核心差异</h3>
+<p><strong>Pi vs Claude Code</strong></p>
+<ul>
+<li>Pi 更灵活，支持多 Provider</li>
+<li>Claude Code 更开箱即用，但锁定 Anthropic</li>
+</ul>
+<p><strong>Pi vs Cursor</strong></p>
+<ul>
+<li>Pi 是终端工具，Cursor 是 IDE</li>
+<li>Pi 扩展性更强，Cursor 用户体验更好</li>
+</ul>
+<p><strong>Pi vs Aider</strong></p>
+<ul>
+<li>Pi 有 UI 框架和扩展系统</li>
+<li>Aider 专注于 Git 集成和代码编辑</li>
+</ul>
+<h3 id="7-3-pi-的最佳场景">7.3 Pi 的最佳场景</h3>
+<ol>
+<li><strong>需要深度定制</strong>：扩展系统无与伦比</li>
+<li><strong>多 Provider 切换</strong>：跨 Provider Handoff 独家</li>
+<li><strong>嵌入其他应用</strong>：SDK 模式支持</li>
+<li><strong>终端重度用户</strong>：TUI 体验优秀</li>
+<li><strong>隐私敏感</strong>：可完全本地运行（Ollama）</li>
+</ol>
+<hr>
+<h2 id="8-总结与建议">8. 总结与建议</h2>
+<h3 id="8-1-优势">8.1 优势</h3>
+<table>
+<tr><th>方面</th><th>评价</th></tr>
+<tr><td><strong>设计哲学</strong></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span> 极简主义 + 极致扩展性</td></tr>
+<tr><td><strong>架构质量</strong></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span> 分层清晰、事件驱动</td></tr>
+<tr><td><strong>扩展能力</strong></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span> 几乎可以改变一切</td></tr>
+<tr><td><strong>多 Provider</strong></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span> 业界最全</td></tr>
+<tr><td><strong>文档质量</strong></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span> 详尽但需要时间消化</td></tr>
+<tr><td><strong>社区活跃</strong></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span> Discord 活跃，但规模较小</td></tr>
+</table>
+<h3 id="8-2-局限">8.2 局限</h3>
+<ul>
+<li>学习曲线陡峭（需要理解扩展系统）</li>
+<li>不适合追求开箱即用的用户</li>
+<li>部分高级功能需要自己实现</li>
+</ul>
+<h3 id="8-3-建议使用场景">8.3 建议使用场景</h3>
+<p><span class="marker-check">✅</span> <strong>推荐使用</strong>：</p>
+<ul>
+<li>需要将 AI Agent 嵌入自己的工具链</li>
+<li>需要自定义工具和工作流</li>
+<li>需要在多个 LLM Provider 间切换</li>
+<li>终端重度用户</li>
+</ul>
+<p><span class="marker-cross">❌</span> <strong>不推荐使用</strong>：</p>
+<ul>
+<li>追求开箱即用体验</li>
+<li>不愿意学习扩展系统</li>
+<li>非技术用户</li>
+</ul>
+<h3 id="8-4-openclaw-集成">8.4 OpenClaw 集成</h3>
+<p>OpenClaw 已集成 Pi 作为 coding-agent 技能之一：</p>
+<pre data-lang="bash"><code><span class="token-comment"># 在 OpenClaw 中使用 Pi</span>
+bash pty:true workdir:~/project command:&quot;pi &<span class="token-comment">#<span class="token-number">39</span>;Your task&#<span class="token-number">39</span>;&quot;</span></code></pre>
+<p>Pi 的 SDK 模式也可以更深度地嵌入 OpenClaw：</p>
+<pre data-lang="typescript"><code><span class="token-keyword">import</span> { createAgentSession } <span class="token-keyword">from</span> <span <span class="token-keyword">class</span>="token-string">&quot;@mariozechner/pi-coding-agent&quot;</span>;
+
+<span <span class="token-keyword">class</span>="token-comment">// 在 OpenClaw Gateway 中运行 Pi session</span>
+<span class="token-keyword">const</span> { session } = <span class="token-keyword">await</span> <span class="token-function">createAgentSession</span>({...});
+<span class="token-keyword">await</span> session.<span class="token-function">prompt</span>(userTask);</code></pre>
+<hr>
+<h2 id="附录">附录</h2>
+<h3 id="a-相关链接">A. 相关链接</h3>
+<ul>
+<li><strong>GitHub</strong>: https://github.com/badlogic/pi-mono</li>
+<li><strong>npm</strong>: https://www.npmjs.com/package/@mariozechner/pi-coding-agent</li>
+<li><strong>Discord</strong>: https://discord.com/invite/3cU7Bz4UPx</li>
+<li><strong>官网</strong>: https://shittycodingagent.ai</li>
+<li><strong>作者博客</strong>: https://mariozechner.at</li>
+</ul>
+<h3 id="b-版本历史关键点">B. 版本历史关键点</h3>
+<ul>
+<li><strong>v0.52.8</strong> (当前) — Anthropic Prompt Caching 优化</li>
+<li><strong>v0.50.0</strong> — 扩展系统重构</li>
+<li><strong>v0.40.0</strong> — RPC 模式支持</li>
+<li><strong>v0.30.0</strong> — Session 树形结构</li>
+</ul>
+<h3 id="c-贡献者">C. 贡献者</h3>
+<ul>
+<li><strong>Mario Zechner</strong> (@badlogic) — 创始人、主要维护者</li>
+<li>社区贡献者 — 扩展示例、Bug 修复</li>
+</ul>
+<hr>
+<p><em>报告完成时间：2026-02-08</em></p>
+<p><em>调研人：OpenClaw Agent</em></p>
+</div>
+    <footer>
+        <p>报告生成时间: 2026/2/8 21:42:07 GMT+8</p>
         <p>Generated by Miles AI Assistant ⚡</p>
     </footer>
 </body>

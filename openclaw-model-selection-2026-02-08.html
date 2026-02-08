@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>或 Codex 订阅 (OAuth)</title>
+    <title>OpenClaw 基座模型选型深度调研</title>
     <style>
         :root {
             --bg: #0d1117;
@@ -15,177 +15,555 @@
             --accent-green: #3fb950;
             --accent-orange: #d29922;
             --accent-red: #f85149;
+            --accent-purple: #a371f7;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
             padding: 2rem;
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
         }
+        /* Navigation */
+        nav { margin-bottom: 1.5rem; }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        nav a:hover { color: var(--accent); }
+        
+        /* Header */
         header {
             text-align: center;
             padding: 2rem 0;
             border-bottom: 1px solid var(--border);
             margin-bottom: 2rem;
         }
-        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header h1 { font-size: 2.2rem; margin-bottom: 0.75rem; color: #fff; }
         header .meta { color: var(--text-muted); font-size: 0.9rem; }
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
+        
+        /* Headings */
+        h1, h2, h3, h4, h5, h6 { color: #fff; margin-top: 2rem; margin-bottom: 1rem; }
+        h2 { font-size: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        h3 { font-size: 1.25rem; color: var(--accent); }
+        h4 { font-size: 1.1rem; color: var(--accent-green); }
+        h5 { font-size: 1rem; color: var(--accent-orange); }
+        
+        /* Content sections */
+        .content { margin-bottom: 2rem; }
+        .content > * { margin-bottom: 1rem; }
+        
+        /* Paragraphs */
+        p { margin: 0.75rem 0; }
+        
+        /* Links */
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        
+        /* Lists */
+        ul, ol { padding-left: 1.5rem; margin: 0.75rem 0; }
+        li { margin: 0.4rem 0; }
+        li > ul, li > ol { margin: 0.25rem 0; }
+        
+        /* Code - Inline */
+        code {
+            background: rgba(110, 118, 129, 0.4);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, Monaco, monospace;
+            font-size: 0.85em;
+            color: #e6edf3;
         }
-        .stat {
-            background: var(--card-bg);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-        .stat strong { color: var(--accent); }
-        section {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        section h2 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .breaking { border-left: 4px solid var(--accent-red); }
-        .breaking h2 { color: var(--accent-red); }
-        .news-item {
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .news-item:last-child { border-bottom: none; }
-        .news-item h3 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-        .news-item h3 a { color: var(--accent); text-decoration: none; }
-        .news-item h3 a:hover { text-decoration: underline; }
-        .news-item h3.no-link { color: var(--text); }
-        .news-item p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; }
-        .news-item .source { 
-            font-size: 0.8rem; 
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-        .news-item .source a { color: var(--accent); text-decoration: none; }
-        .news-item .read-more {
-            display: inline-block;
-            margin-top: 0.5rem;
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.85rem;
-        }
-        .news-item .read-more:hover { text-decoration: underline; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-        th { color: var(--text-muted); font-weight: 600; }
-        td a { color: var(--accent); text-decoration: none; }
-        td a:hover { text-decoration: underline; }
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        .tool-card {
-            background: var(--bg);
+        
+        /* Code - Block */
+        pre {
+            background: #161b22;
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 1rem;
-            text-decoration: none;
-            color: inherit;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: #e6edf3;
             display: block;
-            transition: all 0.2s ease;
+            white-space: pre;
         }
-        .tool-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        .tool-card.no-link { cursor: default; }
-        .tool-card.no-link:hover { transform: none; border-color: var(--border); }
-        .tool-card h4 { color: var(--accent-green); margin-bottom: 0.25rem; }
-        .tool-card.no-link h4 { color: var(--text); }
-        .tool-card .type {
-            font-size: 0.75rem;
-            color: var(--accent-orange);
-            margin-bottom: 0.5rem;
-        }
-        .tool-card p { font-size: 0.85rem; color: var(--text-muted); }
-        .insight-list { list-style: none; }
-        .insight-list li {
-            padding: 0.75rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-        .insight-list li::before {
-            content: "→";
+        /* Code language label */
+        pre[data-lang]::before {
+            content: attr(data-lang);
             position: absolute;
-            left: 0;
-            color: var(--accent);
-        }
-        .insight-list strong { color: var(--accent-orange); }
-        .action-list { list-style: none; }
-        .action-list li {
-            padding: 0.5rem 0;
-            padding-left: 1.75rem;
-            position: relative;
-        }
-        .action-list li::before {
-            content: "☐";
-            position: absolute;
-            left: 0;
-            color: var(--accent-green);
-        }
-        .missing-link {
+            top: 0;
+            right: 0;
+            padding: 0.25rem 0.75rem;
             font-size: 0.75rem;
-            color: var(--accent-orange);
-            opacity: 0.7;
+            color: var(--text-muted);
+            background: var(--bg);
+            border-bottom-left-radius: 6px;
+            border-top-right-radius: 7px;
+            text-transform: uppercase;
         }
+        
+        /* Syntax Highlighting */
+        .token-keyword { color: #ff7b72; }
+        .token-string { color: #a5d6ff; }
+        .token-comment { color: #8b949e; font-style: italic; }
+        .token-function { color: #d2a8ff; }
+        .token-number { color: #79c0ff; }
+        .token-operator { color: #ff7b72; }
+        .token-class { color: #ffa657; }
+        .token-property { color: #79c0ff; }
+        .token-builtin { color: #ffa657; }
+        .token-variable { color: #ffa657; }
+        .token-type { color: #7ee787; }
+        .token-punctuation { color: #c9d1d9; }
+        .token-tag { color: #7ee787; }
+        .token-attr-name { color: #79c0ff; }
+        .token-attr-value { color: #a5d6ff; }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            display: block;
+            overflow-x: auto;
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+        th {
+            background: var(--card-bg);
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) { background: rgba(22, 27, 34, 0.5); }
+        
+        /* Blockquotes */
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+            background: rgba(56, 139, 253, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+        blockquote p { margin: 0.5rem 0; color: var(--text); }
+        blockquote code { background: rgba(110, 118, 129, 0.3); }
+        
+        /* Horizontal rule */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+        
+        /* Emoji-based markers */
+        .marker-star { color: var(--accent-orange); }
+        .marker-check { color: var(--accent-green); }
+        .marker-cross { color: var(--accent-red); }
+        
+        /* Strong & Em */
+        strong { color: #fff; }
+        em { color: var(--text-muted); }
+        
+        /* TOC */
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h2 { margin-top: 0; font-size: 1.1rem; }
+        .toc ol { margin: 0; padding-left: 1.25rem; }
+        .toc li { margin: 0.5rem 0; }
+        .toc a { color: var(--text); }
+        .toc a:hover { color: var(--accent); }
+        
+        /* Footer */
         footer {
             text-align: center;
             padding: 2rem 0;
             color: var(--text-muted);
             font-size: 0.85rem;
             border-top: 1px solid var(--border);
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
-        @media (max-width: 600px) {
+        
+        /* Responsive */
+        @media (max-width: 768px) {
             body { padding: 1rem; }
-            header h1 { font-size: 1.75rem; }
-            .stats { flex-direction: column; gap: 0.5rem; }
+            header h1 { font-size: 1.5rem; }
+            pre { padding: 0.75rem; font-size: 0.8rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.5rem; }
         }
     </style>
 </head>
 <body>
-    <nav style="margin-bottom: 1rem;">
-        <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← 返回报告索引</a>
-    </nav>
-<header>
-        <h1>或 Codex 订阅 (OAuth)</h1>
-        <p class="meta"></p>
-        <div class="stats"></div></header><section><h2>一、核心结论 (TL;DR)</h2><table><tr><th>场景</th><th>推荐模型</th><th>理由</th></tr><tr><td>**最强效果**</td><td>`anthropic/claude-opus-4-5`</td><td>综合能力最强，工具调用最稳定</td></tr><tr><td>**性价比首选**</td><td>`anthropic/claude-sonnet-4-5`</td><td>效果/成本平衡最佳</td></tr><tr><td>**预算敏感**</td><td>`anthropic/claude-haiku-4-5` 或 `openai/gpt-5-mini`</td><td>低成本，适合简单任务</td></tr><tr><td>**隐私优先**</td><td>`venice/llama-3.3-70b`</td><td>完全私有推理，无日志</td></tr><tr><td>**代码专项**</td><td>`openai/gpt-5.2` 或 `moonshot/kimi-k2.5`</td><td>Coding benchmark 领先</td></tr></table></section><section><h2>二、支持的模型提供商</h2><div class="news-item"><h3 class="no-link">内置提供商 (无需额外配置)</h3></div></section><section><h2>三、定价对比 (2026-02 最新)</h2><div class="news-item"><h3 class="no-link">需配置提供商</h3></div><div class="news-item"><h3 class="no-link">3.1 Anthropic Claude 系列</h3><p>> **订阅替代**: Claude Pro $17/月, Claude Max $100+/月 (5x-20x 用量)</p></div><div class="news-item"><h3 class="no-link">3.2 OpenAI GPT 系列</h3><p>> **订阅替代**: Codex 订阅 (ChatGPT Plus/Pro)</p></div><div class="news-item"><h3 class="no-link">3.3 Google Gemini 系列</h3></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">3.1 Anthropic Claude 系列</h4><table><tr><th>模型</th><th>输入 ($/MTok)</th><th>输出 ($/MTok)</th><th>缓存读取</th><th>缓存写入</th></tr><tr><td>**Opus 4.6**</td><td>$5</td><td>$25</td><td>$0.50</td><td>$6.25</td></tr><tr><td>**Opus 4.5**</td><td>$5</td><td>$25</td><td>$0.50</td><td>$6.25</td></tr><tr><td>**Sonnet 4.5**</td><td>$3</td><td>$15</td><td>$0.30</td><td>$3.75</td></tr><tr><td>**Haiku 4.5**</td><td>$1</td><td>$5</td><td>$0.10</td><td>$1.25</td></tr><tr><td>Haiku 3</td><td>$0.25</td><td>$1.25</td><td>$0.03</td><td>$0.30</td></tr></table><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">3.2 OpenAI GPT 系列</h4><table><tr><th>模型</th><th>输入 ($/MTok)</th><th>缓存输入</th><th>输出 ($/MTok)</th></tr><tr><td>**GPT-5.2**</td><td>$1.75</td><td>$0.175</td><td>$14.00</td></tr><tr><td>**GPT-5.2 Pro**</td><td>$21.00</td><td>-</td><td>$168.00</td></tr><tr><td>**GPT-5 mini**</td><td>$0.25</td><td>$0.025</td><td>$2.00</td></tr><tr><td>GPT-4.1</td><td>$3.00</td><td>$0.75</td><td>$12.00</td></tr><tr><td>GPT-4.1 mini</td><td>$0.80</td><td>$0.20</td><td>$3.20</td></tr></table><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">3.3 Google Gemini 系列</h4><table><tr><th>模型</th><th>输入 ($/MTok)</th><th>缓存输入</th><th>输出 ($/MTok)</th></tr><tr><td>**Gemini 3 Pro**</td><td>$2.00</td><td>$0.20</td><td>$12.00</td></tr><tr><td>**Gemini 3 Flash**</td><td>$0.50</td><td>$0.05</td><td>$3.00</td></tr><tr><td>Gemini 2.5 Pro</td><td>$1.25</td><td>$0.125</td><td>$10.00</td></tr><tr><td>Gemini 2.5 Flash</td><td>$0.30</td><td>$0.03</td><td>$2.50</td></tr><tr><td>Gemini 2.5 Flash Lite</td><td>$0.10</td><td>$0.01</td><td>$0.40</td></tr></table><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">3.4 成本估算示例</h4><table><tr><th>模型</th><th>日成本</th><th>月成本 (30天)</th></tr><tr><td>Opus 4.5</td><td>$5.00</td><td>$150</td></tr><tr><td>Sonnet 4.5</td><td>$3.00</td><td>$90</td></tr><tr><td>Haiku 4.5</td><td>$1.00</td><td>$30</td></tr><tr><td>GPT-5.2</td><td>$2.28</td><td>$68</td></tr><tr><td>GPT-5 mini</td><td>$0.33</td><td>$10</td></tr><tr><td>Gemini 3 Pro</td><td>$2.20</td><td>$66</td></tr><tr><td>Gemini 3 Flash</td><td>$0.55</td><td>$17</td></tr></table></section><section><h2>四、效果评估维度</h2><div class="news-item"><h3 class="no-link">3.4 成本估算示例</h3><p>假设每天 Agent 运行: > **提示缓存**: OpenClaw 支持 Anthropic prompt caching，可配置 5分钟/1小时 TTL，实际成本可降低 50-80%</p></div><div class="news-item"><h3 class="no-link">4.1 OpenClaw 内置测试套件</h3><p>OpenClaw 提供三层测试体系:</p></div><div class="news-item"><h3 class="no-link">Layer 1: 直接模型测试 (`models.profiles.live.test.ts`)</h3></div><div class="news-item"><h3 class="no-link">Layer 2: Gateway + Agent 冒烟测试 (`gateway-models.profiles.live.test.ts`)</h3><p>- **响应探针**: 无工具的基础对话 - **Read 探针**: 写入随机文件，要求模型读取并返回内容 - **Exec+Read 探针**: 要求模型执行命令写入文件后读取 - **图像探针**: 发送带 OCR 挑战的图片，验证视觉理解 ```bash OPENCLAW_LIVE_TEST=1 \ OPENCLAW_LIVE_GATEWAY_MODELS="anthropic/claude-opus-4-5,openai/gpt-5.2" \ pnpm test:live ```</p></div><div class="news-item"><h3 class="no-link">Layer 3: CLI 后端测试 (`gateway-cli-backend.live.test.ts`)</h3></div><div class="news-item"><h3 class="no-link">4.2 关键评估指标</h3></div><div class="news-item"><h3 class="no-link">4.3 实际评估方法</h3></div><div class="news-item"><h3 class="no-link">方法 A: OpenClaw 内置扫描</h3><p>```bash openclaw models scan --max-candidates 10 --set-default openclaw models status openclaw models list --all ```</p></div><div class="news-item"><h3 class="no-link">方法 B: 手动 A/B 测试</h3><p>```bash /model anthropic/claude-opus-4-5 /model openai/gpt-5.2 /status /usage full ```</p></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">4.2 关键评估指标</h4><table><tr><th>维度</th><th>测试方法</th><th>权重</th></tr><tr><td>**工具调用准确性**</td><td>Read/Exec 探针成功率</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td>**指令遵循**</td><td>系统提示遵循度</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td>**上下文利用**</td><td>长会话记忆测试</td><td>⭐⭐⭐⭐</td></tr><tr><td>**代码生成**</td><td>实际编码任务</td><td>⭐⭐⭐⭐</td></tr><tr><td>**多模态**</td><td>图像探针 OCR</td><td>⭐⭐⭐</td></tr><tr><td>**响应延迟**</td><td>TTFT/TPS 测量</td><td>⭐⭐⭐</td></tr><tr><td>**成本效率**</td><td>Token/效果比</td><td>⭐⭐⭐⭐</td></tr></table></section><section><h2>五、模型特性对比</h2><div class="news-item"><h3 class="no-link">方法 C: 配置回退链</h3><p>```json5 { agents: { defaults: { model: { primary: "anthropic/claude-sonnet-4-5", fallbacks: [ "openai/gpt-5.2", "google/gemini-3-pro-preview" ] } } } } ```</p></div><div class="news-item"><h3 class="no-link">5.1 工具调用 (Function Calling)</h3><p>> OpenClaw 文档备注: "GLM: a bit better for coding/tool calling. MiniMax: better for writing and vibes."</p></div><div class="news-item"><h3 class="no-link">5.2 上下文窗口</h3></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">5.1 工具调用 (Function Calling)</h4><table><tr><th>模型</th><th>工具调用质量</th><th>并行调用</th><th>复杂链式调用</th></tr><tr><td>Claude Opus 4.5</td><td>⭐⭐⭐⭐⭐</td><td>✅</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td>Claude Sonnet 4.5</td><td>⭐⭐⭐⭐⭐</td><td>✅</td><td>⭐⭐⭐⭐</td></tr><tr><td>GPT-5.2</td><td>⭐⭐⭐⭐</td><td>✅</td><td>⭐⭐⭐⭐</td></tr><tr><td>Gemini 3 Pro</td><td>⭐⭐⭐⭐</td><td>✅</td><td>⭐⭐⭐</td></tr><tr><td>GLM 4.7</td><td>⭐⭐⭐⭐</td><td>✅</td><td>⭐⭐⭐</td></tr></table><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">5.2 上下文窗口</h4><table><tr><th>模型</th><th>上下文长度</th><th>实际可用</th></tr><tr><td>Claude Opus/Sonnet 4.5</td><td>200K</td><td>~150K 稳定</td></tr><tr><td>GPT-5.2</td><td>262K</td><td>~200K 稳定</td></tr><tr><td>Gemini 3 Pro</td><td>202K</td><td>~150K 稳定</td></tr><tr><td>Kimi K2.5</td><td>1M+</td><td>长文优势明显</td></tr></table><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">5.3 特殊能力</h4><table><tr><th>能力</th><th>最佳选择</th></tr><tr><td>**扩展思考**</td><td>Claude Opus (extended thinking), Gemini 3 Pro</td></tr><tr><td>**代码生成**</td><td>GPT-5.2, Kimi K2.5, Claude Sonnet</td></tr><tr><td>**多模态视觉**</td><td>GPT-5.2, Gemini 3, Claude Sonnet/Opus</td></tr><tr><td>**中文理解**</td><td>Kimi K2.5, GLM 4.7, Qwen3</td></tr><tr><td>**本地部署**</td><td>Ollama + Llama 3.3 70B / Qwen3</td></tr></table></section><section><h2>六、OpenClaw 推荐配置</h2><div class="news-item"><h3 class="no-link">5.3 特殊能力</h3></div><div class="news-item"><h3 class="no-link">6.1 最佳效果配置</h3><p>```json5 { agents: { defaults: { model: { primary: "anthropic/claude-opus-4-5" }, models: { "anthropic/claude-opus-4-5": { alias: "opus", params: { cacheControlTtl: "1h" } } } } } } ```</p></div><div class="news-item"><h3 class="no-link">6.2 性价比配置</h3><p>```json5 { agents: { defaults: { model: { primary: "anthropic/claude-sonnet-4-5", fallbacks: ["anthropic/claude-haiku-4-5"] }, models: { "anthropic/claude-sonnet-4-5": { alias: "sonnet" }, "anthropic/claude-haiku-4-5": { alias: "haiku" } } } } } ```</p></div><div class="news-item"><h3 class="no-link">6.3 隐私优先配置 (Venice)</h3><p>```json5 { env: { VENICE_API_KEY: "vapi_..." }, agents: { defaults: { model: { primary: "venice/llama-3.3-70b", fallbacks: ["venice/claude-opus-45"]  // 匿名代理 } } } } ```</p></div></section><section><h2>七、成本优化策略</h2><div class="news-item"><h3 class="no-link">6.4 混合成本优化配置</h3><p>```json5 { agents: { defaults: { model: { primary: "openai/gpt-5-mini",  // 简单任务 fallbacks: [ "anthropic/claude-sonnet-4-5",  // 中等任务 "anthropic/claude-opus-4-5"     // 复杂任务 ] }, heartbeat: { every: "55m" }  // 保持缓存热 } } } ```</p></div><div class="news-item"><h3 class="no-link">7.1 Prompt Caching</h3><p>Anthropic 支持 5分钟/1小时 缓存 TTL: ```json5 { agents: { defaults: { models: { "anthropic/claude-opus-4-5": { params: { cacheControlTtl: "1h" } } }, heartbeat: { every: "55m" }  // 55分钟心跳保持缓存 } } } ``` **成本节省**: 缓存读取仅 $0.50/MTok vs 输入 $5/MTok (节省 90%)</p></div><div class="news-item"><h3 class="no-link">7.2 会话压缩</h3><p>使用 `/compact` 主动压缩长会话: ``` /compact  # 总结当前会话，重置上下文 ```</p></div><div class="news-item"><h3 class="no-link">7.3 Batch API (Anthropic/OpenAI)</h3><p>异步批处理可节省 50%:</p></div><h4 style="color: var(--text-muted); margin: 1rem 0 0.75rem;">7.4 订阅 vs API</h4><table><tr><th>使用量</th><th>推荐</th></tr><tr><td>< $20/月</td><td>API 按量付费</td></tr><tr><td>$20-100/月</td><td>Claude Pro 订阅 ($17)</td></tr><tr><td>$100-500/月</td><td>Claude Max ($100) 或 API</td></tr><tr><td>> $500/月</td><td>API + 批量处理 + 缓存优化</td></tr></table></section><section><h2>八、快速设置指南</h2><div class="news-item"><h3 class="no-link">7.4 订阅 vs API</h3></div><div class="news-item"><h3 class="no-link">8.1 Anthropic (推荐)</h3><p>```bash openclaw onboard --auth-choice anthropic-api-key claude setup-token openclaw models auth paste-token --provider anthropic ```</p></div><div class="news-item"><h3 class="no-link">8.2 OpenAI</h3><p>```bash openclaw onboard --auth-choice openai-api-key openclaw onboard --auth-choice openai-codex ```</p></div><div class="news-item"><h3 class="no-link">8.3 Venice (隐私)</h3><p>```bash openclaw onboard --auth-choice venice-api-key openclaw models set venice/llama-3.3-70b ```</p></div></section><section><h2>九、评估清单</h2><ul class="action-list"><li>**工具调用测试**: 让模型执行 read/exec 任务</li><li>**指令遵循测试**: 给复杂系统提示，验证遵循度</li><li>**长会话测试**: 20+ 轮对话后检查上下文记忆</li><li>**代码任务测试**: 实际编程任务的完成质量</li><li>**成本监控**: 运行 `/status` 和 `/usage cost` 追踪消耗</li><li>**延迟测试**: 注意首 token 时间 (TTFT) 和生成速度</li></ul></section><section><h2>十、总结</h2><div class="news-item"><h3 class="no-link">8.4 验证配置</h3><p>```bash openclaw models status openclaw chat "Hello, what model are you?" ``` 在选择模型前，建议执行以下评估:</p></div><div class="news-item"><h3 class="no-link">选型决策树</h3><p>``` 需要最强能力？ ├── 是 → Claude Opus 4.5 └── 否 → 预算敏感？ ├── 是 → 简单任务？ │        ├── 是 → Haiku 4.5 / GPT-5 mini │        └── 否 → Sonnet 4.5 └── 否 → 需要隐私？ ├── 是 → Venice Llama 3.3 70B └── 否 → Sonnet 4.5 (默认推荐) ```</p></div></section><section><h2>参考资料</h2><div class="news-item"><h3 class="no-link">当前推荐 (2026-02)</h3><p>**默认选择**: `anthropic/claude-sonnet-4-5`</p></div></section><footer>
-        <p>报告生成时间: 2026/2/8 21:31:14 GMT+8</p>
+    <nav><a href="index.html">← 返回报告索引</a></nav>
+<div class="content">
+<header><h1>OpenClaw 基座模型选型深度调研</h1></header>
+<blockquote>
+<p>调研日期: 2026-02-08</p>
+<p>调研范围: 成本、效果、评估方法</p>
+</blockquote>
+<hr>
+<h2 id="一-核心结论-tl-dr">一、核心结论 (TL;DR)</h2>
+<table>
+<tr><th>场景</th><th>推荐模型</th><th>理由</th></tr>
+<tr><td><strong>最强效果</strong></td><td><code>anthropic/claude-opus-4-5</code></td><td>综合能力最强，工具调用最稳定</td></tr>
+<tr><td><strong>性价比首选</strong></td><td><code>anthropic/claude-sonnet-4-5</code></td><td>效果/成本平衡最佳</td></tr>
+<tr><td><strong>预算敏感</strong></td><td><code>anthropic/claude-haiku-4-5</code> 或 <code>openai/gpt-5-mini</code></td><td>低成本，适合简单任务</td></tr>
+<tr><td><strong>隐私优先</strong></td><td><code>venice/llama-3.3-70b</code></td><td>完全私有推理，无日志</td></tr>
+<tr><td><strong>代码专项</strong></td><td><code>openai/gpt-5.2</code> 或 <code>moonshot/kimi-k2.5</code></td><td>Coding benchmark 领先</td></tr>
+</table>
+<hr>
+<h2 id="二-支持的模型提供商">二、支持的模型提供商</h2>
+<p>OpenClaw 通过 <code>pi-ai</code> 统一 API 支持 20+ 提供商:</p>
+<h3 id="内置提供商-无需额外配置">内置提供商 (无需额外配置)</h3>
+<ul>
+<li><strong>Anthropic</strong>: Claude Opus/Sonnet/Haiku 系列</li>
+<li><strong>OpenAI</strong>: GPT-5.x, GPT-4.1, Codex</li>
+<li><strong>Google</strong>: Gemini 3/2.5 系列</li>
+<li><strong>xAI</strong>: Grok 4 系列</li>
+<li><strong>Z.AI</strong>: GLM 4.7</li>
+<li><strong>Groq/Cerebras</strong>: 高速推理</li>
+<li><strong>OpenRouter</strong>: 聚合多模型</li>
+</ul>
+<h3 id="需配置提供商">需配置提供商</h3>
+<ul>
+<li><strong>Venice AI</strong>: 隐私推理 + 匿名代理</li>
+<li><strong>Moonshot/Kimi</strong>: 中国区优化</li>
+<li><strong>MiniMax</strong>: M2.1 写作优化</li>
+<li><strong>Ollama</strong>: 本地模型</li>
+<li><strong>自定义</strong>: LM Studio, vLLM, LiteLLM 等</li>
+</ul>
+<hr>
+<h2 id="三-定价对比-2026-02-最新">三、定价对比 (2026-02 最新)</h2>
+<h3 id="3-1-anthropic-claude-系列">3.1 Anthropic Claude 系列</h3>
+<table>
+<tr><th>模型</th><th>输入 ($/MTok)</th><th>输出 ($/MTok)</th><th>缓存读取</th><th>缓存写入</th></tr>
+<tr><td><strong>Opus 4.6</strong></td><td>$5</td><td>$25</td><td>$0.50</td><td>$6.25</td></tr>
+<tr><td><strong>Opus 4.5</strong></td><td>$5</td><td>$25</td><td>$0.50</td><td>$6.25</td></tr>
+<tr><td><strong>Sonnet 4.5</strong></td><td>$3</td><td>$15</td><td>$0.30</td><td>$3.75</td></tr>
+<tr><td><strong>Haiku 4.5</strong></td><td>$1</td><td>$5</td><td>$0.10</td><td>$1.25</td></tr>
+<tr><td>Haiku 3</td><td>$0.25</td><td>$1.25</td><td>$0.03</td><td>$0.30</td></tr>
+</table>
+<blockquote>
+<p><strong>订阅替代</strong>: Claude Pro $17/月, Claude Max $100+/月 (5x-20x 用量)</p>
+</blockquote>
+<h3 id="3-2-openai-gpt-系列">3.2 OpenAI GPT 系列</h3>
+<table>
+<tr><th>模型</th><th>输入 ($/MTok)</th><th>缓存输入</th><th>输出 ($/MTok)</th></tr>
+<tr><td><strong>GPT-5.2</strong></td><td>$1.75</td><td>$0.175</td><td>$14.00</td></tr>
+<tr><td><strong>GPT-5.2 Pro</strong></td><td>$21.00</td><td>-</td><td>$168.00</td></tr>
+<tr><td><strong>GPT-5 mini</strong></td><td>$0.25</td><td>$0.025</td><td>$2.00</td></tr>
+<tr><td>GPT-4.1</td><td>$3.00</td><td>$0.75</td><td>$12.00</td></tr>
+<tr><td>GPT-4.1 mini</td><td>$0.80</td><td>$0.20</td><td>$3.20</td></tr>
+</table>
+<blockquote>
+<p><strong>订阅替代</strong>: Codex 订阅 (ChatGPT Plus/Pro)</p>
+</blockquote>
+<h3 id="3-3-google-gemini-系列">3.3 Google Gemini 系列</h3>
+<table>
+<tr><th>模型</th><th>输入 ($/MTok)</th><th>缓存输入</th><th>输出 ($/MTok)</th></tr>
+<tr><td><strong>Gemini 3 Pro</strong></td><td>$2.00</td><td>$0.20</td><td>$12.00</td></tr>
+<tr><td><strong>Gemini 3 Flash</strong></td><td>$0.50</td><td>$0.05</td><td>$3.00</td></tr>
+<tr><td>Gemini 2.5 Pro</td><td>$1.25</td><td>$0.125</td><td>$10.00</td></tr>
+<tr><td>Gemini 2.5 Flash</td><td>$0.30</td><td>$0.03</td><td>$2.50</td></tr>
+<tr><td>Gemini 2.5 Flash Lite</td><td>$0.10</td><td>$0.01</td><td>$0.40</td></tr>
+</table>
+<h3 id="3-4-成本估算示例">3.4 成本估算示例</h3>
+<p>假设每天 Agent 运行:</p>
+<ul>
+<li>输入 ~500K tokens (系统提示+历史+工具结果)</li>
+<li>输出 ~100K tokens</li>
+</ul>
+<table>
+<tr><th>模型</th><th>日成本</th><th>月成本 (30天)</th></tr>
+<tr><td>Opus 4.5</td><td>$5.00</td><td>$150</td></tr>
+<tr><td>Sonnet 4.5</td><td>$3.00</td><td>$90</td></tr>
+<tr><td>Haiku 4.5</td><td>$1.00</td><td>$30</td></tr>
+<tr><td>GPT-5.2</td><td>$2.28</td><td>$68</td></tr>
+<tr><td>GPT-5 mini</td><td>$0.33</td><td>$10</td></tr>
+<tr><td>Gemini 3 Pro</td><td>$2.20</td><td>$66</td></tr>
+<tr><td>Gemini 3 Flash</td><td>$0.55</td><td>$17</td></tr>
+</table>
+<blockquote>
+<p><strong>提示缓存</strong>: OpenClaw 支持 Anthropic prompt caching，可配置 5分钟/1小时 TTL，实际成本可降低 50-80%</p>
+</blockquote>
+<hr>
+<h2 id="四-效果评估维度">四、效果评估维度</h2>
+<h3 id="4-1-openclaw-内置测试套件">4.1 OpenClaw 内置测试套件</h3>
+<p>OpenClaw 提供三层测试体系:</p>
+<h4 id="layer-1-直接模型测试-models-profiles-live-test-ts">Layer 1: 直接模型测试 (<code>models.profiles.live.test.ts</code>)</h4>
+<ul>
+<li>绕过 Gateway，直接测试模型 API</li>
+<li>验证: 模型是否能正常返回响应</li>
+<li>隔离: 区分 "API 问题" vs "Gateway 问题"</li>
+</ul>
+<h4 id="layer-2-gateway-agent-冒烟测试-gateway-models-profiles-live-test-ts">Layer 2: Gateway + Agent 冒烟测试 (<code>gateway-models.profiles.live.test.ts</code>)</h4>
+<ul>
+<li>启动完整 Gateway 实例</li>
+<li>创建 <code>agent:dev:*</code> 测试会话</li>
+<li>执行三类探针:</li>
+<li><strong>响应探针</strong>: 无工具的基础对话</li>
+<li><strong>Read 探针</strong>: 写入随机文件，要求模型读取并返回内容</li>
+<li><strong>Exec+Read 探针</strong>: 要求模型执行命令写入文件后读取</li>
+<li><strong>图像探针</strong>: 发送带 OCR 挑战的图片，验证视觉理解</li>
+</ul>
+<pre data-lang="bash"><code><span class="token-comment"># 运行现代模型测试</span>
+OPENCLAW_LIVE_TEST=<span class="token-number">1</span> \
+OPENCLAW_LIVE_GATEWAY_MODELS=<span class="token-string">&quot;anthropic/claude-opus-<span class="token-number">4</span>-<span class="token-number">5</span>,openai/gpt-<span class="token-number">5.2</span>&quot;</span> \
+pnpm test:live</code></pre>
+<h4 id="layer-3-cli-后端测试-gateway-cli-backend-live-test-ts">Layer 3: CLI 后端测试 (<code>gateway-cli-backend.live.test.ts</code>)</h4>
+<ul>
+<li>测试 Claude Code CLI / Codex CLI 集成</li>
+<li>验证本地 CLI 作为后端的完整流程</li>
+</ul>
+<h3 id="4-2-关键评估指标">4.2 关键评估指标</h3>
+<table>
+<tr><th>维度</th><th>测试方法</th><th>权重</th></tr>
+<tr><td><strong>工具调用准确性</strong></td><td>Read/Exec 探针成功率</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td><strong>指令遵循</strong></td><td>系统提示遵循度</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td><strong>上下文利用</strong></td><td>长会话记忆测试</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td><strong>代码生成</strong></td><td>实际编码任务</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td><strong>多模态</strong></td><td>图像探针 OCR</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td><strong>响应延迟</strong></td><td>TTFT/TPS 测量</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td><strong>成本效率</strong></td><td>Token/效果比</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+</table>
+<h3 id="4-3-实际评估方法">4.3 实际评估方法</h3>
+<h4 id="方法-a-openclaw-内置扫描">方法 A: OpenClaw 内置扫描</h4>
+<pre data-lang="bash"><code><span class="token-comment"># 扫描 OpenRouter 免费模型并探测能力</span>
+openclaw models scan --max-candidates <span class="token-number">10</span> --set-default
+
+<span class="token-comment"># 查看当前模型状态</span>
+openclaw models status
+
+<span class="token-comment"># 列出所有可用模型</span>
+openclaw models list --all</code></pre>
+<h4 id="方法-b-手动-a-b-测试">方法 B: 手动 A/B 测试</h4>
+<pre data-lang="bash"><code><span class="token-comment"># 在聊天中切换模型</span>
+/model anthropic/claude-opus-<span class="token-number">4</span>-<span class="token-number">5</span>
+<span class="token-comment"># 执行测试任务...</span>
+
+/model openai/gpt-<span class="token-number">5.2</span>
+<span class="token-comment"># 执行相同任务对比...</span>
+
+<span class="token-comment"># 查看 token 使用和成本</span>
+/status
+/usage full</code></pre>
+<h4 id="方法-c-配置回退链">方法 C: 配置回退链</h4>
+<pre data-lang="json5"><code>{
+  agents: {
+    defaults: {
+      model: {
+        primary: <span class="token-string">&quot;anthropic/claude-sonnet-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span>,
+        fallbacks: [
+          <span class="token-string">&quot;openai/gpt-<span class="token-number">5.2</span>&quot;</span>,
+          <span class="token-string">&quot;google/gemini-<span class="token-number">3</span>-pro-preview&quot;</span>
+        ]
+      }
+    }
+  }
+}</code></pre>
+<hr>
+<h2 id="五-模型特性对比">五、模型特性对比</h2>
+<h3 id="5-1-工具调用-function-calling">5.1 工具调用 (Function Calling)</h3>
+<table>
+<tr><th>模型</th><th>工具调用质量</th><th>并行调用</th><th>复杂链式调用</th></tr>
+<tr><td>Claude Opus 4.5</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td>Claude Sonnet 4.5</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td>GPT-5.2</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td>Gemini 3 Pro</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+<tr><td>GLM 4.7</td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td><td><span class="marker-check">✅</span></td><td><span class="marker-star">⭐</span><span class="marker-star">⭐</span><span class="marker-star">⭐</span></td></tr>
+</table>
+<blockquote>
+<p>OpenClaw 文档备注: "GLM: a bit better for coding/tool calling. MiniMax: better for writing and vibes."</p>
+</blockquote>
+<h3 id="5-2-上下文窗口">5.2 上下文窗口</h3>
+<table>
+<tr><th>模型</th><th>上下文长度</th><th>实际可用</th></tr>
+<tr><td>Claude Opus/Sonnet 4.5</td><td>200K</td><td>~150K 稳定</td></tr>
+<tr><td>GPT-5.2</td><td>262K</td><td>~200K 稳定</td></tr>
+<tr><td>Gemini 3 Pro</td><td>202K</td><td>~150K 稳定</td></tr>
+<tr><td>Kimi K2.5</td><td>1M+</td><td>长文优势明显</td></tr>
+</table>
+<h3 id="5-3-特殊能力">5.3 特殊能力</h3>
+<table>
+<tr><th>能力</th><th>最佳选择</th></tr>
+<tr><td><strong>扩展思考</strong></td><td>Claude Opus (extended thinking), Gemini 3 Pro</td></tr>
+<tr><td><strong>代码生成</strong></td><td>GPT-5.2, Kimi K2.5, Claude Sonnet</td></tr>
+<tr><td><strong>多模态视觉</strong></td><td>GPT-5.2, Gemini 3, Claude Sonnet/Opus</td></tr>
+<tr><td><strong>中文理解</strong></td><td>Kimi K2.5, GLM 4.7, Qwen3</td></tr>
+<tr><td><strong>本地部署</strong></td><td>Ollama + Llama 3.3 70B / Qwen3</td></tr>
+</table>
+<hr>
+<h2 id="六-openclaw-推荐配置">六、OpenClaw 推荐配置</h2>
+<h3 id="6-1-最佳效果配置">6.1 最佳效果配置</h3>
+<pre data-lang="json5"><code>{
+  agents: {
+    defaults: {
+      model: { primary: <span class="token-string">&quot;anthropic/claude-opus-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span> },
+      models: {
+        <span class="token-string">&quot;anthropic/claude-opus-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span>: {
+          alias: <span class="token-string">&quot;opus&quot;</span>,
+          params: { cacheControlTtl: <span class="token-string">&quot;1h&quot;</span> }
+        }
+      }
+    }
+  }
+}</code></pre>
+<h3 id="6-2-性价比配置">6.2 性价比配置</h3>
+<pre data-lang="json5"><code>{
+  agents: {
+    defaults: {
+      model: {
+        primary: <span class="token-string">&quot;anthropic/claude-sonnet-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span>,
+        fallbacks: [<span class="token-string">&quot;anthropic/claude-haiku-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span>]
+      },
+      models: {
+        <span class="token-string">&quot;anthropic/claude-sonnet-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span>: { alias: <span class="token-string">&quot;sonnet&quot;</span> },
+        <span class="token-string">&quot;anthropic/claude-haiku-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span>: { alias: <span class="token-string">&quot;haiku&quot;</span> }
+      }
+    }
+  }
+}</code></pre>
+<h3 id="6-3-隐私优先配置-venice">6.3 隐私优先配置 (Venice)</h3>
+<pre data-lang="json5"><code>{
+  env: { VENICE_API_KEY: <span class="token-string">&quot;vapi_...&quot;</span> },
+  agents: {
+    defaults: {
+      model: {
+        primary: <span class="token-string">&quot;venice/llama-<span class="token-number">3.3</span>-70b&quot;</span>,
+        fallbacks: [<span class="token-string">&quot;venice/claude-opus-<span class="token-number">45</span>&quot;</span>]  <span class="token-comment">// 匿名代理</span>
+      }
+    }
+  }
+}</code></pre>
+<h3 id="6-4-混合成本优化配置">6.4 混合成本优化配置</h3>
+<pre data-lang="json5"><code>{
+  agents: {
+    defaults: {
+      model: {
+        primary: <span class="token-string">&quot;openai/gpt-<span class="token-number">5</span>-mini&quot;</span>,  <span class="token-comment">// 简单任务</span>
+        fallbacks: [
+          <span class="token-string">&quot;anthropic/claude-sonnet-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span>,  <span class="token-comment">// 中等任务</span>
+          <span class="token-string">&quot;anthropic/claude-opus-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span>     <span class="token-comment">// 复杂任务</span>
+        ]
+      },
+      heartbeat: { every: <span class="token-string">&quot;55m&quot;</span> }  <span class="token-comment">// 保持缓存热</span>
+    }
+  }
+}</code></pre>
+<hr>
+<h2 id="七-成本优化策略">七、成本优化策略</h2>
+<h3 id="7-1-prompt-caching">7.1 Prompt Caching</h3>
+<p>Anthropic 支持 5分钟/1小时 缓存 TTL:</p>
+<pre data-lang="json5"><code>{
+  agents: {
+    defaults: {
+      models: {
+        <span class="token-string">&quot;anthropic/claude-opus-<span class="token-number">4</span>-<span class="token-number">5</span>&quot;</span>: {
+          params: { cacheControlTtl: <span class="token-string">&quot;1h&quot;</span> }
+        }
+      },
+      heartbeat: { every: <span class="token-string">&quot;55m&quot;</span> }  <span class="token-comment">// <span class="token-number">55</span>分钟心跳保持缓存</span>
+    }
+  }
+}</code></pre>
+<p><strong>成本节省</strong>: 缓存读取仅 $0.50/MTok vs 输入 $5/MTok (节省 90%)</p>
+<h3 id="7-2-会话压缩">7.2 会话压缩</h3>
+<p>使用 <code>/compact</code> 主动压缩长会话:</p>
+<pre><code>/compact  # 总结当前会话，重置上下文</code></pre>
+<h3 id="7-3-batch-api-anthropic-openai">7.3 Batch API (Anthropic/OpenAI)</h3>
+<p>异步批处理可节省 50%:</p>
+<ul>
+<li>Anthropic: 支持 batch processing</li>
+<li>OpenAI: Batch API 24小时异步处理</li>
+</ul>
+<h3 id="7-4-订阅-vs-api">7.4 订阅 vs API</h3>
+<table>
+<tr><th>使用量</th><th>推荐</th></tr>
+<tr><td>&lt; $20/月</td><td>API 按量付费</td></tr>
+<tr><td>$20-100/月</td><td>Claude Pro 订阅 ($17)</td></tr>
+<tr><td>$100-500/月</td><td>Claude Max ($100) 或 API</td></tr>
+<tr><td>> $500/月</td><td>API + 批量处理 + 缓存优化</td></tr>
+</table>
+<hr>
+<h2 id="八-快速设置指南">八、快速设置指南</h2>
+<h3 id="8-1-anthropic-推荐">8.1 Anthropic (推荐)</h3>
+<pre data-lang="bash"><code><span class="token-comment"># 方式 A: API Key</span>
+openclaw onboard --auth-choice anthropic-api-key
+
+<span class="token-comment"># 方式 B: Claude 订阅 (setup-token)</span>
+claude setup-token
+openclaw models auth paste-token --provider anthropic</code></pre>
+<h3 id="8-2-openai">8.2 OpenAI</h3>
+<pre data-lang="bash"><code><span class="token-comment"># API Key</span>
+openclaw onboard --auth-choice openai-api-key
+
+<span class="token-comment"># 或 Codex 订阅 (OAuth)</span>
+openclaw onboard --auth-choice openai-codex</code></pre>
+<h3 id="8-3-venice-隐私">8.3 Venice (隐私)</h3>
+<pre data-lang="bash"><code>openclaw onboard --auth-choice venice-api-key
+openclaw models set venice/llama-<span class="token-number">3.3</span>-70b</code></pre>
+<h3 id="8-4-验证配置">8.4 验证配置</h3>
+<pre data-lang="bash"><code>openclaw models status
+openclaw chat <span class="token-string">&quot;Hello, what model are you?&quot;</span></code></pre>
+<hr>
+<h2 id="九-评估清单">九、评估清单</h2>
+<p>在选择模型前，建议执行以下评估:</p>
+<ul>
+<li>☐ <strong>工具调用测试</strong>: 让模型执行 read/exec 任务</li>
+<li>☐ <strong>指令遵循测试</strong>: 给复杂系统提示，验证遵循度</li>
+<li>☐ <strong>长会话测试</strong>: 20+ 轮对话后检查上下文记忆</li>
+<li>☐ <strong>代码任务测试</strong>: 实际编程任务的完成质量</li>
+<li>☐ <strong>成本监控</strong>: 运行 <code>/status</code> 和 <code>/usage cost</code> 追踪消耗</li>
+<li>☐ <strong>延迟测试</strong>: 注意首 token 时间 (TTFT) 和生成速度</li>
+</ul>
+<hr>
+<h2 id="十-总结">十、总结</h2>
+<h3 id="选型决策树">选型决策树</h3>
+<pre><code>需要最强能力？
+├── 是 → Claude Opus 4.5
+└── 否 → 预算敏感？
+         ├── 是 → 简单任务？
+         │        ├── 是 → Haiku 4.5 / GPT-5 mini
+         │        └── 否 → Sonnet 4.5
+         └── 否 → 需要隐私？
+                  ├── 是 → Venice Llama 3.3 70B
+                  └── 否 → Sonnet 4.5 (默认推荐)</code></pre>
+<h3 id="当前推荐-2026-02">当前推荐 (2026-02)</h3>
+<p><strong>默认选择</strong>: <code>anthropic/claude-sonnet-4-5</code></p>
+<ul>
+<li>工具调用稳定</li>
+<li>成本合理 ($3/$15 per MTok)</li>
+<li>OpenClaw 官方推荐</li>
+<li>配合 prompt caching 效果最佳</li>
+</ul>
+<hr>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>OpenClaw 文档: https://docs.openclaw.ai</li>
+<li>Anthropic 定价: https://claude.com/pricing</li>
+<li>OpenAI 定价: https://openai.com/api/pricing</li>
+<li>Google Vertex AI 定价: https://cloud.google.com/vertex-ai/generative-ai/pricing</li>
+<li>Venice AI: https://venice.ai</li>
+</ul>
+</div>
+    <footer>
+        <p>报告生成时间: 2026/2/8 21:42:11 GMT+8</p>
         <p>Generated by Miles AI Assistant ⚡</p>
     </footer>
 </body>

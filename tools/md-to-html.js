@@ -175,6 +175,66 @@ const HTML_TEMPLATE = `<!DOCTYPE html>
             color: var(--accent-orange);
             opacity: 0.7;
         }
+        /* Code blocks */
+        pre {
+            background: #1a1f2b;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+            color: #e6edf3;
+        }
+        code {
+            background: #343942;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, Monaco, 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #79c0ff;
+        }
+        /* Syntax highlighting (basic) */
+        .hljs-keyword, .hljs-selector-tag { color: #ff7b72; }
+        .hljs-string, .hljs-attr { color: #a5d6ff; }
+        .hljs-comment { color: #8b949e; font-style: italic; }
+        .hljs-function, .hljs-title { color: #d2a8ff; }
+        .hljs-number { color: #79c0ff; }
+        .hljs-built_in { color: #ffa657; }
+        .hljs-variable { color: #ffa657; }
+        .hljs-type { color: #7ee787; }
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        /* Horizontal rule */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+        /* Inline formatting in content */
+        section p, section li {
+            line-height: 1.7;
+        }
+        section ul, section ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        section li {
+            margin: 0.25rem 0;
+        }
         footer {
             text-align: center;
             padding: 2rem 0;
