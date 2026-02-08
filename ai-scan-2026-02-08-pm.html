@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 下午扫描报告 - 2026年2月8日</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-purple: #a371f7;
+            --accent-orange: #d29922;
+            --border: #30363d;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .date { color: var(--text-muted); font-size: 1.1rem; }
+        section { margin-bottom: 3rem; }
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .links a {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--border);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+        .links a:hover { background: var(--accent); color: var(--bg); }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.1), rgba(163, 113, 247, 0.1));
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .highlight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .highlight-item { display: flex; align-items: flex-start; gap: 0.75rem; }
+        .highlight-item .icon { font-size: 1.5rem; }
+        .highlight-item .content h4 { font-size: 0.9rem; color: var(--accent); }
+        .highlight-item .content p { font-size: 0.85rem; color: var(--text-muted); }
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            background: var(--accent-purple);
+            color: white;
+            border-radius: 10px;
+            margin-right: 0.25rem;
+        }
+        .tag.green { background: var(--accent-green); }
+        .tag.orange { background: var(--accent-orange); }
+        footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 AI 下午扫描报告</h1>
+            <p class="date">2026年2月8日 17:00 (Asia/Shanghai)</p>
+        </header>
+
+        <section>
+            <h2>🔥 GitHub Trending AI项目</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>KeygraphHQ/shannon</h3>
+                    <span class="tag green">Security</span>
+                    <p>全自动AI黑客工具，在XBOW基准测试中达到96.15%成功率，用于发现Web应用真实漏洞。</p>
+                    <div class="links">
+                        <a href="https://github.com/KeygraphHQ/shannon" target="_blank">📦 GitHub</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>openai/skills</h3>
+                    <span class="tag">Official</span>
+                    <p>OpenAI官方发布的Codex技能目录。</p>
+                    <div class="links">
+                        <a href="https://github.com/openai/skills" target="_blank">📦 GitHub</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>microsoft/litebox</h3>
+                    <span class="tag green">Security</span>
+                    <p>支持内核态和用户态执行的安全聚焦库操作系统。</p>
+                    <div class="links">
+                        <a href="https://github.com/microsoft/litebox" target="_blank">📦 GitHub</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>p-e-w/heretic</h3>
+                    <span class="tag orange">Tools</span>
+                    <p>全自动语言模型审查移除工具。</p>
+                    <div class="links">
+                        <a href="https://github.com/p-e-w/heretic" target="_blank">📦 GitHub</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>obra/superpowers</h3>
+                    <span class="tag">Framework</span>
+                    <p>一个可用的agentic技能框架和软件开发方法论。</p>
+                    <div class="links">
+                        <a href="https://github.com/obra/superpowers" target="_blank">📦 GitHub</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>OpenBMB/MiniCPM-o</h3>
+                    <span class="tag">Multimodal</span>
+                    <p>Gemini 2.5 Flash级别MLLM，支持视觉、语音和全双工多模态实时流，可在手机上运行。</p>
+                    <div class="links">
+                        <a href="https://github.com/OpenBMB/MiniCPM-o" target="_blank">📦 GitHub</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>ComposioHQ/awesome-claude-skills</h3>
+                    <span class="tag">Resources</span>
+                    <p>精选的Claude Skills、资源和工具列表。</p>
+                    <div class="links">
+                        <a href="https://github.com/ComposioHQ/awesome-claude-skills" target="_blank">📦 GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 arXiv cs.AI 最新论文</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>DyTopo: Multi-Agent Dynamic Topology Routing</h3>
+                    <span class="tag">Multi-Agent</span>
+                    <p>管理者引导的多智能体框架，通过语义匹配进行动态消息路由，平均提升6.2%。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.06039" target="_blank">📄 arXiv</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>CommCP: LLM-Based Multi-Agent Coordination</h3>
+                    <span class="tag">Multi-Agent</span><span class="tag green">Robotics</span>
+                    <p>用于多智能体多任务具身问答的去中心化通信框架，采用保形预测校准消息。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.06038" target="_blank">📄 arXiv</a>
+                        <a href="https://comm-cp.github.io/" target="_blank">🌐 项目</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>BudgetMem: Agent Runtime Memory</h3>
+                    <span class="tag">Memory</span>
+                    <p>查询感知的运行时智能体内存框架，通过RL训练路由器进行预算层路由。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.06025" target="_blank">📄 arXiv</a>
+                        <a href="https://github.com/ViktorAxelsen/BudgetMem" target="_blank">💻 代码</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>CORAL: Inference-Time Steering</h3>
+                    <span class="tag orange">LLM</span>
+                    <p>正则化推理时转向方法，准确率提升10%，预期校准误差改善50%。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.06022" target="_blank">📄 arXiv</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>GenArena: Visual Generation Evaluation</h3>
+                    <span class="tag">Evaluation</span>
+                    <p>采用成对比较范式的视觉生成评估框架，与LMArena排行榜Spearman相关性达0.86。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.06013" target="_blank">📄 arXiv</a>
+                        <a href="https://genarena.github.io/" target="_blank">🌐 项目</a>
+                        <a href="https://github.com/ruihanglix/genarena" target="_blank">💻 代码</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>AgenticPay: Multi-Agent Negotiation</h3>
+                    <span class="tag">Multi-Agent</span><span class="tag orange">Economics</span>
+                    <p>多智能体买卖谈判基准和模拟框架，支持超过110个任务。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.06008" target="_blank">📄 arXiv</a>
+                        <a href="https://github.com/SafeRL-Lab/AgenticPay" target="_blank">💻 代码</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Share: LoRA Subspaces for Continual Learning</h3>
+                    <span class="tag orange">Efficiency</span>
+                    <p>共享低秩子空间实现持续学习，相比传统LoRA参数减少100倍，内存节省281倍。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.06043" target="_blank">📄 arXiv</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>RISE-Video: Video Generation Reasoning</h3>
+                    <span class="tag">Video</span><span class="tag">Benchmark</span>
+                    <p>TI2V合成推理导向基准，467个人工标注样本，跨越8个类别。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.05986" target="_blank">📄 arXiv</a>
+                        <a href="https://github.com/VisionXLab/RISE-Video" target="_blank">💻 代码</a>
+                        <a href="https://huggingface.co/datasets/VisionXLab/RISE-Video" target="_blank">🤗 数据集</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Diamond Maps: Efficient Reward Alignment</h3>
+                    <span class="tag">Alignment</span>
+                    <p>随机流图模型，在推理时实现高效准确的任意奖励对齐。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.05993" target="_blank">📄 arXiv</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Whisper for Speech Emotion Recognition</h3>
+                    <span class="tag green">Audio</span>
+                    <p>基于Whisper的语音情感识别，ShEMO数据集上未加权准确率提升2.47%。</p>
+                    <div class="links">
+                        <a href="https://arxiv.org/abs/2602.06000" target="_blank">📄 arXiv</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📊 今日亮点</h2>
+            <div class="highlight-box">
+                <div class="highlight-grid">
+                    <div class="highlight-item">
+                        <span class="icon">🤖</span>
+                        <div class="content">
+                            <h4>多智能体</h4>
+                            <p>DyTopo、CommCP、AgenticPay等多个协作框架</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="icon">🧠</span>
+                        <div class="content">
+                            <h4>LLM优化</h4>
+                            <p>Share LoRA (100x参数减少)、CORAL推理时转向</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="icon">🎬</span>
+                        <div class="content">
+                            <h4>视频生成</h4>
+                            <p>RISE-Video推理能力基准、GenArena评估框架</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="icon">🔐</span>
+                        <div class="content">
+                            <h4>安全</h4>
+                            <p>Shannon自动漏洞发现、Heretic审查移除</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>报告生成时间: 2026-02-08 17:00 CST | AI Afternoon Scan</p>
+        </footer>
+    </div>
+</body>
+</html>
