@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI下午扫描 - 2026年2月10日</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-purple: #a371f7;
+            --accent-orange: #d29922;
+            --accent-red: #f85149;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #1a1f35 0%, #0d1117 100%);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        section h2 {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .card h3 {
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+        .card .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .card .tag.arxiv { background: var(--accent-purple); }
+        .card .tag.github { background: var(--accent-green); }
+        .card .tag.agent { background: var(--accent-orange); }
+        .card .tag.security { background: var(--accent-red); }
+        .card p {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        .card .links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card .links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .card .links a:hover {
+            text-decoration: underline;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        tr:hover { background: rgba(88, 166, 255, 0.05); }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-link">← 返回索引</a>
+    
+    <header>
+        <h1>🔍 AI下午扫描</h1>
+        <p class="meta">📅 2026年2月10日 17:00 CST | 来源: GitHub Trending / arXiv cs.AI</p>
+    </header>
+
+    <section>
+        <h2>🔥 GitHub Trending AI项目</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="tag security">安全</span>
+                <h3>KeygraphHQ/shannon</h3>
+                <p>全自主AI黑客，专门在Web应用中发现真实漏洞。在XBOW Benchmark无提示版本上达到<strong>96.15%</strong>成功率。</p>
+                <div class="links">
+                    <a href="https://github.com/KeygraphHQ/shannon" target="_blank">📦 GitHub仓库</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag agent">Agent</span>
+                <h3>virattt/dexter</h3>
+                <p>用于深度金融研究的自主智能体，自动分析市场数据和财务报告。</p>
+                <div class="links">
+                    <a href="https://github.com/virattt/dexter" target="_blank">📦 GitHub仓库</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag github">工具</span>
+                <h3>pydantic/monty</h3>
+                <p>专为AI设计的最小化、安全的Python解释器，用Rust编写，可安全执行AI生成的代码。</p>
+                <div class="links">
+                    <a href="https://github.com/pydantic/monty" target="_blank">📦 GitHub仓库</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag agent">Agent</span>
+                <h3>hsliuping/TradingAgents-CN</h3>
+                <p>基于多智能体LLM的中文金融交易框架，TradingAgents中文增强版。</p>
+                <div class="links">
+                    <a href="https://github.com/hsliuping/TradingAgents-CN" target="_blank">📦 GitHub仓库</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag github">工具</span>
+                <h3>iOfficeAI/AionUi</h3>
+                <p>免费、本地、开源的24/7协作平台，支持Gemini CLI、Claude Code、Codex、OpenCode等主流AI编程工具。</p>
+                <div class="links">
+                    <a href="https://github.com/iOfficeAI/AionUi" target="_blank">📦 GitHub仓库</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag agent">官方</span>
+                <h3>github/gh-aw</h3>
+                <p>GitHub官方发布的Agentic Workflows工具，实现GitHub自动化的Agent化。</p>
+                <div class="links">
+                    <a href="https://github.com/github/gh-aw" target="_blank">📦 GitHub仓库</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag">官方</span>
+                <h3>openai/skills</h3>
+                <p>OpenAI官方的Codex技能目录，定义和扩展AI编程能力。</p>
+                <div class="links">
+                    <a href="https://github.com/openai/skills" target="_blank">📦 GitHub仓库</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag github">插件</span>
+                <h3>EveryInc/compound-engineering-plugin</h3>
+                <p>官方Claude Code复合工程插件，扩展Claude Code能力。</p>
+                <div class="links">
+                    <a href="https://github.com/EveryInc/compound-engineering-plugin" target="_blank">📦 GitHub仓库</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>📄 arXiv cs.AI 最新论文</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="tag arxiv">基准测试</span>
+                <h3>GEBench: GUI环境基准测试</h3>
+                <p>评估GUI生成中动态交互和时间一致性的综合基准，包含700个样本，5类任务，提出GE-Score五维评估指标。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.09007" target="_blank">📄 论文</a>
+                    <a href="https://github.com/stepfun-ai/GEBench" target="_blank">💻 代码</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag arxiv">AGI</span>
+                <h3>Data Science Towards AGI: 分层数据管理</h3>
+                <p>提出L0-L4分层数据管理框架，从原始资源到可验证知识，支持LLM训练全生命周期。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.09003" target="_blank">📄 论文</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag arxiv">推理</span>
+                <h3>iGRPO: 自反馈驱动的LLM推理</h3>
+                <p>在GRPO基础上增加动态自我条件化，AIME24达<strong>85.62%</strong>、AIME25达<strong>79.64%</strong> SOTA。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.09000" target="_blank">📄 论文</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag agent">科学发现</span>
+                <h3>InternAgent-1.5: 长周期自主科学发现</h3>
+                <p>统一的端到端科学发现系统，包含生成、验证、演化三个协调子系统，在GAIA、HLE等基准上领先。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.08990" target="_blank">📄 论文</a>
+                    <a href="https://github.com/InternScience/InternAgent" target="_blank">💻 代码</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag security">安全</span>
+                <h3>Next-Gen CAPTCHAs: 对抗GUI-Agent的防御</h3>
+                <p>利用人类与AI的"认知差距"设计动态任务，对抗GUI-Agent自动化攻击。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.09012" target="_blank">📄 论文</a>
+                    <a href="https://greenoso.github.io/NextGen-CAPTCHAs_webpage/" target="_blank">🌐 项目页</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag arxiv">世界模型</span>
+                <h3>stable-worldmodel-v1: 可复现世界模型研究</h3>
+                <p>模块化、经过测试的世界模型研究生态系统，提供高效数据收集、标准化环境和规划算法。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.08968" target="_blank">📄 论文</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag arxiv">生成</span>
+                <h3>ArcFlow: 2步文本生成图像</h3>
+                <p>非线性流蒸馏框架，基于Qwen-Image-20B和FLUX.1-dev，仅微调<5%参数实现<strong>40倍加速</strong>。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.09014" target="_blank">📄 论文</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag arxiv">优化</span>
+                <h3>ARO: 大模型矩阵优化新视角</h3>
+                <p>自适应旋转优化框架，比AdamW快<strong>1.3-1.35倍</strong>，比正交化方法快<strong>1.1-1.15倍</strong>。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.09006" target="_blank">📄 论文</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag arxiv">机器人</span>
+                <h3>机器人社会导航: VLM引导的路径选择</h3>
+                <p>集成几何规划与社会推理的导航框架，使用微调VLM评估路径的社会适宜性。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.09002" target="_blank">📄 论文</a>
+                    <a href="https://path-etiquette.github.io" target="_blank">🌐 项目页</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag agent">数字孪生</span>
+                <h3>Digital Twin与Agentic AI用于山火管理</h3>
+                <p>智能虚拟态势室(IVSR)平台，结合双向数字孪生与自主AI Agent进行野火灾害管理。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.08949" target="_blank">📄 论文</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag arxiv">3D/4D</span>
+                <h3>MotionCrafter: 4D VAE密集几何与运动重建</h3>
+                <p>从单目视频联合重建4D几何和密集场景流，几何重建提升<strong>38.64%</strong>，运动重建提升<strong>25.0%</strong>。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.08961" target="_blank">📄 论文</a>
+                    <a href="https://ruijiezhu94.github.io/MotionCrafter_Page" target="_blank">🌐 项目页</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="tag arxiv">语言模型</span>
+                <h3>Next Concept Prediction: 离散潜空间中的下一概念预测</h3>
+                <p>提出NCP范式，预测跨越多token的离散概念，在13个基准上比传统token级模型表现更好。</p>
+                <div class="links">
+                    <a href="https://arxiv.org/abs/2602.08984" target="_blank">📄 论文</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>📊 今日要点</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>类别</th>
+                    <th>亮点</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>🛡️ 安全</strong></td>
+                    <td>Shannon达到96%漏洞发现成功率；Next-Gen CAPTCHA对抗GUI-Agent</td>
+                </tr>
+                <tr>
+                    <td><strong>🤖 Agent</strong></td>
+                    <td>InternAgent-1.5自主科学发现；GitHub官方gh-aw工作流</td>
+                </tr>
+                <tr>
+                    <td><strong>⚡ 优化</strong></td>
+                    <td>iGRPO在AIME25达79.64%；ARO比AdamW快1.35倍</td>
+                </tr>
+                <tr>
+                    <td><strong>🎨 生成</strong></td>
+                    <td>ArcFlow 2步文本生图40倍加速</td>
+                </tr>
+                <tr>
+                    <td><strong>🔧 工具</strong></td>
+                    <td>Monty安全Python解释器；AionUi多Agent协作平台</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>报告生成时间: 2026-02-10 17:00 CST</p>
+        <p>数据来源: GitHub Trending / arXiv API</p>
+    </footer>
+</body>
+</html>
