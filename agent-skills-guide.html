@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Skills 完全指南 | 最佳实践与优秀示例</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-orange: #d29922;
+            --accent-red: #f85149;
+            --accent-purple: #a371f7;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        header h1 { 
+            font-size: 2.5rem; 
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        header .meta { color: var(--text-muted); font-size: 0.9rem; }
+        
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--accent); }
+        .toc ul { list-style: none; columns: 2; }
+        .toc li { padding: 0.3rem 0; }
+        .toc a { color: var(--text); text-decoration: none; }
+        .toc a:hover { color: var(--accent); }
+        
+        section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--accent-green);
+        }
+        section h3 {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent-orange);
+        }
+        section h4 {
+            font-size: 1rem;
+            margin: 1rem 0 0.5rem;
+            color: var(--accent-purple);
+        }
+        
+        p { margin-bottom: 1rem; }
+        
+        pre {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+        code {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            background: rgba(110,118,129,0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th { 
+            color: var(--text-muted); 
+            font-weight: 600;
+            background: var(--bg);
+        }
+        
+        .principle-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .principle-card h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .example-card {
+            background: var(--bg);
+            border-left: 4px solid var(--accent-green);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .example-card.warning {
+            border-left-color: var(--accent-orange);
+        }
+        .example-card.complex {
+            border-left-color: var(--accent-purple);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        .badge-simple { background: rgba(59,251,80,0.2); color: var(--accent-green); }
+        .badge-standard { background: rgba(88,166,255,0.2); color: var(--accent); }
+        .badge-script { background: rgba(210,153,34,0.2); color: var(--accent-orange); }
+        .badge-complex { background: rgba(163,113,247,0.2); color: var(--accent-purple); }
+        
+        .file-tree {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+        }
+        .file-tree .folder { color: var(--accent); }
+        .file-tree .required { color: var(--accent-green); }
+        .file-tree .optional { color: var(--text-muted); }
+        
+        .tip {
+            background: rgba(88,166,255,0.1);
+            border: 1px solid rgba(88,166,255,0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .tip::before {
+            content: "💡 ";
+        }
+        
+        .warning-box {
+            background: rgba(248,81,73,0.1);
+            border: 1px solid rgba(248,81,73,0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .warning-box::before {
+            content: "⚠️ ";
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            header h1 { font-size: 1.8rem; }
+            .toc ul { columns: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🧩 Agent Skills 完全指南</h1>
+        <p class="meta">最佳实践与优秀示例汇总 | 2026-02-11</p>
+    </header>
+
+    <nav class="toc">
+        <h2>📑 目录</h2>
+        <ul>
+            <li><a href="#principles">核心原则</a></li>
+            <li><a href="#structure">Skill 结构</a></li>
+            <li><a href="#frontmatter">Frontmatter 详解</a></li>
+            <li><a href="#description">Description 写作</a></li>
+            <li><a href="#resources">附属资源</a></li>
+            <li><a href="#examples">优秀示例</a></li>
+            <li><a href="#patterns">写作模式</a></li>
+            <li><a href="#checklist">检查清单</a></li>
+        </ul>
+    </nav>
+
+    <section id="principles">
+        <h2>🎯 核心原则</h2>
+        
+        <div class="principle-card">
+            <h4>1. 简洁至上 (Concise is Key)</h4>
+            <p>Context window 是公共资源。Skill 与系统提示、对话历史、其他 Skills 共享上下文。</p>
+            <p><strong>默认假设</strong>：AI 已经很聪明了。只添加 AI 不知道的信息。</p>
+            <p>每写一段内容前问自己：</p>
+            <ul>
+                <li>"AI 真的需要这个解释吗？"</li>
+                <li>"这段话值得占用 token 吗？"</li>
+            </ul>
+            <div class="tip">优先使用简洁示例，而非冗长解释。</div>
+        </div>
+        
+        <div class="principle-card">
+            <h4>2. 设定适当的自由度</h4>
+            <table>
+                <tr><th>自由度</th><th>形式</th><th>适用场景</th></tr>
+                <tr><td><strong>高</strong></td><td>文本说明</td><td>多种方案有效、依赖上下文判断</td></tr>
+                <tr><td><strong>中</strong></td><td>伪代码/带参数脚本</td><td>有首选模式但允许变化</td></tr>
+                <tr><td><strong>低</strong></td><td>具体脚本、少参数</td><td>操作脆弱易错、一致性关键</td></tr>
+            </table>
+        </div>
+        
+        <div class="principle-card">
+            <h4>3. 渐进式披露 (Progressive Disclosure)</h4>
+            <p>三级加载系统：</p>
+            <table>
+                <tr><th>层级</th><th>内容</th><th>加载时机</th><th>大小建议</th></tr>
+                <tr><td><strong>L1</strong></td><td>name + description</td><td>始终在上下文</td><td>~100 词</td></tr>
+                <tr><td><strong>L2</strong></td><td>SKILL.md 正文</td><td>Skill 触发时</td><td>&lt;5000 词</td></tr>
+                <tr><td><strong>L3</strong></td><td>附属资源</td><td>按需加载</td><td>无限制</td></tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="structure">
+        <h2>📁 Skill 结构</h2>
+        
+        <div class="file-tree">
+            <span class="folder">skill-name/</span><br>
+            ├── <span class="required">SKILL.md</span>              # 必需：主文件<br>
+            ├── <span class="optional">scripts/</span>              # 可选：可执行脚本<br>
+            │   └── process.sh<br>
+            ├── <span class="optional">references/</span>           # 可选：参考文档<br>
+            │   └── api-docs.md<br>
+            └── <span class="optional">assets/</span>               # 可选：模板/资源文件<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;└── template.html
+        </div>
+        
+        <h3>各目录用途</h3>
+        <table>
+            <tr><th>目录</th><th>用途</th><th>示例</th></tr>
+            <tr><td><code>scripts/</code></td><td>封装复杂命令、确保可重复性</td><td>frame.sh, generate_image.py</td></tr>
+            <tr><td><code>references/</code></td><td>按需加载的详细文档</td><td>api-docs.md, schema.md</td></tr>
+            <tr><td><code>assets/</code></td><td>模板和资源文件（不加载到上下文）</td><td>template.html, logo.png</td></tr>
+        </table>
+        
+        <div class="warning-box">
+            <strong>不要包含</strong>：README.md, CHANGELOG.md, INSTALLATION_GUIDE.md — Skill 是给 AI 用的，不需要人类文档。
+        </div>
+    </section>
+
+    <section id="frontmatter">
+        <h2>📋 Frontmatter 详解</h2>
+        
+        <h3>基本格式</h3>
+        <pre><code>---
+name: my-skill
+description: 简短描述做什么 + 触发条件
+homepage: https://example.com
+metadata: {"clawdbot":{"emoji":"🔧","requires":{"bins":["curl"]}}}
+---</code></pre>
+        
+        <h3>必需字段</h3>
+        <table>
+            <tr><th>字段</th><th>说明</th></tr>
+            <tr><td><code>name</code></td><td>Skill 名称 (小写、连字符)</td></tr>
+            <tr><td><code>description</code></td><td><strong>关键字段</strong> - 这是触发机制，必须清晰全面</td></tr>
+        </table>
+        
+        <h3>Metadata 结构 (Clawdbot)</h3>
+        <pre><code>{
+  "clawdbot": {
+    "emoji": "🔧",
+    "requires": {
+      "bins": ["ffmpeg"],        // 必需的命令行工具
+      "anyBins": ["node", "bun"], // 至少有一个
+      "env": ["API_KEY"],        // 必需的环境变量
+      "config": ["browser.enabled"]
+    },
+    "primaryEnv": "API_KEY",
+    "os": ["darwin", "linux"],   // 限定操作系统
+    "install": [{
+      "id": "brew",
+      "kind": "brew",
+      "formula": "my-tool",
+      "bins": ["my-tool"],
+      "label": "Install via Homebrew"
+    }]
+  }
+}</code></pre>
+    </section>
+
+    <section id="description">
+        <h2>✍️ Description 写作指南</h2>
+        
+        <p>Description 是最重要的字段，决定 Skill 何时被触发。</p>
+        
+        <div class="example-card warning">
+            <h4>❌ 差的例子</h4>
+            <pre><code>description: PDF 处理工具</code></pre>
+            <p>问题：太笼统，无法判断何时触发</p>
+        </div>
+        
+        <div class="example-card">
+            <h4>✅ 好的例子</h4>
+            <pre><code>description: |
+  Edit PDFs with natural-language instructions using the nano-pdf CLI. 
+  Use when the user asks to: rotate PDF pages, merge PDFs, extract pages, 
+  add watermarks, or convert PDF to images.</code></pre>
+            <p>要点：说明做什么 + 列出具体触发场景</p>
+        </div>
+        
+        <h3>Description 写作要点</h3>
+        <ol>
+            <li>说明 Skill 做什么</li>
+            <li>列出具体触发场景 ("Use when...")</li>
+            <li>包含关键动词和名词</li>
+            <li>不要写在正文的 "When to use" 段落里 — 正文是触发后才加载的</li>
+        </ol>
+    </section>
+
+    <section id="resources">
+        <h2>📦 附属资源使用</h2>
+        
+        <h3>Scripts 目录</h3>
+        <p><strong>何时使用</strong>：相同代码反复重写、需要确定性可靠性、复杂 CLI 参数组合</p>
+        
+        <h4>脚本示例 (video-frames/scripts/frame.sh)</h4>
+        <pre><code>#!/usr/bin/env bash
+set -euo pipefail
+
+ffmpeg -hide_banner -loglevel error -y \
+  -ss "$time" -i "$input" -frames:v 1 "$output"
+
+echo "$output"</code></pre>
+        
+        <h4>Python 脚本带内联依赖 (uv)</h4>
+        <pre><code>#!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["google-genai>=1.0.0", "pillow>=10.0.0"]
+# ///
+
+# 无需 requirements.txt，uv 自动处理依赖</code></pre>
+        
+        <h4>在 SKILL.md 中引用</h4>
+        <pre><code>提取帧：
+```bash
+{baseDir}/scripts/frame.sh video.mp4 --time 00:00:10 --out /tmp/frame.jpg
+```</code></pre>
+        <div class="tip"><code>{baseDir}</code> 会自动替换为 Skill 目录路径</div>
+        
+        <h3>References 目录</h3>
+        <p><strong>何时使用</strong>：详细 API 文档、数据库 Schema、领域知识</p>
+        
+        <h4>组织模式</h4>
+        <div class="file-tree">
+            <span class="folder">bigquery-skill/</span><br>
+            ├── SKILL.md (概览 + 导航)<br>
+            └── <span class="folder">references/</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;├── finance.md (财务指标)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;├── sales.md (销售数据)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;└── product.md (产品数据)
+        </div>
+        
+        <h4>在 SKILL.md 中引用</h4>
+        <pre><code>## 高级功能
+
+- **财务查询**: 见 [references/finance.md](references/finance.md)
+- **销售数据**: 见 [references/sales.md](references/sales.md)</code></pre>
+    </section>
+
+    <section id="examples">
+        <h2>🏆 优秀示例展示</h2>
+        
+        <h3><span class="badge badge-simple">极简型</span> weather (30行)</h3>
+        <div class="example-card">
+            <pre><code>---
+name: weather
+description: Get current weather and forecasts (no API key required).
+metadata: {"clawdbot":{"emoji":"🌤️","requires":{"bins":["curl"]}}}
+---
+
+# Weather
+
+## wttr.in (primary)
+
+Quick one-liner:
+```bash
+curl -s "wttr.in/London?format=3"
+```
+
+Tips:
+- URL-encode spaces: `wttr.in/New+York`
+- Units: `?m` (metric) `?u` (USCS)</code></pre>
+            <p><strong>✅ 优点</strong>：极简、直接可用、无废话</p>
+        </div>
+        
+        <h3><span class="badge badge-standard">标准型</span> gog (Google Workspace)</h3>
+        <div class="example-card">
+            <pre><code>---
+name: gog
+description: Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs.
+metadata: {"clawdbot":{"emoji":"🎮","requires":{"bins":["gog"]}}}
+---
+
+# gog
+
+Setup (once)
+- `gog auth credentials /path/to/client_secret.json`
+- `gog auth add you@gmail.com --services gmail,calendar,drive`
+
+Common commands
+- Gmail search: `gog gmail search 'newer_than:7d' --max 10`
+- Gmail send: `gog gmail send --to a@b.com --subject "Hi" --body "Hello"`
+- Calendar: `gog calendar events &lt;calendarId&gt; --from &lt;iso&gt; --to &lt;iso&gt;`
+
+Email Formatting
+- Prefer plain text with `--body-file`
+- Example (stdin):
+  ```bash
+  gog gmail send --to a@b.com --subject "Hi" --body-file - &lt;&lt;'EOF'
+  Hi Name,
+  Thanks for meeting today.
+  EOF
+  ```</code></pre>
+            <p><strong>✅ 优点</strong>：结构清晰、覆盖主要用例、有实用技巧</p>
+        </div>
+        
+        <h3><span class="badge badge-script">脚本型</span> nano-banana-pro</h3>
+        <div class="example-card">
+            <pre><code>---
+name: nano-banana-pro
+description: Generate or edit images via Gemini 3 Pro Image.
+metadata: {"clawdbot":{"emoji":"🍌","requires":{"bins":["uv"],"env":["GEMINI_API_KEY"]}}}
+---
+
+# Nano Banana Pro
+
+Generate
+```bash
+uv run {baseDir}/scripts/generate_image.py --prompt "description" --filename "output.png"
+```
+
+Edit
+```bash
+uv run {baseDir}/scripts/generate_image.py --prompt "edit" --input-image "/path/in.png"
+```
+
+Notes
+- Resolutions: `1K` (default), `2K`, `4K`
+- Script prints `MEDIA:` line for auto-attach</code></pre>
+            <p><strong>✅ 优点</strong>：SKILL.md 简洁 + 脚本处理复杂逻辑 + uv 内联依赖</p>
+        </div>
+        
+        <h3><span class="badge badge-complex">复杂型</span> coding-agent</h3>
+        <div class="example-card complex">
+            <pre><code>---
+name: coding-agent
+description: Run Codex CLI, Claude Code via background process for programmatic control.
+metadata: {"clawdbot":{"emoji":"🧩","requires":{"anyBins":["claude","codex"]}}}
+---
+
+# Coding Agent
+
+## ⚠️ PTY Mode Required!
+**Always use `pty:true`** when running coding agents.
+
+## Quick Start
+```bash
+bash pty:true workdir:~/project command:"codex exec 'Add error handling'"
+```
+
+## The Pattern: workdir + background + pty
+```bash
+bash pty:true workdir:~/project background:true command:"codex exec --full-auto 'Build snake game'"
+process action:log sessionId:XXX   # Monitor
+process action:kill sessionId:XXX  # Stop
+```
+
+## ⚠️ Rules
+1. Always use pty:true
+2. Respect tool choice
+3. Be patient with long tasks
+4. NEVER start in ~/clawd/
+
+## Learnings (Jan 2026)
+- PTY is essential for interactive terminals
+- Git repo required for Codex</code></pre>
+            <p><strong>✅ 优点</strong>：警告醒目、模式清晰、包含经验教训</p>
+        </div>
+        
+        <h3><span class="badge badge-complex">自动化型</span> peekaboo (macOS UI)</h3>
+        <div class="example-card complex">
+            <pre><code>---
+name: peekaboo
+description: Capture and automate macOS UI with the Peekaboo CLI.
+metadata: {"clawdbot":{"emoji":"👀","os":["darwin"],"requires":{"bins":["peekaboo"]}}}
+---
+
+# Peekaboo
+
+## Features (分类列表)
+**Core**: capture, image, list, permissions
+**Interaction**: click, drag, type, scroll
+**System**: app, window, menu, dock
+
+## Quickstart (happy path)
+```bash
+peekaboo permissions
+peekaboo see --annotate --path /tmp/see.png
+peekaboo click --on B1
+peekaboo type "Hello" --return
+```
+
+## Common targeting parameters
+- App/window: `--app`, `--window-title`, `--window-id`
+- Element: `--on`/`--id` (from `see` output)
+- Coords: `--coords x,y`</code></pre>
+            <p><strong>✅ 优点</strong>：功能分类清晰、有 "happy path"、参数速查表</p>
+        </div>
+    </section>
+
+    <section id="patterns">
+        <h2>📝 写作模式总结</h2>
+        
+        <table>
+            <tr><th>模式</th><th>用法</th><th>示例</th></tr>
+            <tr><td><strong>Quick Start</strong></td><td>最常用的 1-3 个命令</td><td>所有 skill 都应有</td></tr>
+            <tr><td><strong>Happy Path</strong></td><td>推荐的标准流程</td><td>peekaboo: see → click → type</td></tr>
+            <tr><td><strong>参数速查表</strong></td><td>常用参数一览</td><td>gog 的 Calendar Colors</td></tr>
+            <tr><td><strong>警告块 ⚠️</strong></td><td>重要注意事项</td><td>coding-agent: PTY Required</td></tr>
+            <tr><td><strong>经验教训</strong></td><td>踩坑记录</td><td>coding-agent: Learnings</td></tr>
+            <tr><td><strong>stdin 示例</strong></td><td>多行输入模式</td><td>gog: heredoc 用法</td></tr>
+        </table>
+        
+        <h3>命名规范</h3>
+        <table>
+            <tr><th>规则</th><th>示例</th></tr>
+            <tr><td>小写 + 连字符</td><td><code>pdf-editor</code>, <code>video-frames</code></td></tr>
+            <tr><td>动词开头</td><td><code>summarize</code>, <code>translate</code></td></tr>
+            <tr><td>工具命名空间</td><td><code>gh-address-comments</code>, <code>linear-issue</code></td></tr>
+            <tr><td>长度 &lt; 64 字符</td><td>✓</td></tr>
+        </table>
+    </section>
+
+    <section id="checklist">
+        <h2>✅ 发布前检查清单</h2>
+        
+        <table>
+            <tr><th>检查项</th><th>状态</th></tr>
+            <tr><td><code>name</code> 使用小写和连字符</td><td>☐</td></tr>
+            <tr><td><code>description</code> 包含触发条件和使用场景</td><td>☐</td></tr>
+            <tr><td>SKILL.md 正文 &lt; 500 行</td><td>☐</td></tr>
+            <tr><td>脚本已测试可运行</td><td>☐</td></tr>
+            <tr><td>使用 <code>{baseDir}</code> 引用脚本路径</td><td>☐</td></tr>
+            <tr><td>大型参考文档已拆分到 <code>references/</code></td><td>☐</td></tr>
+            <tr><td>删除了不必要的说明文件 (README 等)</td><td>☐</td></tr>
+            <tr><td>示例命令可直接复制使用</td><td>☐</td></tr>
+            <tr><td>有 Quick Start 或 Happy Path 示例</td><td>☐</td></tr>
+        </table>
+        
+        <h3>安装位置优先级</h3>
+        <table>
+            <tr><th>位置</th><th>优先级</th><th>用途</th></tr>
+            <tr><td><code>&lt;workspace&gt;/skills/</code></td><td>最高</td><td>项目专用</td></tr>
+            <tr><td><code>~/.clawdbot/skills/</code></td><td>中</td><td>用户自定义</td></tr>
+            <tr><td>内置 skills</td><td>最低</td><td>系统默认</td></tr>
+        </table>
+    </section>
+
+    <footer>
+        <p>
+            📚 参考资源：
+            <a href="https://agentskills.io" target="_blank">AgentSkills 规范</a> |
+            <a href="https://clawhub.com" target="_blank">ClawdHub</a> |
+            <a href="https://docs.clawd.bot/tools/skills" target="_blank">Clawdbot 文档</a>
+        </p>
+        <p>最后更新: 2026-02-11 | <a href="index.html">← 返回索引</a></p>
+    </footer>
+</body>
+</html>
